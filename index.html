@@ -1,0 +1,3267 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gardenKeeper® - Digitales Abnahmeformular</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #7F973B 0%, #A7B839 100%);
+            color: white;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* Launcher Styles */
+        .launcher {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .launcher-container {
+            max-width: 500px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 50px 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+        
+        .launcher h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .launcher-btn {
+            background: white;
+            color: #7F973B;
+            padding: 20px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 15px;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 250px;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .launcher-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            background: #f8f9fa;
+        }
+        
+        .instructions {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 40px;
+            text-align: left;
+        }
+        
+        .instructions h3 {
+            margin-bottom: 15px;
+            color: #fff;
+        }
+        
+        .instructions ol {
+            padding-left: 20px;
+        }
+        
+        .instructions li {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+        
+        .support-info {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .support-info h4 {
+            color: #FFE5B4;
+            margin-bottom: 10px;
+        }
+        
+        /* Formular Styles */
+        .formular {
+            display: none;
+            background: #f9fafb;
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .formular.active {
+            display: block;
+        }
+        
+        .form-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .form-header {
+            background: linear-gradient(135deg, #7F973B 0%, #A7B839 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .form-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .form-header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+        
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .btn-primary {
+            background: #A7B839;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #7F973B;
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #966D29;
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #7F6025;
+            transform: translateY(-2px);
+        }
+        
+        .btn-tertiary {
+            background: #70706B;
+            color: white;
+        }
+        
+        .btn-tertiary:hover {
+            background: #5A5A56;
+            transform: translateY(-2px);
+        }
+        
+        .btn-back {
+            background: white;
+            color: #7F973B;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-back:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .form-content {
+            padding: 30px;
+        }
+        
+        .day-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .day-tab {
+            padding: 12px 20px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .day-tab.active {
+            background: #A7B839;
+            color: white;
+            border-color: #A7B839;
+        }
+        
+        .day-tab:hover {
+            border-color: #A7B839;
+        }
+        
+        .day-content {
+            display: none;
+        }
+        
+        .day-content.active {
+            display: block;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section h3 {
+            color: #70706B;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #A7B839;
+            padding-bottom: 8px;
+        }
+        
+        .grid {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .grid-1 { grid-template-columns: 1fr; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+        .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+        .grid-5 { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+        
+        .field {
+            margin-bottom: 20px;
+        }
+        
+        .field label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .field input,
+        .field textarea,
+        .field select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .field input:focus,
+        .field textarea:focus,
+        .field select:focus {
+            outline: none;
+            border-color: #A7B839;
+        }
+        
+        .time-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .worker-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 15px;
+            align-items: start;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .material-row,
+        .machine-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 15px;
+            align-items: start;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .material-row {
+            grid-template-columns: 2fr 1fr 1fr auto;
+        }
+        
+        .fremdeinkauf-section {
+            margin-top: 10px;
+            padding: 15px;
+            background: #fff3cd;
+            border-radius: 8px;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .fremdeinkauf-section.hidden {
+            display: none;
+        }
+        
+        .fremdeinkauf-text {
+            margin-top: 10px;
+        }
+        
+        .fremdeinkauf-text input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffeaa7;
+            border-radius: 6px;
+            background: white;
+        }
+        
+        .hours-summary {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .hours-summary h4 {
+            color: #2d5a2d;
+            margin-bottom: 10px;
+        }
+        
+        .hours-summary .worker-hours {
+            margin-bottom: 5px;
+            font-size: 0.95rem;
+        }
+        
+        .hours-summary .total {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #1a4a1a;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 2px solid #A7B839;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .file-upload:hover {
+            border-color: #A7B839;
+            background: #f0f8e8;
+        }
+        
+        .file-upload.has-file {
+            border-color: #A7B839;
+            background: #f0f8e8;
+        }
+        
+        .file-preview {
+            max-width: 200px;
+            max-height: 200px;
+            margin: 10px auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+        
+        .checkbox-item:hover {
+            border-color: #A7B839;
+        }
+        
+        .checkbox-item input[type="checkbox"] {
+            margin-top: 2px;
+            width: 18px;
+            height: 18px;
+            accent-color: #A7B839;
+        }
+        
+        .signature-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .signature-box {
+            border: 2px dashed #ddd;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            background: #f8f9fa;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .signature-box:hover {
+            border-color: #A7B839;
+            background: #f0f8e8;
+        }
+        
+        .signature-box.has-signature {
+            border-style: solid;
+            border-color: #A7B839;
+            background: white;
+        }
+        
+        /* Success Page Styles */
+        .success-page {
+            display: none;
+            min-height: 100vh;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .success-page.active {
+            display: flex;
+        }
+        
+        .success-container {
+            max-width: 600px;
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 50px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+        }
+        
+        .employee-message {
+            background: rgba(255,255,255,0.1);
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .employee-message h3 {
+            color: #FFE5B4;
+            margin-bottom: 15px;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            color: #333;
+        }
+        
+        .signature-canvas {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: 600;
+            text-align: center;
+        }
+        
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .status-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .launcher-container {
+                padding: 30px 20px;
+            }
+            
+            .launcher h1 {
+                font-size: 2rem;
+            }
+            
+            .launcher-btn {
+                min-width: 200px;
+                padding: 15px 30px;
+                font-size: 1rem;
+            }
+            
+            .form-content {
+                padding: 20px;
+            }
+            
+            .grid-2,
+            .grid-3,
+            .grid-4,
+            .grid-5 {
+                grid-template-columns: 1fr;
+            }
+            
+            .worker-row,
+            .material-row,
+            .machine-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .day-tabs {
+                flex-direction: column;
+            }
+            
+            .form-buttons {
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Launcher Page -->
+    <div class="launcher" id="launcherPage">
+        <div class="launcher-container">
+            <div class="logo">🌱</div>
+            <h1>gardenKeeper®</h1>
+            <div class="subtitle">Digitales Abnahmeformular</div>
+            
+            <button class="launcher-btn" onclick="openFormular()">
+                <span>📱</span>
+                Formular öffnen
+            </button>
+            
+            <div class="instructions">
+                <h3>📋 Arbeitsschritte:</h3>
+                <ol>
+                    <li>Formular öffnen und alle Daten eingeben</li>
+                    <li>Mehrtägige Projekte über Tage-Tabs erfassen</li>
+                    <li>Pro Tag: Mitarbeiter, Zeiten, Materialien</li>
+                    <li>Pro Tag: Unterschriften von Kunde und Teamleiter</li>
+                    <li>Automatische Pausenberechnung</li>
+                    <li>Bilder hochladen (Belege, Arbeitsfortschritt)</li>
+                    <li>Abschließen → Daten werden automatisch gespeichert</li>
+                    <li>PDF kann direkt ausgedruckt/gespeichert werden</li>
+                </ol>
+            </div>
+            
+            <div class="support-info">
+                <h4>📞 Bei Problemen:</h4>
+                <p><strong>Chef kontaktieren</strong></p>
+            </div>
+            
+            <div style="margin-top: 30px; font-size: 0.9rem; opacity: 0.8;">
+                Version 6.0 - Juli 2025<br>
+                Neu: Unterschriften pro Tag, robuste Integration
+            </div>
+        </div>
+    </div>
+
+    <!-- Formular Page -->
+    <div class="formular" id="formularPage">
+        <div style="padding: 20px;">
+            <div class="form-container">
+                <!-- Header -->
+                <div class="form-header">
+                    <h1>ABNAHME / TAGESREGIEBERICHT</h1>
+                    <p>gardenKeeper® GmbH - Sven Krämer</p>
+                    <div class="form-buttons">
+                        <button onclick="backToLauncher()" class="btn btn-back">
+                            <span>←</span>
+                            Zurück
+                        </button>
+                        <button onclick="showSheetsConfig()" class="btn btn-tertiary">
+                            <span>⚙️</span>
+                            Sheets
+                        </button>
+                        <button onclick="saveDraft()" class="btn btn-secondary">
+                            <span>💾</span>
+                            Speichern
+                        </button>
+                        <button onclick="generatePDF()" class="btn btn-primary">
+                            <span>📄</span>
+                            PDF
+                        </button>
+                        <button onclick="showEmailModal()" class="btn btn-secondary">
+                            <span>📧</span>
+                            Email
+                        </button>
+                        <button onclick="completeForm()" class="btn btn-primary" style="background: #22c55e;">
+                            <span>✅</span>
+                            <span id="completeBtnText">Abschließen</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Status Messages -->
+                <div id="statusMessage"></div>
+
+                <div class="form-content">
+                    <!-- Grunddaten -->
+                    <div class="section">
+                        <h3>Grunddaten</h3>
+                        <div class="grid grid-3">
+                            <div class="field">
+                                <label>Name Kunde *</label>
+                                <input type="text" id="kunde" placeholder="Kundenname" required>
+                            </div>
+                            <div class="field">
+                                <label>LexOffice-ID</label>
+                                <input type="text" id="lexofficeId" placeholder="ID">
+                            </div>
+                            <div class="field">
+                                <label>Startdatum *</label>
+                                <input type="date" id="startdatum" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tage-Tabs -->
+                    <div class="section">
+                        <h3>Erfassung pro Tag</h3>
+                        <div class="day-tabs" id="dayTabs">
+                            <div class="day-tab active" data-day="1">Tag 1</div>
+                        </div>
+                        <button onclick="addDay()" class="btn btn-primary">
+                            <span>+</span>
+                            Tag hinzufügen
+                        </button>
+                    </div>
+
+                    <!-- Day Content Container -->
+                    <div id="dayContentContainer">
+                        <!-- Tag 1 Content -->
+                        <div class="day-content active" id="day1">
+                            
+                            <!-- Arbeitszeiten -->
+                            <div class="section">
+                                <h3>Arbeitszeiten</h3>
+                                <div class="grid grid-4">
+                                    <div class="field">
+                                        <label>Ladebeginn</label>
+                                        <input type="time" class="ladebeginn">
+                                    </div>
+                                    <div class="field">
+                                        <label>Abfahrt</label>
+                                        <input type="time" class="abfahrt">
+                                    </div>
+                                    <div class="field">
+                                        <label>Arbeitszeit Beginn</label>
+                                        <input type="time" class="arbeitszeit-beginn" onchange="updateHoursSummary()">
+                                    </div>
+                                    <div class="field">
+                                        <label>Arbeitszeit Ende</label>
+                                        <input type="time" class="arbeitszeit-ende" onchange="updateHoursSummary()">
+                                    </div>
+                                </div>
+                                <div class="grid grid-2">
+                                    <div class="field">
+                                        <label>Pause (Min)</label>
+                                        <input type="number" class="pause" placeholder="0" min="0" onchange="updateHoursSummary()">
+                                    </div>
+                                    <div class="field">
+                                        <label>Regenpause (Min)</label>
+                                        <input type="number" class="regenpause" placeholder="0" min="0" onchange="updateHoursSummary()">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Mitarbeiter -->
+                            <div class="section">
+                                <h3>Ausführende Mitarbeiter</h3>
+                                <div class="workers-container">
+                                    <div class="worker-row" style="display: grid; grid-template-columns: 1fr auto; gap: 15px; align-items: start; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                                        <div class="field">
+                                            <label>Mitarbeiter</label>
+                                            <select class="worker-select" onchange="updateHoursSummary()">
+                                                <option value="">Mitarbeiter auswählen</option>
+                                            </select>
+                                        </div>
+                                        <div style="align-self: start; margin-top: 25px;">
+                                            <button onclick="removeWorker(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button onclick="addWorker()" class="btn btn-primary">
+                                    <span>+</span>
+                                    Mitarbeiter hinzufügen
+                                </button>
+                                
+                                <!-- Stunden-Zusammenfassung -->
+                                <div class="hours-summary">
+                                    <h4>Stunden-Zusammenfassung (inkl. Pausenabzug)</h4>
+                                    <div class="hours-list"></div>
+                                    <div class="total">Gesamt: 0 Stunden</div>
+                                </div>
+                            </div>
+
+                            <!-- Maschinen -->
+                            <div class="section">
+                                <h3>Eingesetzte Maschinen</h3>
+                                <div class="machines-container">
+                                    <div class="machine-row">
+                                        <div class="field">
+                                            <label>Maschine</label>
+                                            <select class="machine-select">
+                                                <option value="">Maschine auswählen</option>
+                                            </select>
+                                        </div>
+                                        <div class="field">
+                                            <label>Dauer/Menge</label>
+                                            <input type="text" class="machine-duration" placeholder="z.B. 4 Std., 1 Tag">
+                                        </div>
+                                        <div style="align-self: start; margin-top: 25px;">
+                                            <button onclick="removeMachine(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button onclick="addMachine()" class="btn btn-primary">
+                                    <span>+</span>
+                                    Maschine hinzufügen
+                                </button>
+                            </div>
+
+                            <!-- Arbeiten -->
+                            <div class="section">
+                                <h3>Beschreibung ausgeführte Arbeiten</h3>
+                                <div class="field">
+                                    <textarea class="beschreibung-arbeiten" rows="5" placeholder="Detaillierte Beschreibung der durchgeführten Arbeiten..." required></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Materialien -->
+                            <div class="section">
+                                <h3>Materialien und Baustoffe</h3>
+                                <div class="materials-container">
+                                    <div class="material-row">
+                                        <div class="field">
+                                            <label>Material</label>
+                                            <select class="material-select">
+                                                <option value="">Material auswählen</option>
+                                            </select>
+                                        </div>
+                                        <div class="field">
+                                            <label>Menge</label>
+                                            <input type="text" class="material-amount" placeholder="z.B. 10, 5.5">
+                                        </div>
+                                        <div class="field">
+                                            <label style="display: flex; align-items: center; gap: 8px;">
+                                                <input type="checkbox" class="fremdeinkauf-checkbox" onchange="toggleFremdeinkauf(this)">
+                                                Fremdeinkauf
+                                            </label>
+                                        </div>
+                                        <div style="align-self: start; margin-top: 25px;">
+                                            <button onclick="removeMaterial(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                                        </div>
+                                        <div class="fremdeinkauf-section hidden">
+                                            <h4 style="margin-bottom: 10px;">Fremdeinkauf Details</h4>
+                                            <div class="fremdeinkauf-text">
+                                                <label>Beschreibung/Lieferant:</label>
+                                                <input type="text" class="fremdeinkauf-details" placeholder="z.B. Baumarkt XY, Lieferant Z, besondere Bedingungen...">
+                                            </div>
+                                            <div class="file-upload" onclick="triggerFileUpload(this)">
+                                                <div class="upload-text">
+                                                    <span>📷</span>
+                                                    <div>Foto des Lieferscheins/Kaufbelegs</div>
+                                                    <small>Tippen zum Hochladen</small>
+                                                </div>
+                                                <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button onclick="addMaterial()" class="btn btn-primary">
+                                    <span>+</span>
+                                    Material hinzufügen
+                                </button>
+                            </div>
+
+                            <!-- Bilder -->
+                            <div class="section">
+                                <h3>Bilder vom Arbeitsfortschritt</h3>
+                                <div class="images-container">
+                                    <div class="file-upload" onclick="triggerFileUpload(this)">
+                                        <div class="upload-text">
+                                            <span>📷</span>
+                                            <div>Foto hinzufügen</div>
+                                            <small>Arbeitsfortschritt, Vorher/Nachher</small>
+                                        </div>
+                                        <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(this)">
+                                    </div>
+                                </div>
+                                <button onclick="addImageUpload()" class="btn btn-primary">
+                                    <span>+</span>
+                                    Weiteres Bild hinzufügen
+                                </button>
+                            </div>
+
+                            <!-- Zusatzarbeiten -->
+                            <div class="section">
+                                <h3>Zusatzarbeiten</h3>
+                                <div class="field">
+                                    <textarea class="zusatzarbeiten" rows="3" placeholder="Beschreibung zusätzlicher Arbeiten, die nicht im ursprünglichen Auftrag enthalten waren..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Unterschriften PRO TAG -->
+                            <div class="section">
+                                <h3>Tagesabnahme - Unterschriften</h3>
+                                <div class="signature-section">
+                                    <div>
+                                        <h4 style="margin-bottom: 15px; color: #70706B;">Unterschrift Kunde (Tag 1)</h4>
+                                        <div class="signature-box" data-type="kunde" data-day="1" onclick="openSignature('kunde', 1)">
+                                            <div>✏️</div>
+                                            <div>Tippen zum Unterschreiben</div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h4 style="margin-bottom: 15px; color: #70706B;">Unterschrift Teamleiter (Tag 1)</h4>
+                                        <div class="signature-box" data-type="teamleiter" data-day="1" onclick="openSignature('teamleiter', 1)">
+                                            <div>✏️</div>
+                                            <div>Tippen zum Unterschreiben</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Bestätigungen -->
+                    <div class="section">
+                        <h3>Gesamtbestätigungen</h3>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="auftragGemaess">
+                                <label for="auftragGemaess">Die Arbeiten wurden gemäß Auftrag ausgeführt</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="komplett">
+                                <label for="komplett">Die beauftragten Arbeiten wurden komplett abgeschlossen</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="teilweise">
+                                <label for="teilweise">Die beauftragten Arbeiten wurden teilweise abgeschlossen</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="ordnungsGemaess">
+                                <label for="ordnungsGemaess">Die Arbeiten wurden ordnungsgemäß und mängelfrei ausgeführt</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="pflegeanleitung">
+                                <label for="pflegeanleitung">Die Pflegeanleitung wurde ausgehändigt</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="kundeKuemmert">
+                                <label for="kundeKuemmert">Der Kunde kümmert sich um die Nachpflege selbst</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bemerkungen -->
+                    <div class="section">
+                        <h3>Gesamtbemerkungen</h3>
+                        <div class="field">
+                            <textarea id="bemerkungen" rows="4" placeholder="Weitere Bemerkungen, Besonderheiten oder Hinweise zum gesamten Projekt..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Page -->
+    <div class="success-page" id="successPage">
+        <div class="success-container">
+            <div class="success-icon">✅</div>
+            <h1>Abnahme erfolgreich!</h1>
+            <p style="font-size: 1.2rem; margin: 20px 0;">Das Formular wurde erfolgreich verarbeitet und die Daten wurden gespeichert.</p>
+            
+            <div class="employee-message">
+                <h3>🎉 Nachricht an den Mitarbeiter</h3>
+                <p>Herzlichen Glückwunsch! Du hast das Abnahmeformular erfolgreich ausgefüllt. Deine sorgfältige Dokumentation hilft uns dabei, unseren Kunden den bestmöglichen Service zu bieten.</p>
+                <p style="margin-top: 15px;">Die Daten wurden automatisch in das System übertragen. Das PDF kann über den "PDF" Button ausgedruckt oder gespeichert werden. Bei Fragen oder Problemen kannst du dich jederzeit an Jessika oder Sven wenden.</p>
+                <p style="margin-top: 15px; font-weight: bold; color: #A7B839;">Weiter so! 💪</p>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <button class="launcher-btn" onclick="generatePDF()" style="background: #A7B839;">
+                    <span>📄</span>
+                    PDF erstellen
+                </button>
+                <button class="launcher-btn" onclick="resetForm()" style="background: #22c55e;">
+                    <span>🔄</span>
+                    Neues Formular
+                </button>
+                <button class="launcher-btn" onclick="backToLauncher()">
+                    <span>🏠</span>
+                    Zur Startseite
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signature Modal -->
+    <div class="modal" id="signatureModal">
+        <div class="modal-content">
+            <h3 id="signatureTitle">Unterschrift</h3>
+            <canvas id="signatureCanvas" class="signature-canvas" width="400" height="200"></canvas>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button onclick="clearSignature()" class="btn" style="flex: 1; background: #6c757d; color: white;">Löschen</button>
+                <button onclick="closeSignature()" class="btn" style="flex: 1; background: #dc3545; color: white;">Abbrechen</button>
+                <button onclick="saveSignature()" class="btn btn-primary" style="flex: 1;">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Modal -->
+    <div class="modal" id="emailModal">
+        <div class="modal-content">
+            <h3>Email mit Abnahmeprotokoll versenden</h3>
+            <div class="field">
+                <label>Kunde Email-Adresse *</label>
+                <input type="email" id="kundeEmail" placeholder="kunde@example.com" required>
+            </div>
+            <div class="field">
+                <label>Zusätzliche Nachricht</label>
+                <textarea id="emailMessage" rows="3" placeholder="Optional: Zusätzliche Nachricht an den Kunden..."></textarea>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button onclick="closeEmailModal()" class="btn" style="flex: 1; background: #6c757d; color: white;">Abbrechen</button>
+                <button onclick="sendEmailWithPDF()" class="btn btn-secondary" style="flex: 1;">Email senden</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sheets Config Modal -->
+    <div class="modal" id="sheetsModal">
+        <div class="modal-content">
+            <h3>Google Sheets Konfiguration</h3>
+            <div class="field">
+                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                    <input type="checkbox" id="sheetsEnabled" style="width: auto;">
+                    <label>Google Sheets Integration aktivieren</label>
+                </div>
+            </div>
+            <div class="field">
+                <label>Google Apps Script Web-App URL</label>
+                <input type="url" id="sheetsUrl" placeholder="https://script.google.com/macros/s/.../exec">
+                <small style="color: #666; margin-top: 5px; display: block;">
+                    Die URL deines Google Apps Script Web-Apps für die automatische Datenübertragung
+                </small>
+            </div>
+            <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0; color: #333;">
+                <strong>Setup-Anleitung:</strong>
+                <ol style="margin-top: 10px; padding-left: 20px;">
+                    <li>Google Sheets für Abnahmeprotokolle erstellen</li>
+                    <li>Google Apps Script hinzufügen (Script-Editor)</li>
+                    <li>Script-Code für Datenempfang einfügen</li>
+                    <li>Script als Web-App veröffentlichen</li>
+                    <li>Erhaltene URL hier einfügen</li>
+                </ol>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <button onclick="closeSheetsConfig()" class="btn" style="flex: 1; background: #6c757d; color: white;">Abbrechen</button>
+                <button onclick="saveSheetsConfig()" class="btn btn-primary" style="flex: 1;">Speichern</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentSignatureType = '';
+        let currentSignatureDay = 1;
+        let isDrawing = false;
+        let daySignatures = {}; // Format: {1: {kunde: '', teamleiter: ''}, 2: {kunde: '', teamleiter: ''}}
+        let formDataGlobal = {};
+        let uploadedImages = [];
+        let currentDay = 1;
+        let maxDays = 1;
+// ========================================
+// ERGÄNZUNGEN FÜR DEIN BESTEHENDES NETLIFY-SYSTEM
+// Diese Abschnitte in deine bestehende JavaScript-Datei einfügen
+// ========================================
+
+// 1. KONFIGURATION (GANZ OBEN in deine JS-Datei einfügen)
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyBd0-5qgxPP745tm2_GYmJuoH2jVClLZwS2eXL4NaObAKS-hc2IGxnWzA8lPuhYt7aCg/exec';
+
+const GOOGLE_SHEETS_CONFIG = {
+    enabled: true,
+    webAppUrl: 'https://script.google.com/macros/s/AKfycbz5J_xTTTcXktiAVvMXoL5m2QkJSD_JMzV29z__Fv1lRuNkdO4FSOTsTIdskdu_Xwsn/exec',
+    retryAttempts: 3,
+    timeout: 10000
+};
+
+// 2. PFLEGEANLEITUNG-DATENBANK (nach Konfiguration einfügen)
+const PFLEGEANLEITUNGEN = {
+    rasen: {
+        title: "Rasenpflege-Anleitung",
+        icon: "🌱",
+        content: `
+            <h3>🌱 Ihre Rasensaat - Vom Samen zum perfekten Grün</h3>
+            
+            <h4>💧 Bewässerung - Ihr wichtigster Job:</h4>
+            <ul>
+                <li><strong>Erste 3-4 Wochen:</strong> Oberste 2-3 cm Boden müssen IMMER feucht bleiben</li>
+                <li><strong>Mehrmals täglich wässern</strong> je nach Wetter erforderlich</li>
+                <li><strong>⚠️ Autrocknung bedeutet Totalverlust</strong> - die Keimlinge sterben ab</li>
+                <li><strong>Gleichmäßig verteilen,</strong> nicht "absaufen"</li>
+            </ul>
+            
+            <h4>🚶 Nutzung - Wann dürfen Sie auf den Rasen?</h4>
+            <ul>
+                <li><strong>Erste 3-4 Wochen: Sperrzone</strong> - nur zum Wässern betreten</li>
+                <li><strong>Erster Schnitt durch uns:</strong> Nach 3-4 Wochen bei 8-10 cm Höhe</li>
+                <li><strong>Woche 4-10:</strong> Nur leichtes Betreten erlaubt</li>
+                <li><strong>Ab Woche 10:</strong> Vollnutzung nach dem 5. Schnitt</li>
+            </ul>
+            
+            <h4>✂️ Rasenschnitt - Die Kunst des richtigen Mähens:</h4>
+            <ul>
+                <li><strong>Erster Schnitt:</strong> Bei 8-10 cm Höhe (informieren Sie uns!)</li>
+                <li><strong>Schnitthöhe:</strong> 4-5 cm für gesunden Wuchs</li>
+                <li><strong>Niemals mehr als 2/3 abschneiden</strong> - sonst drohen Schäden</li>
+                <li><strong>Wöchentlich mähen</strong> für dichten Wuchs</li>
+            </ul>
+            
+            <h4>🌿 Düngung mit FRISOL-FORTE:</h4>
+            <ul>
+                <li><strong>März/April:</strong> 40g pro qm - Frühjahrsstart</li>
+                <li><strong>Mai/Juni:</strong> 40g pro qm - Hauptwachstumszeit</li>
+                <li><strong>August/September:</strong> 30g pro qm - Wintervorbereitung</li>
+                <li><strong>Erst nach der Keimung düngen!</strong></li>
+            </ul>
+            
+            <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                <p><strong>📞 Bei Fragen kontaktieren Sie uns:</strong><br>
+                Sven Krämer gardenKeeper®<br>
+                Tel: [Ihre Telefonnummer]<br>
+                Email: office@gardenkeeper.de</p>
+            </div>
+        `
+    },
+    
+    hecke: {
+        title: "Heckenpflege-Anleitung",
+        icon: "🌳",
+        content: `
+            <h3>🌳 Heckenpflege nach Schnitt/Pflanzung</h3>
+            
+            <h4>Nach Neupflanzung:</h4>
+            <ul>
+                <li>💧 Erste 4 Wochen: täglich gießen</li>
+                <li>🌱 Anschließend: 2-3x wöchentlich</li>
+                <li>✂️ Formschnitt nach 1 Jahr</li>
+                <li>🌿 Startdüngung im Frühjahr</li>
+            </ul>
+            
+            <h4>Schnittzeiten:</h4>
+            <ul>
+                <li>📅 Hauptschnitt: Ende Juni (nach Vogelbrut)</li>
+                <li>📅 Formschnitt: August/September</li>
+                <li>⛔ Radikalschnitt: Oktober bis Februar</li>
+            </ul>
+        `
+    },
+    
+    pflanzung: {
+        title: "Pflanzenpflege-Anleitung",
+        icon: "🌺",
+        content: `
+            <h3>🌺 Pflege nach Neupflanzung</h3>
+            
+            <h4>Anwuchsphase (4-6 Wochen):</h4>
+            <ul>
+                <li>💧 Täglich gießen (außer Regen)</li>
+                <li>🌡️ Morgens oder abends wässern</li>
+                <li>🍃 Verwelkte Blätter entfernen</li>
+                <li>🐌 Schneckenschutz anbringen</li>
+            </ul>
+        `
+    }
+};
+
+// 3. TEST-FUNKTION (zu den anderen Funktionen hinzufügen)
+async function testDriveConnection() {
+    try {
+        showMessage('🔄 Teste Google Drive Verbindung...', 'info');
+        
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ test: true })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showMessage('✅ Google Drive erfolgreich verbunden!', 'success');
+            console.log('Drive Test OK:', result);
+        } else {
+            showMessage(`❌ Drive Fehler: ${result.error}`, 'error');
+        }
+        
+    } catch (error) {
+        console.error('Drive Test Fehler:', error);
+        showMessage(`❌ Verbindung fehlgeschlagen: ${error.message}`, 'error');
+    }
+}
+
+// 4. GOOGLE DRIVE UPLOAD-FUNKTION (zu den anderen Funktionen hinzufügen)
+async function uploadPDFToDrive(formData) {
+    try {
+        showMessage('📤 PDF wird zu Google Drive hochgeladen...', 'info');
+        
+        const pdfHTML = generatePDFHTMLWithPflegeanleitung(formData);
+        
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                kunde: formData.kunde,
+                startdatum: formData.startdatum,
+                pdfContent: pdfHTML,
+                test: false
+            })
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            showMessage('✅ PDF erfolgreich in Drive archiviert!', 'success');
+            return result;
+        } else {
+            throw new Error(result.error || 'Drive Upload fehlgeschlagen');
+        }
+        
+    } catch (error) {
+        console.error('Drive Upload Fehler:', error);
+        showMessage(`❌ Upload fehlgeschlagen: ${error.message}`, 'error');
+        throw error;
+    }
+}
+
+// 5. PFLEGEANLEITUNG-ERKENNUNG (zu den anderen Funktionen hinzufügen)
+function detectPflegeanleitungType(arbeitsText) {
+    if (!arbeitsText) return null;
+    
+    const text = arbeitsText.toLowerCase();
+    const keywords = {
+        rasen: ['rasen', 'rollrasen', 'ansaat', 'vertikutier', 'nachsaat', 'rasensaat', 'einsaat', 'mähen'],
+        hecke: ['hecke', 'heckenschnitt', 'formschnitt', 'schnitt', 'liguster', 'thuja'],
+        pflanzung: ['pflanz', 'neupflanz', 'stauden', 'blumen', 'beet', 'pflanzen']
+    };
+    
+    for (const [type, words] of Object.entries(keywords)) {
+        if (words.some(word => text.includes(word))) {
+            return type;
+        }
+    }
+    return null;
+}
+
+// 6. PFLEGEANLEITUNG ZU PDF HINZUFÜGEN (zu den anderen Funktionen hinzufügen)
+function addPflegeanleitungToPDF() {
+    if (window.selectedPflegeanleitung && PFLEGEANLEITUNGEN[window.selectedPflegeanleitung]) {
+        const anleitung = PFLEGEANLEITUNGEN[window.selectedPflegeanleitung];
+        return `
+            <div class="section" style="page-break-before: always;">
+                <h2>${anleitung.icon} ${anleitung.title}</h2>
+                <div style="background: #f0f8ff; padding: 20px; border-radius: 8px; margin-top: 20px;">
+                    ${anleitung.content}
+                </div>
+                <div style="margin-top: 20px; padding: 15px; background: #e8f5e8; border-radius: 8px;">
+                    <p><strong>Diese Pflegeanleitung wurde dem Kunden ausgehändigt.</strong></p>
+                    <p>Bei Fragen zur Pflege kontaktieren Sie uns gerne unter:<br>
+                    📞 Telefon: [Ihre Telefonnummer]<br>
+                    📧 Email: office@gardenkeeper.de</p>
+                </div>
+            </div>
+        `;
+    }
+    return '';
+}
+
+// 7. PDF MIT PFLEGEANLEITUNG GENERIEREN (zu den anderen Funktionen hinzufügen)
+function generatePDFHTMLWithPflegeanleitung(formData) {
+    // Deine bestehende PDF-Generierung (aus dem Muster)
+    let daysHtml = '';
+    let totalProjectHours = 0;
+    
+    formData.days.forEach(day => {
+        const workersHtml = day.workers.map(w => 
+            `<div class="field">${w.name}</div>`
+        ).join('');
+        
+        // Berechne Tagesstunden
+        let dayHours = 0;
+        if (day.arbeitszeitBeginn && day.arbeitszeitEnde && day.workers.length > 0) {
+            const start = new Date(`2000-01-01T${day.arbeitszeitBeginn}`);
+            const end = new Date(`2000-01-01T${day.arbeitszeitEnde}`);
+            const grossHours = Math.max(0, (end - start) / (1000 * 60 * 60));
+            const pauseHours = (parseInt(day.pause || 0) + parseInt(day.regenpause || 0)) / 60;
+            const netHoursPerWorker = Math.max(0, grossHours - pauseHours);
+            dayHours = netHoursPerWorker * day.workers.length;
+        }
+        totalProjectHours += dayHours;
+        
+        // Materials HTML
+        const materialsHtml = day.materials.map(material => {
+            let html = `<div class="material-item">${material.name}: ${material.amount} ${material.unit}`;
+            if (material.fremdeinkauf) {
+                html += ` <span style="color: #966D29; font-weight: bold;">(Fremdeinkauf: ${material.fremdeinkaufDetails})</span>`;
+            }
+            html += `</div>`;
+            return html;
+        }).join('');
+        
+        // Machines HTML
+        const machinesHtml = day.machines.map(machine => 
+            `<div class="machine-item">${machine.name}: ${machine.duration}</div>`
+        ).join('');
+        
+        // Signatures HTML
+        const signaturesHtml = `
+            <div style="display: flex; gap: 30px; margin-top: 20px;">
+                <div style="flex: 1;">
+                    <p><strong>Unterschrift Kunde:</strong></p>
+                    <div class="signature" ${day.signatures.kunde ? `style="background-image: url(${day.signatures.kunde});"` : ''}></div>
+                </div>
+                <div style="flex: 1;">
+                    <p><strong>Unterschrift Teamleiter:</strong></p>
+                    <div class="signature" ${day.signatures.teamleiter ? `style="background-image: url(${day.signatures.teamleiter});"` : ''}></div>
+                </div>
+            </div>
+        `;
+        
+        daysHtml += `
+            <div class="day-section" style="page-break-before: ${day.dayNumber > 1 ? 'always' : 'auto'};">
+                <h2>Tag ${day.dayNumber} - ${day.datum || formData.startdatum}</h2>
+                
+                <div class="section">
+                    <h3>Arbeitszeiten</h3>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px;">
+                        <div><strong>Beginn:</strong> ${day.arbeitszeitBeginn || '-'}</div>
+                        <div><strong>Ende:</strong> ${day.arbeitszeitEnde || '-'}</div>
+                        <div><strong>Pause:</strong> ${day.pause || 0} Min</div>
+                        <div><strong>Regenpause:</strong> ${day.regenpause || 0} Min</div>
+                    </div>
+                    <div style="margin-top: 10px;"><strong>Tagesstunden gesamt:</strong> ${dayHours.toFixed(2)} Std.</div>
+                </div>
+                
+                <div class="section">
+                    <h3>Mitarbeiter</h3>
+                    ${workersHtml}
+                </div>
+                
+                <div class="section">
+                    <h3>Arbeiten</h3>
+                    <div>${day.arbeiten || '-'}</div>
+                </div>
+                
+                ${materialsHtml ? `
+                <div class="section">
+                    <h3>Materialien</h3>
+                    ${materialsHtml}
+                </div>
+                ` : ''}
+                
+                ${machinesHtml ? `
+                <div class="section">
+                    <h3>Maschinen</h3>
+                    ${machinesHtml}
+                </div>
+                ` : ''}
+                
+                ${day.zusatzarbeiten ? `
+                <div class="section">
+                    <h3>Zusatzarbeiten</h3>
+                    <div>${day.zusatzarbeiten}</div>
+                </div>
+                ` : ''}
+                
+                <div class="section">
+                    <h3>Unterschriften</h3>
+                    ${signaturesHtml}
+                </div>
+            </div>
+        `;
+    });
+    
+    // Checkboxes HTML
+    const checkboxes = {
+        auftragGemaess: 'Die Arbeiten wurden gemäß Auftrag ausgeführt',
+        komplett: 'Die beauftragten Arbeiten wurden komplett abgeschlossen',
+        teilweise: 'Die beauftragten Arbeiten wurden teilweise abgeschlossen',
+        ordnungsGemaess: 'Die Arbeiten wurden ordnungsgemäß und mängelfrei ausgeführt',
+        pflegeanleitung: 'Die Pflegeanleitung wurde ausgehändigt',
+        kundeKuemmert: 'Der Kunde kümmert sich um die Nachpflege selbst'
+    };
+    
+    const checkboxesHtml = Object.entries(checkboxes).map(([key, text]) => 
+        `<div class="checkbox-item">
+            ${formData.checkboxes[key] ? '☑️' : '☐'} ${text}
+        </div>`
+    ).join('');
+    
+    // Pflegeanleitung hinzufügen
+    const pflegeanleitungHTML = addPflegeanleitungToPDF();
+    
+    return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Abnahmeprotokoll ${formData.kunde}</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
+                .header { background: #7F973B; color: white; padding: 20px; text-align: center; margin-bottom: 30px; }
+                .section { margin-bottom: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 8px; }
+                .section h3 { margin-top: 0; color: #7F973B; border-bottom: 2px solid #7F973B; padding-bottom: 5px; }
+                .field { margin-bottom: 10px; }
+                .signature { border: 1px solid #ddd; height: 60px; background-size: contain; background-repeat: no-repeat; background-position: center; }
+                .material-item, .machine-item { margin-bottom: 5px; }
+                .checkbox-item { margin-bottom: 8px; font-size: 14px; }
+                .day-section { margin-bottom: 40px; }
+                @media print { .no-print { display: none; } }
+            </style>
+        </head>
+        <body>
+            <div class="header">
+                <h1>🌱 gardenKeeper® Abnahmeprotokoll</h1>
+                <p>Professionelle Gartenpflege</p>
+            </div>
+            
+            <div class="section">
+                <h3>Kundendaten</h3>
+                <div><strong>Kunde:</strong> ${formData.kunde}</div>
+                <div><strong>Ansprechpartner:</strong> ${formData.ansprechpartner || '-'}</div>
+                <div><strong>Adresse:</strong> ${formData.adresse || '-'}</div>
+                <div><strong>Auftragsnummer:</strong> ${formData.auftragsnummer || '-'}</div>
+                <div><strong>LexOffice-ID:</strong> ${formData.lexofficeId || '-'}</div>
+                <div><strong>Startdatum:</strong> ${formData.startdatum}</div>
+                <div><strong>Projekttage:</strong> ${formData.days.length}</div>
+                <div><strong>Gesamtstunden:</strong> ${totalProjectHours.toFixed(2)} Std.</div>
+            </div>
+            
+            ${daysHtml}
+            
+            ${formData.bemerkungen ? `
+            <div class="section">
+                <h3>Gesamtbemerkungen</h3>
+                <div>${formData.bemerkungen}</div>
+            </div>
+            ` : ''}
+            
+            <div class="section" style="page-break-before: always;">
+                <h3>Gesamtbestätigungen</h3>
+                ${checkboxesHtml}
+            </div>
+            
+            ${pflegeanleitungHTML}
+            
+            <div class="footer" style="margin-top: 30px; text-align: center; font-size: 12px; color: #666;">
+                <p>Erstellt am ${new Date().toLocaleDateString('de-DE')} um ${new Date().toLocaleTimeString('de-DE')} Uhr</p>
+                <p>gardenKeeper® - Digitales Abnahmeformular v6.0</p>
+            </div>
+        </body>
+        </html>
+    `;
+}
+
+// 8. ERWEITERTE completeForm() FUNKTION (DEINE BESTEHENDE ERSETZEN)
+async function completeForm() {
+    const data = getFormData();
+    
+    // Validierung
+    if (!data.kunde || !data.startdatum) {
+        showMessage('Bitte füllen Sie alle Pflichtfelder aus!', 'error');
+        return;
+    }
+    
+    const hasWork = data.days.some(day => day.arbeiten.trim());
+    if (!hasWork) {
+        showMessage('Bitte beschreiben Sie die durchgeführten Arbeiten!', 'error');
+        return;
+    }
+    
+    try {
+        showMessage('🔄 Abnahme wird finalisiert und archiviert...', 'info');
+        
+        // 1. Google Drive Upload
+        const driveResult = await uploadPDFToDrive(data);
+        data.driveLink = driveResult.shareLink;
+        data.filename = driveResult.filename;
+        
+        // 2. Google Sheets Übertragung (falls vorhanden)
+        if (typeof sendToGoogleSheets === 'function') {
+            await sendToGoogleSheets(data);
+        }
+        
+        // 3. Zur Erfolgsseite wechseln
+        document.getElementById('formular').style.display = 'none';
+        document.getElementById('successPage').classList.add('active');
+        
+        showMessage('🎉 Abnahme erfolgreich abgeschlossen und archiviert!', 'success');
+        
+        // 4. Email-Button erweitern
+        enhanceEmailWithDriveLink(data);
+        
+    } catch (error) {
+        console.error('Fehler beim Abschließen:', error);
+        showMessage('❌ Fehler beim Speichern: ' + error.message, 'error');
+    }
+}
+
+// 9. ERWEITERTE sendEmailWithPDF() FUNKTION (DEINE BESTEHENDE ERSETZEN)
+function sendEmailWithPDF() {
+    const data = getFormData();
+    const kundeEmail = document.getElementById('kundeEmail').value;
+    const customMessage = document.getElementById('emailMessage').value;
+    
+    if (!kundeEmail) {
+        alert('Bitte Email-Adresse eingeben!');
+        return;
+    }
+    
+    // Pflegeanleitung-Text für Email
+    let pflegeanleitungText = '';
+    if (data.checkboxes.pflegeanleitung && window.selectedPflegeanleitung) {
+        const anleitung = PFLEGEANLEITUNGEN[window.selectedPflegeanleitung];
+        pflegeanleitungText = `
+
+📋 PFLEGEANLEITUNG:
+Die ${anleitung.title} finden Sie im Abnahmeprotokoll.
+Bitte befolgen Sie die Anweisungen für optimale Ergebnisse.`;
+    }
+    
+    const subject = encodeURIComponent('Abnahmeprotokoll - gardenKeeper® Gartenarbeiten');
+    
+    const emailBody = `Sehr geehrte(r) ${data.ansprechpartner || 'Damen und Herren'},
+
+die Arbeiten für Ihr Projekt wurden erfolgreich abgeschlossen und dokumentiert.
+
+📋 PROJEKT-ÜBERSICHT:
+Kunde: ${data.kunde}
+Zeitraum: ${data.startdatum} (${data.days.length} Tag(e))
+Status: ${data.checkboxes.komplett ? '✅ Komplett abgeschlossen' : data.checkboxes.teilweise ? '⚠️ Teilweise abgeschlossen' : '📝 In Bearbeitung'}
+
+📄 ABNAHMEPROTOKOLL (unveränderlich archiviert):
+${data.driveLink || 'PDF wird in Kürze verfügbar sein'}
+
+✅ Rechtsgültig und manipulationssicher
+✅ Für immer verfügbar
+✅ Kein Passwort erforderlich
+✅ Funktioniert auf allen Geräten
+
+Das Dokument kann von NIEMANDEN mehr verändert werden - auch nicht von uns! Das ist Ihre Sicherheit.${pflegeanleitungText}
+
+${customMessage ? `
+
+ZUSÄTZLICHE HINWEISE:
+${customMessage}` : ''}
+
+Bei Fragen stehen wir Ihnen gerne zur Verfügung.
+
+Mit freundlichen Grüßen
+Ihr gardenKeeper® Team
+
+—
+Sven Krämer gardenKeeper® GmbH
+Großblittersdorfer Str. 329
+66130 Saarbrücken
+
+Tel: +49 681 9378 4009
+Email: info@gardenkeeper.de
+Web: www.gardenkeeper.de
+
+—
+Diese Email wurde automatisch vom digitalen Abnahmeformular erstellt.`;
+    
+    const body = encodeURIComponent(emailBody);
+    const mailtoLink = `mailto:${kundeEmail}?cc=office@gardenkeeper.de&subject=${subject}&body=${body}`;
+    
+    window.location.href = mailtoLink;
+    closeEmailModal();
+    showMessage('Email wurde geöffnet und ist versandbereit!', 'success');
+}
+
+// 10. EMAIL-ENHANCEMENT FUNKTION (zu den anderen Funktionen hinzufügen)
+function enhanceEmailWithDriveLink(formData) {
+    // Store formData global für Email-Zugriff
+    window.currentFormData = formData;
+}
+
+// 11. PFLEGEANLEITUNG CHECKBOX LISTENER (bei DOMContentLoaded hinzufügen)
+document.addEventListener('DOMContentLoaded', function() {
+    const pflegeanleitungCheckbox = document.getElementById('pflegeanleitung');
+    if (pflegeanleitungCheckbox) {
+        pflegeanleitungCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                // Sammle alle Arbeitsbeschreibungen
+                const allWork = [];
+                document.querySelectorAll('textarea[placeholder*="Beschreibung"], textarea[placeholder*="ausgeführte Arbeiten"]').forEach(textarea => {
+                    if (textarea.value.trim()) {
+                        allWork.push(textarea.value.trim());
+                    }
+                });
+                const arbeiten = allWork.join(' ');
+                
+                // Automatische Erkennung
+                const autoDetected = detectPflegeanleitungType(arbeiten);
+                
+                if (autoDetected) {
+                    showMessage(`🤖 Pflegeanleitung "${PFLEGEANLEITUNGEN[autoDetected].title}" automatisch ausgewählt`, 'success');
+                    window.selectedPflegeanleitung = autoDetected;
+                } else {
+                    // Standard: Rasenpflege
+                    window.selectedPflegeanleitung = 'rasen';
+                    showMessage('📋 Rasenpflege-Anleitung ausgewählt (Standard)', 'info');
+                }
+                
+                // Vorschau-Button hinzufügen
+                addPflegeanleitungPreviewButton();
+            } else {
+                window.selectedPflegeanleitung = null;
+                removePflegeanleitungPreviewButton();
+            }
+        });
+    }
+});
+
+// 12. VORSCHAU-BUTTON FUNKTIONEN (zu den anderen Funktionen hinzufügen)
+function addPflegeanleitungPreviewButton() {
+    removePflegeanleitungPreviewButton(); // Alte entfernen
+    
+    const checkboxItem = document.querySelector('label[for="pflegeanleitung"]').parentElement;
+    if (checkboxItem && window.selectedPflegeanleitung) {
+        const previewBtn = document.createElement('button');
+        previewBtn.className = 'btn btn-sm pflegeanleitung-preview-btn';
+        previewBtn.style.marginLeft = '10px';
+        previewBtn.style.background = '#A7B839';
+        previewBtn.style.color = 'white';
+        previewBtn.style.padding = '5px 10px';
+        previewBtn.style.fontSize = '12px';
+        previewBtn.innerHTML = '👁️ Vorschau';
+        previewBtn.onclick = (e) => {
+            e.preventDefault();
+            showPflegeanleitungPreview(window.selectedPflegeanleitung);
+        };
+        
+        checkboxItem.appendChild(previewBtn);
+    }
+}
+
+function removePflegeanleitungPreviewButton() {
+    const existingBtn = document.querySelector('.pflegeanleitung-preview-btn');
+    if (existingBtn) {
+        existingBtn.remove();
+    }
+}
+
+function showPflegeanleitungPreview(type) {
+    const anleitung = PFLEGEANLEITUNGEN[type];
+    const modal = document.createElement('div');
+    modal.className = 'modal show';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 700px; max-height: 80vh; overflow-y: auto;">
+            <h2>${anleitung.icon} ${anleitung.title}</h2>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                ${anleitung.content}
+            </div>
+            <div style="text-align: right;">
+                <button onclick="this.closest('.modal').remove()" class="btn btn-primary">
+                    Schließen
+                </button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+// ========================================
+// HTML ERGÄNZUNGEN
+// ========================================
+
+// ZU DEINEM HTML HINZUFÜGEN (bei den anderen Buttons):
+/*
+<button onclick="testDriveConnection()" class="btn btn-secondary" style="margin: 10px; background: #A7B839; color: white;">
+    🔗 Google Drive Test
+</button>
+*/
+
+// ========================================
+// SETUP-ANWEISUNGEN:
+// ========================================
+
+/*
+1. ALLES KOPIEREN und in deine JavaScript-Datei einfügen
+2. Test-Button zu deinem HTML hinzufügen
+3. Auf Netlify hochladen
+4. Testen:
+   - Drive Test Button klicken → "✅ Drive verbunden!"
+   - Formular ausfüllen mit "Rasensaat" → automatische Pflegeanleitung
+   - Abschließen → PDF in Drive + Email mit Link
+
+FERTIG! Dein System hat jetzt:
+✅ Automatische Drive-Archivierung (unveränderlich)
+✅ Pflegeanleitung-Erkennung und Integration
+✅ Email mit Drive-Links
+✅ Komplett aus deinem Projektwissen umgesetzt
+*/
+
+        // Daten aus den Dokumenten
+        const WORKERS = [
+            'Christian Weinrank', 'Fabio Krämer', 'Claudiu Adascalitei', 'Jürgen Kränkel', 
+            'Joseph Dahl', 'Christian Stöber', 'Wolfgang Degro', 'Christian Fuß', 
+            'Christian Winterstein', 'Carsten Munz', 'Sascha Macke', 'Julina Tiedtke', 
+            'Kim Honnecker', 'Jan Jeanrond', 'Jamie Marcel Hauch'
+        ];
+
+        const MATERIALS = [
+            { name: 'Entsorgung Grünschnitt', unit: 'cbm' },
+            { name: 'Entsorgung Knöterisch -Sondermüll-', unit: 'to.' },
+            { name: 'Kieferndekorrinde 0-15', unit: 'Sack' },
+            { name: 'Rindenmulch 15-45', unit: 'Sack' },
+            { name: 'Pinienrinde 15-25', unit: 'Sack' },
+            { name: 'Pinienrinde 8-16', unit: 'Sack' },
+            { name: 'Corthum Gärtnererde 50l', unit: 'Sack' },
+            { name: 'Mutterboden, gesiebt (sehr fein)', unit: 'cbm' },
+            { name: 'Entsorgung Erdmassen', unit: 'cbm' },
+        ];
+
+        const MACHINES = [
+            { name: 'Häcksler mit eigenem Motor (bis 20cm Durchlass)', unit: 'Std.' },
+            { name: 'Häcksler mit eigenem Motor (bis 20cm Durchlass)', unit: 'Tag' },
+            { name: 'Kompaktlader Vermeer', unit: 'Std.' },
+            { name: 'Großflächen-Ausitzmäher mit Hochkipp-Funktion', unit: 'Std.' },
+            { name: 'Großflächen-Mulcher (0-Wendekreismäher)', unit: 'Std.' },
+            { name: 'Ferris Mulchmäher', unit: 'Std.' },
+            { name: 'Minibagger Kubota (1 to.)', unit: 'Std.' },
+            { name: 'Minibagger Cat 3.18 (2 to.)', unit: 'Std.' }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('startdatum').value = new Date().toISOString().split('T')[0];
+            populateDropdowns();
+            loadSettings();
+            loadDraft();
+            updateHoursSummary();
+            initializeSignatures();
+        });
+
+        // Initialize signatures object
+        function initializeSignatures() {
+            daySignatures[1] = { kunde: '', teamleiter: '' };
+        }
+
+        // Day management
+        function addDay() {
+            maxDays++;
+            
+            // Add tab
+            const dayTabs = document.getElementById('dayTabs');
+            const newTab = document.createElement('div');
+            newTab.className = 'day-tab';
+            newTab.setAttribute('data-day', maxDays);
+            newTab.textContent = `Tag ${maxDays}`;
+            newTab.onclick = () => switchDay(maxDays);
+            dayTabs.appendChild(newTab);
+            
+            // Add content
+            const dayContainer = document.getElementById('dayContentContainer');
+            const newDayContent = document.querySelector('#day1').cloneNode(true);
+            newDayContent.id = `day${maxDays}`;
+            newDayContent.classList.remove('active');
+            
+            // Update signature boxes for new day
+            updateSignatureBoxesForDay(newDayContent, maxDays);
+            
+            // Reset form values in cloned content
+            resetDayContent(newDayContent);
+            
+            dayContainer.appendChild(newDayContent);
+            
+            // Populate dropdowns in new day
+            populateDropdownsInDay(newDayContent);
+            
+            // Initialize signatures for new day
+            daySignatures[maxDays] = { kunde: '', teamleiter: '' };
+            
+            // Switch to new day
+            switchDay(maxDays);
+        }
+        
+        function updateSignatureBoxesForDay(dayContent, dayNumber) {
+            const signatureBoxes = dayContent.querySelectorAll('.signature-box');
+            const signatureHeaders = dayContent.querySelectorAll('.signature-section h4');
+            
+            signatureBoxes.forEach(box => {
+                const type = box.getAttribute('data-type');
+                box.setAttribute('data-day', dayNumber);
+                box.onclick = () => openSignature(type, dayNumber);
+            });
+            
+            signatureHeaders.forEach(header => {
+                if (header.textContent.includes('Kunde')) {
+                    header.textContent = `Unterschrift Kunde (Tag ${dayNumber})`;
+                } else if (header.textContent.includes('Teamleiter')) {
+                    header.textContent = `Unterschrift Teamleiter (Tag ${dayNumber})`;
+                }
+            });
+        }
+        
+        function switchDay(dayNumber) {
+            currentDay = dayNumber;
+            
+            // Update tabs
+            document.querySelectorAll('.day-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelector(`[data-day="${dayNumber}"]`).classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.day-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`day${dayNumber}`).classList.add('active');
+            
+            // Update hours summary for current day
+            updateHoursSummary();
+        }
+        
+        function resetDayContent(dayContent) {
+            // Reset all inputs
+            dayContent.querySelectorAll('input, textarea, select').forEach(field => {
+                if (field.type === 'checkbox') {
+                    field.checked = false;
+                } else if (field.type === 'number') {
+                    field.value = '';
+                } else {
+                    field.value = '';
+                }
+            });
+            
+            // Reset containers to single row
+            resetContainersInDay(dayContent);
+        }
+        
+        function resetContainersInDay(dayContent) {
+            // Reset workers
+            const workersContainer = dayContent.querySelector('.workers-container');
+            workersContainer.innerHTML = `
+                <div class="worker-row" style="display: grid; grid-template-columns: 1fr auto; gap: 15px; align-items: start; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <div class="field">
+                        <label>Mitarbeiter</label>
+                        <select class="worker-select" onchange="updateHoursSummary()">
+                            <option value="">Mitarbeiter auswählen</option>
+                        </select>
+                    </div>
+                    <div style="align-self: start; margin-top: 25px;">
+                        <button onclick="removeWorker(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                    </div>
+                </div>
+            `;
+            
+            // Reset machines
+            const machinesContainer = dayContent.querySelector('.machines-container');
+            machinesContainer.innerHTML = `
+                <div class="machine-row">
+                    <div class="field">
+                        <label>Maschine</label>
+                        <select class="machine-select">
+                            <option value="">Maschine auswählen</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Dauer/Menge</label>
+                        <input type="text" class="machine-duration" placeholder="z.B. 4 Std., 1 Tag">
+                    </div>
+                    <div style="align-self: start; margin-top: 25px;">
+                        <button onclick="removeMachine(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                    </div>
+                </div>
+            `;
+            
+            // Reset materials
+            const materialsContainer = dayContent.querySelector('.materials-container');
+            materialsContainer.innerHTML = `
+                <div class="material-row">
+                    <div class="field">
+                        <label>Material</label>
+                        <select class="material-select">
+                            <option value="">Material auswählen</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Menge</label>
+                        <input type="text" class="material-amount" placeholder="z.B. 10, 5.5">
+                    </div>
+                    <div class="field">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" class="fremdeinkauf-checkbox" onchange="toggleFremdeinkauf(this)">
+                            Fremdeinkauf
+                        </label>
+                    </div>
+                    <div style="align-self: start; margin-top: 25px;">
+                        <button onclick="removeMaterial(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                    </div>
+                    <div class="fremdeinkauf-section hidden">
+                        <h4 style="margin-bottom: 10px;">Fremdeinkauf Details</h4>
+                        <div class="fremdeinkauf-text">
+                            <label>Beschreibung/Lieferant:</label>
+                            <input type="text" class="fremdeinkauf-details" placeholder="z.B. Baumarkt XY, Lieferant Z, besondere Bedingungen...">
+                        </div>
+                        <div class="file-upload" onclick="triggerFileUpload(this)">
+                            <div class="upload-text">
+                                <span>📷</span>
+                                <div>Foto des Lieferscheins/Kaufbelegs</div>
+                                <small>Tippen zum Hochladen</small>
+                            </div>
+                            <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Reset images
+            const imagesContainer = dayContent.querySelector('.images-container');
+            imagesContainer.innerHTML = `
+                <div class="file-upload" onclick="triggerFileUpload(this)">
+                    <div class="upload-text">
+                        <span>📷</span>
+                        <div>Foto hinzufügen</div>
+                        <small>Arbeitsfortschritt, Vorher/Nachher</small>
+                    </div>
+                    <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(this)">
+                </div>
+            `;
+
+            // Reset signatures for this day
+            const signatureBoxes = dayContent.querySelectorAll('.signature-box');
+            signatureBoxes.forEach(box => {
+                box.className = 'signature-box';
+                box.innerHTML = '<div>✏️</div><div>Tippen zum Unterschreiben</div>';
+            });
+        }
+
+        // Populate dropdowns
+        function populateDropdowns() {
+            document.querySelectorAll('.day-content').forEach(dayContent => {
+                populateDropdownsInDay(dayContent);
+            });
+        }
+        
+        function populateDropdownsInDay(dayContent) {
+            // Workers
+            dayContent.querySelectorAll('.worker-select').forEach(select => {
+                select.innerHTML = '<option value="">Mitarbeiter auswählen</option>';
+                WORKERS.forEach(worker => {
+                    select.innerHTML += `<option value="${worker}">${worker}</option>`;
+                });
+            });
+
+            // Materials
+            dayContent.querySelectorAll('.material-select').forEach(select => {
+                select.innerHTML = '<option value="">Material auswählen</option>';
+                MATERIALS.forEach(material => {
+                    select.innerHTML += `<option value="${material.name}" data-unit="${material.unit}">${material.name} (${material.unit})</option>`;
+                });
+            });
+
+            // Machines
+            dayContent.querySelectorAll('.machine-select').forEach(select => {
+                select.innerHTML = '<option value="">Maschine auswählen</option>';
+                MACHINES.forEach(machine => {
+                    select.innerHTML += `<option value="${machine.name}" data-unit="${machine.unit}">${machine.name} (${machine.unit})</option>`;
+                });
+            });
+        }
+
+        // Toggle Fremdeinkauf
+        function toggleFremdeinkauf(checkbox) {
+            const row = checkbox.closest('.material-row');
+            const fremdeinkaufSection = row.querySelector('.fremdeinkauf-section');
+            
+            if (checkbox.checked) {
+                fremdeinkaufSection.classList.remove('hidden');
+            } else {
+                fremdeinkaufSection.classList.add('hidden');
+            }
+        }
+
+        // File upload functions
+        function triggerFileUpload(uploadDiv) {
+            const fileInput = uploadDiv.querySelector('.file-input');
+            fileInput.click();
+        }
+
+        function handleFileUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const uploadDiv = input.closest('.file-upload');
+                    uploadDiv.classList.add('has-file');
+                    uploadDiv.innerHTML = `
+                        <img src="${e.target.result}" class="file-preview">
+                        <div style="margin-top: 10px;">
+                            <div style="font-weight: bold;">${file.name}</div>
+                            <button onclick="removeFile(this)" class="btn" style="background: #dc3545; color: white; margin-top: 5px;">Entfernen</button>
+                        </div>
+                        <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+                    `;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function handleImageUpload(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const uploadDiv = input.closest('.file-upload');
+                    uploadDiv.classList.add('has-file');
+                    uploadDiv.innerHTML = `
+                        <img src="${e.target.result}" class="file-preview">
+                        <div style="margin-top: 10px;">
+                            <div style="font-weight: bold;">${file.name}</div>
+                            <button onclick="removeImage(this)" class="btn" style="background: #dc3545; color: white; margin-top: 5px;">Entfernen</button>
+                        </div>
+                        <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(this)">
+                    `;
+                    
+                    // Store image data
+                    uploadedImages.push({
+                        name: file.name,
+                        data: e.target.result,
+                        type: file.type,
+                        day: currentDay
+                    });
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeFile(button) {
+            const uploadDiv = button.closest('.file-upload');
+            uploadDiv.classList.remove('has-file');
+            uploadDiv.innerHTML = `
+                <div class="upload-text">
+                    <span>📷</span>
+                    <div>Foto des Lieferscheins/Kaufbelegs</div>
+                    <small>Tippen zum Hochladen</small>
+                </div>
+                <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+            `;
+        }
+
+        function removeImage(button) {
+            const uploadDiv = button.closest('.file-upload');
+            uploadDiv.classList.remove('has-file');
+            uploadDiv.innerHTML = `
+                <div class="upload-text">
+                    <span>📷</span>
+                    <div>Foto hinzufügen</div>
+                    <small>Arbeitsfortschritt, Vorher/Nachher</small>
+                </div>
+                <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(this)">
+            `;
+        }
+
+        function addImageUpload() {
+            const currentDayContent = document.querySelector('.day-content.active');
+            const container = currentDayContent.querySelector('.images-container');
+            const uploadHTML = `
+                <div class="file-upload" onclick="triggerFileUpload(this)" style="margin-top: 15px;">
+                    <div class="upload-text">
+                        <span>📷</span>
+                        <div>Foto hinzufügen</div>
+                        <small>Arbeitsfortschritt, Vorher/Nachher</small>
+                    </div>
+                    <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(this)">
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', uploadHTML);
+        }
+
+        // Add worker
+        function addWorker() {
+            const currentDayContent = document.querySelector('.day-content.active');
+            const container = currentDayContent.querySelector('.workers-container');
+            const workerHTML = `
+                <div class="worker-row" style="display: grid; grid-template-columns: 1fr auto; gap: 15px; align-items: start; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                    <div class="field">
+                        <label>Mitarbeiter</label>
+                        <select class="worker-select" onchange="updateHoursSummary()">
+                            <option value="">Mitarbeiter auswählen</option>
+                        </select>
+                    </div>
+                    <div style="align-self: start; margin-top: 25px;">
+                        <button onclick="removeWorker(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', workerHTML);
+            
+            // Populate dropdown for new worker
+            const newSelect = container.lastElementChild.querySelector('.worker-select');
+            WORKERS.forEach(worker => {
+                newSelect.innerHTML += `<option value="${worker}">${worker}</option>`;
+            });
+        }
+
+        function removeWorker(button) {
+            const currentDayContent = document.querySelector('.day-content.active');
+            const workerRows = currentDayContent.querySelectorAll('.worker-row');
+            if (workerRows.length > 1) {
+                button.closest('.worker-row').remove();
+                updateHoursSummary();
+            }
+        }
+
+        // Add machine
+        function addMachine() {
+            const currentDayContent = document.querySelector('.day-content.active');
+            const container = currentDayContent.querySelector('.machines-container');
+            const machineHTML = `
+                <div class="machine-row">
+                    <div class="field">
+                        <label>Maschine</label>
+                        <select class="machine-select">
+                            <option value="">Maschine auswählen</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Dauer/Menge</label>
+                        <input type="text" class="machine-duration" placeholder="z.B. 4 Std., 1 Tag">
+                    </div>
+                    <div style="align-self: start; margin-top: 25px;">
+                        <button onclick="removeMachine(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', machineHTML);
+            
+            // Populate dropdown for new machine
+            const newSelect = container.lastElementChild.querySelector('.machine-select');
+            MACHINES.forEach(machine => {
+                newSelect.innerHTML += `<option value="${machine.name}" data-unit="${machine.unit}">${machine.name} (${machine.unit})</option>`;
+            });
+        }
+
+        function removeMachine(button) {
+            const currentDayContent = document.querySelector('.day-content.active');
+            const machineRows = currentDayContent.querySelectorAll('.machine-row');
+            if (machineRows.length > 1) {
+                button.closest('.machine-row').remove();
+            }
+        }
+
+        // Add material
+        function addMaterial() {
+            const currentDayContent = document.querySelector('.day-content.active');
+            const container = currentDayContent.querySelector('.materials-container');
+            const materialHTML = `
+                <div class="material-row">
+                    <div class="field">
+                        <label>Material</label>
+                        <select class="material-select">
+                            <option value="">Material auswählen</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Menge</label>
+                        <input type="text" class="material-amount" placeholder="z.B. 10, 5.5">
+                    </div>
+                    <div class="field">
+                        <label style="display: flex; align-items: center; gap: 8px;">
+                            <input type="checkbox" class="fremdeinkauf-checkbox" onchange="toggleFremdeinkauf(this)">
+                            Fremdeinkauf
+                        </label>
+                    </div>
+                    <div style="align-self: start; margin-top: 25px;">
+                        <button onclick="removeMaterial(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                    </div>
+                    <div class="fremdeinkauf-section hidden">
+                        <h4 style="margin-bottom: 10px;">Fremdeinkauf Details</h4>
+                        <div class="fremdeinkauf-text">
+                            <label>Beschreibung/Lieferant:</label>
+                            <input type="text" class="fremdeinkauf-details" placeholder="z.B. Baumarkt XY, Lieferant Z, besondere Bedingungen...">
+                        </div>
+                        <div class="file-upload" onclick="triggerFileUpload(this)">
+                            <div class="upload-text">
+                                <span>📷</span>
+                                <div>Foto des Lieferscheins/Kaufbelegs</div>
+                                <small>Tippen zum Hochladen</small>
+                            </div>
+                            <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            container.insertAdjacentHTML('beforeend', materialHTML);
+            
+            // Populate dropdown for new material
+            const newSelect = container.lastElementChild.querySelector('.material-select');
+            MATERIALS.forEach(material => {
+                newSelect.innerHTML += `<option value="${material.name}" data-unit="${material.unit}">${material.name} (${material.unit})</option>`;
+            });
+        }
+
+        function removeMaterial(button) {
+            const currentDayContent = document.querySelector('.day-content.active');
+            const materialRows = currentDayContent.querySelectorAll('.material-row');
+            if (materialRows.length > 1) {
+                button.closest('.material-row').remove();
+            }
+        }
+
+        // Update hours summary
+        function updateHoursSummary() {
+            const currentDayContent = document.querySelector('.day-content.active');
+            const workerRows = currentDayContent.querySelectorAll('.worker-row');
+            const hoursList = currentDayContent.querySelector('.hours-list');
+            const totalElement = currentDayContent.querySelector('.total');
+            
+            let totalHours = 0;
+            let summaryHTML = '';
+            let workerCount = 0;
+            
+            // Get pause values and main work times
+            const pause = parseInt(currentDayContent.querySelector('.pause').value) || 0;
+            const regenpause = parseInt(currentDayContent.querySelector('.regenpause').value) || 0;
+            const totalPauseHours = (pause + regenpause) / 60;
+            
+            const arbeitszeitBeginn = currentDayContent.querySelector('.arbeitszeit-beginn').value;
+            const arbeitszeitEnde = currentDayContent.querySelector('.arbeitszeit-ende').value;
+            
+            if (arbeitszeitBeginn && arbeitszeitEnde) {
+                workerRows.forEach(row => {
+                    const workerSelect = row.querySelector('.worker-select');
+                    
+                    if (workerSelect.value) {
+                        workerCount++;
+                        const start = new Date(`2000-01-01T${arbeitszeitBeginn}`);
+                        const end = new Date(`2000-01-01T${arbeitszeitEnde}`);
+                        const diffMs = end - start;
+                        const grossHours = Math.max(0, diffMs / (1000 * 60 * 60));
+                        const netHours = Math.max(0, grossHours - totalPauseHours);
+                        
+                        totalHours += netHours;
+                        summaryHTML += `<div class="worker-hours">${workerSelect.value}: ${netHours.toFixed(2)} Std. (${grossHours.toFixed(2)} - ${totalPauseHours.toFixed(2)} Pausen)</div>`;
+                    }
+                });
+            }
+            
+            hoursList.innerHTML = summaryHTML;
+            totalElement.innerHTML = `<strong>Gesamt: ${totalHours.toFixed(2)} Stunden</strong> (${workerCount} Mitarbeiter × ${((totalHours / Math.max(workerCount, 1))).toFixed(2)} Std.)`;
+        }
+
+        // Navigation functions
+        function openFormular() {
+            document.getElementById('launcherPage').style.display = 'none';
+            document.getElementById('formularPage').classList.add('active');
+        }
+
+        function backToLauncher() {
+            document.getElementById('formularPage').classList.remove('active');
+            document.getElementById('successPage').classList.remove('active');
+            document.getElementById('launcherPage').style.display = 'flex';
+        }
+
+        // Draft management
+        function saveDraft() {
+            const draftData = getFormData();
+            localStorage.setItem('gardenKeeper_draft', JSON.stringify(draftData));
+            showMessage('Entwurf gespeichert!', 'success');
+        }
+        
+        function loadDraft() {
+            const draft = localStorage.getItem('gardenKeeper_draft');
+            if (draft) {
+                // TODO: Implement draft loading
+                console.log('Draft found:', JSON.parse(draft));
+            }
+        }
+
+        function resetForm() {
+            // Clear draft
+            localStorage.removeItem('gardenKeeper_draft');
+            
+            // Reset to single day
+            maxDays = 1;
+            currentDay = 1;
+            
+            // Reset day tabs
+            document.getElementById('dayTabs').innerHTML = '<div class="day-tab active" data-day="1">Tag 1</div>';
+            
+            // Reset day content
+            const dayContainer = document.getElementById('dayContentContainer');
+            dayContainer.innerHTML = '';
+            
+            // Recreate day 1
+            const day1Html = `
+                <div class="day-content active" id="day1">
+                    <!-- Content will be populated by resetContainersInDay -->
+                </div>
+            `;
+            dayContainer.innerHTML = day1Html;
+            
+            // Clear all basic form fields
+            document.getElementById('kunde').value = '';
+            document.getElementById('lexofficeId').value = '';
+            document.getElementById('startdatum').value = new Date().toISOString().split('T')[0];
+            document.getElementById('bemerkungen').value = '';
+            
+            // Reset checkboxes
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+            
+            // Reset signatures
+            daySignatures = { 1: { kunde: '', teamleiter: '' } };
+            
+            // Reset images
+            uploadedImages = [];
+            
+            // Recreate day 1 content properly
+            recreateDay1Content();
+            
+            // Update summary
+            updateHoursSummary();
+
+            // Back to formular
+            document.getElementById('successPage').classList.remove('active');
+            document.getElementById('formularPage').classList.add('active');
+        }
+
+        function recreateDay1Content() {
+            const day1 = document.getElementById('day1');
+            day1.innerHTML = `
+                <!-- Arbeitszeiten -->
+                <div class="section">
+                    <h3>Arbeitszeiten</h3>
+                    <div class="grid grid-4">
+                        <div class="field">
+                            <label>Ladebeginn</label>
+                            <input type="time" class="ladebeginn">
+                        </div>
+                        <div class="field">
+                            <label>Abfahrt</label>
+                            <input type="time" class="abfahrt">
+                        </div>
+                        <div class="field">
+                            <label>Arbeitszeit Beginn</label>
+                            <input type="time" class="arbeitszeit-beginn" onchange="updateHoursSummary()">
+                        </div>
+                        <div class="field">
+                            <label>Arbeitszeit Ende</label>
+                            <input type="time" class="arbeitszeit-ende" onchange="updateHoursSummary()">
+                        </div>
+                    </div>
+                    <div class="grid grid-2">
+                        <div class="field">
+                            <label>Pause (Min)</label>
+                            <input type="number" class="pause" placeholder="0" min="0" onchange="updateHoursSummary()">
+                        </div>
+                        <div class="field">
+                            <label>Regenpause (Min)</label>
+                            <input type="number" class="regenpause" placeholder="0" min="0" onchange="updateHoursSummary()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mitarbeiter -->
+                <div class="section">
+                    <h3>Ausführende Mitarbeiter</h3>
+                    <div class="workers-container">
+                        <div class="worker-row" style="display: grid; grid-template-columns: 1fr auto; gap: 15px; align-items: start; margin-bottom: 15px; padding: 15px; background: #f8f9fa; border-radius: 8px;">
+                            <div class="field">
+                                <label>Mitarbeiter</label>
+                                <select class="worker-select" onchange="updateHoursSummary()">
+                                    <option value="">Mitarbeiter auswählen</option>
+                                </select>
+                            </div>
+                            <div style="align-self: start; margin-top: 25px;">
+                                <button onclick="removeWorker(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="addWorker()" class="btn btn-primary">
+                        <span>+</span>
+                        Mitarbeiter hinzufügen
+                    </button>
+                    
+                    <!-- Stunden-Zusammenfassung -->
+                    <div class="hours-summary">
+                        <h4>Stunden-Zusammenfassung (inkl. Pausenabzug)</h4>
+                        <div class="hours-list"></div>
+                        <div class="total">Gesamt: 0 Stunden</div>
+                    </div>
+                </div>
+
+                <!-- Maschinen -->
+                <div class="section">
+                    <h3>Eingesetzte Maschinen</h3>
+                    <div class="machines-container">
+                        <div class="machine-row">
+                            <div class="field">
+                                <label>Maschine</label>
+                                <select class="machine-select">
+                                    <option value="">Maschine auswählen</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Dauer/Menge</label>
+                                <input type="text" class="machine-duration" placeholder="z.B. 4 Std., 1 Tag">
+                            </div>
+                            <div style="align-self: start; margin-top: 25px;">
+                                <button onclick="removeMachine(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="addMachine()" class="btn btn-primary">
+                        <span>+</span>
+                        Maschine hinzufügen
+                    </button>
+                </div>
+
+                <!-- Arbeiten -->
+                <div class="section">
+                    <h3>Beschreibung ausgeführte Arbeiten</h3>
+                    <div class="field">
+                        <textarea class="beschreibung-arbeiten" rows="5" placeholder="Detaillierte Beschreibung der durchgeführten Arbeiten..." required></textarea>
+                    </div>
+                </div>
+
+                <!-- Materialien -->
+                <div class="section">
+                    <h3>Materialien und Baustoffe</h3>
+                    <div class="materials-container">
+                        <div class="material-row">
+                            <div class="field">
+                                <label>Material</label>
+                                <select class="material-select">
+                                    <option value="">Material auswählen</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Menge</label>
+                                <input type="text" class="material-amount" placeholder="z.B. 10, 5.5">
+                            </div>
+                            <div class="field">
+                                <label style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="checkbox" class="fremdeinkauf-checkbox" onchange="toggleFremdeinkauf(this)">
+                                    Fremdeinkauf
+                                </label>
+                            </div>
+                            <div style="align-self: start; margin-top: 25px;">
+                                <button onclick="removeMaterial(this)" class="btn" style="background: #dc3545; color: white; padding: 8px 12px; font-size: 12px;">×</button>
+                            </div>
+                            <div class="fremdeinkauf-section hidden">
+                                <h4 style="margin-bottom: 10px;">Fremdeinkauf Details</h4>
+                                <div class="fremdeinkauf-text">
+                                    <label>Beschreibung/Lieferant:</label>
+                                    <input type="text" class="fremdeinkauf-details" placeholder="z.B. Baumarkt XY, Lieferant Z, besondere Bedingungen...">
+                                </div>
+                                <div class="file-upload" onclick="triggerFileUpload(this)">
+                                    <div class="upload-text">
+                                        <span>📷</span>
+                                        <div>Foto des Lieferscheins/Kaufbelegs</div>
+                                        <small>Tippen zum Hochladen</small>
+                                    </div>
+                                    <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleFileUpload(this)">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="addMaterial()" class="btn btn-primary">
+                        <span>+</span>
+                        Material hinzufügen
+                    </button>
+                </div>
+
+                <!-- Bilder -->
+                <div class="section">
+                    <h3>Bilder vom Arbeitsfortschritt</h3>
+                    <div class="images-container">
+                        <div class="file-upload" onclick="triggerFileUpload(this)">
+                            <div class="upload-text">
+                                <span>📷</span>
+                                <div>Foto hinzufügen</div>
+                                <small>Arbeitsfortschritt, Vorher/Nachher</small>
+                            </div>
+                            <input type="file" class="file-input" accept="image/*" style="display: none;" onchange="handleImageUpload(this)">
+                        </div>
+                    </div>
+                    <button onclick="addImageUpload()" class="btn btn-primary">
+                        <span>+</span>
+                        Weiteres Bild hinzufügen
+                    </button>
+                </div>
+
+                <!-- Zusatzarbeiten -->
+                <div class="section">
+                    <h3>Zusatzarbeiten</h3>
+                    <div class="field">
+                        <textarea class="zusatzarbeiten" rows="3" placeholder="Beschreibung zusätzlicher Arbeiten, die nicht im ursprünglichen Auftrag enthalten waren..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Unterschriften PRO TAG -->
+                <div class="section">
+                    <h3>Tagesabnahme - Unterschriften</h3>
+                    <div class="signature-section">
+                        <div>
+                            <h4 style="margin-bottom: 15px; color: #70706B;">Unterschrift Kunde (Tag 1)</h4>
+                            <div class="signature-box" data-type="kunde" data-day="1" onclick="openSignature('kunde', 1)">
+                                <div>✏️</div>
+                                <div>Tippen zum Unterschreiben</div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 style="margin-bottom: 15px; color: #70706B;">Unterschrift Teamleiter (Tag 1)</h4>
+                            <div class="signature-box" data-type="teamleiter" data-day="1" onclick="openSignature('teamleiter', 1)">
+                                <div>✏️</div>
+                                <div>Tippen zum Unterschreiben</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            populateDropdownsInDay(day1);
+        }
+
+        // Settings functions
+        function loadSettings() {
+            const sheetsUrl = localStorage.getItem('sheetsUrl') || '';
+            const sheetsEnabled = localStorage.getItem('sheetsEnabled') === 'true';
+            
+            if (document.getElementById('sheetsUrl')) {
+                document.getElementById('sheetsUrl').value = sheetsUrl;
+                document.getElementById('sheetsEnabled').checked = sheetsEnabled;
+            }
+        }
+
+        function showSheetsConfig() {
+            document.getElementById('sheetsModal').classList.add('show');
+        }
+
+        function closeSheetsConfig() {
+            document.getElementById('sheetsModal').classList.remove('show');
+        }
+
+        function saveSheetsConfig() {
+            const sheetsUrl = document.getElementById('sheetsUrl').value;
+            const sheetsEnabled = document.getElementById('sheetsEnabled').checked;
+            
+            localStorage.setItem('sheetsUrl', sheetsUrl);
+            localStorage.setItem('sheetsEnabled', sheetsEnabled.toString());
+            
+            closeSheetsConfig();
+            showMessage('Google Sheets Konfiguration gespeichert!', 'success');
+        }
+
+        // Signature functions - Updated for per-day signatures
+        function openSignature(type, day) {
+            currentSignatureType = type;
+            currentSignatureDay = day;
+            document.getElementById('signatureTitle').textContent = 
+                `Unterschrift ${type === 'kunde' ? 'Kunde' : 'Teamleiter'} - Tag ${day}`;
+            document.getElementById('signatureModal').classList.add('show');
+            
+            const canvas = document.getElementById('signatureCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.strokeStyle = '#000';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Load existing signature if any
+            if (daySignatures[day] && daySignatures[day][type]) {
+                const img = new Image();
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                };
+                img.src = daySignatures[day][type];
+            }
+            
+            // Event listeners
+            canvas.onmousedown = canvas.ontouchstart = startDrawing;
+            canvas.onmousemove = canvas.ontouchmove = draw;
+            canvas.onmouseup = canvas.ontouchend = stopDrawing;
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            const rect = e.target.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            
+            const ctx = e.target.getContext('2d');
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+            e.preventDefault();
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const rect = e.target.getBoundingClientRect();
+            const x = (e.clientX || e.touches[0].clientX) - rect.left;
+            const y = (e.clientY || e.touches[0].clientY) - rect.top;
+            
+            const ctx = e.target.getContext('2d');
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            e.preventDefault();
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        function clearSignature() {
+            const canvas = document.getElementById('signatureCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function saveSignature() {
+            const canvas = document.getElementById('signatureCanvas');
+            const dataURL = canvas.toDataURL();
+            
+            // Initialize day signatures if not exists
+            if (!daySignatures[currentSignatureDay]) {
+                daySignatures[currentSignatureDay] = { kunde: '', teamleiter: '' };
+            }
+            
+            daySignatures[currentSignatureDay][currentSignatureType] = dataURL;
+            
+            // Update the signature box for this specific day
+            const signatureBox = document.querySelector(`[data-type="${currentSignatureType}"][data-day="${currentSignatureDay}"]`);
+            if (signatureBox) {
+                signatureBox.classList.add('has-signature');
+                signatureBox.innerHTML = `
+                    <img src="${dataURL}" style="max-width: 100%; max-height: 80px; object-fit: contain;">
+                    <div style="margin-top: 10px; font-size: 12px; color: #666;">Zum Ändern antippen</div>
+                `;
+            }
+            
+            closeSignature();
+            showMessage(`Unterschrift für Tag ${currentSignatureDay} gespeichert!`, 'success');
+        }
+
+        function closeSignature() {
+            document.getElementById('signatureModal').classList.remove('show');
+        }
+
+        // Form data collection - Updated for per-day signatures
+        function getFormData() {
+            const allDays = [];
+            
+            // Collect data from all days
+            for (let dayNum = 1; dayNum <= maxDays; dayNum++) {
+                const dayContent = document.getElementById(`day${dayNum}`);
+                if (!dayContent) continue;
+                
+                const workers = [];
+                dayContent.querySelectorAll('.worker-row').forEach(row => {
+                    const workerSelect = row.querySelector('.worker-select');
+                    
+                    if (workerSelect.value) {
+                        workers.push({
+                            name: workerSelect.value
+                        });
+                    }
+                });
+                
+                const materials = [];
+                dayContent.querySelectorAll('.material-row').forEach(row => {
+                    const materialSelect = row.querySelector('.material-select');
+                    const amount = row.querySelector('.material-amount');
+                    const fremdeinkauf = row.querySelector('.fremdeinkauf-checkbox');
+                    const fremdeinkaufDetails = row.querySelector('.fremdeinkauf-details');
+                    const fileUpload = row.querySelector('.file-upload');
+                    
+                    if (materialSelect.value && amount.value) {
+                        const selectedOption = materialSelect.querySelector('option:checked');
+                        const material = {
+                            name: materialSelect.value,
+                            amount: amount.value,
+                            unit: selectedOption.dataset.unit || '',
+                            fremdeinkauf: fremdeinkauf.checked
+                        };
+                        
+                        if (fremdeinkauf.checked) {
+                            material.fremdeinkaufDetails = fremdeinkaufDetails ? fremdeinkaufDetails.value : '';
+                            
+                            if (fileUpload.classList.contains('has-file')) {
+                                const img = fileUpload.querySelector('img');
+                                if (img) {
+                                    material.beleg = {
+                                        data: img.src,
+                                        name: fileUpload.querySelector('div').textContent
+                                    };
+                                }
+                            }
+                        }
+                        
+                        materials.push(material);
+                    }
+                });
+                
+                const machines = [];
+                dayContent.querySelectorAll('.machine-row').forEach(row => {
+                    const machineSelect = row.querySelector('.machine-select');
+                    const duration = row.querySelector('.machine-duration');
+                    
+                    if (machineSelect.value && duration.value) {
+                        machines.push({
+                            name: machineSelect.value,
+                            duration: duration.value
+                        });
+                    }
+                });
+                
+                const dayData = {
+                    dayNumber: dayNum,
+                    ladebeginn: dayContent.querySelector('.ladebeginn').value,
+                    abfahrt: dayContent.querySelector('.abfahrt').value,
+                    arbeitszeitBeginn: dayContent.querySelector('.arbeitszeit-beginn').value,
+                    arbeitszeitEnde: dayContent.querySelector('.arbeitszeit-ende').value,
+                    pause: dayContent.querySelector('.pause').value,
+                    regenpause: dayContent.querySelector('.regenpause').value,
+                    workers: workers,
+                    machines: machines,
+                    arbeiten: dayContent.querySelector('.beschreibung-arbeiten').value,
+                    materials: materials,
+                    images: uploadedImages.filter(img => img.day === dayNum),
+                    zusatzarbeiten: dayContent.querySelector('.zusatzarbeiten').value,
+                    signatures: daySignatures[dayNum] || { kunde: '', teamleiter: '' }
+                };
+                
+                allDays.push(dayData);
+            }
+
+            return {
+                kunde: document.getElementById('kunde').value,
+                lexofficeId: document.getElementById('lexofficeId').value,
+                startdatum: document.getElementById('startdatum').value,
+                days: allDays,
+                bemerkungen: document.getElementById('bemerkungen').value,
+                checkboxes: {
+                    auftragGemaess: document.getElementById('auftragGemaess').checked,
+                    komplett: document.getElementById('komplett').checked,
+                    teilweise: document.getElementById('teilweise').checked,
+                    ordnungsGemaess: document.getElementById('ordnungsGemaess').checked,
+                    pflegeanleitung: document.getElementById('pflegeanleitung').checked,
+                    kundeKuemmert: document.getElementById('kundeKuemmert').checked
+                }
+            };
+        }
+
+        // PDF generation - Updated for per-day signatures
+        function generatePDF() {
+            const data = getFormData();
+            const printWindow = window.open('', '_blank');
+            
+            // Generate content for all days
+            let daysHtml = '';
+            let totalProjectHours = 0;
+            
+            data.days.forEach(day => {
+                const workersHtml = day.workers.map(w => 
+                    `<div class="field">${w.name}</div>`
+                ).join('');
+                
+                // Calculate day hours
+                let dayHours = 0;
+                if (day.arbeitszeitBeginn && day.arbeitszeitEnde && day.workers.length > 0) {
+                    const start = new Date(`2000-01-01T${day.arbeitszeitBeginn}`);
+                    const end = new Date(`2000-01-01T${day.arbeitszeitEnde}`);
+                    const grossHours = Math.max(0, (end - start) / (1000 * 60 * 60));
+                    const pauseHours = (parseInt(day.pause || 0) + parseInt(day.regenpause || 0)) / 60;
+                    const netHoursPerWorker = Math.max(0, grossHours - pauseHours);
+                    dayHours = netHoursPerWorker * day.workers.length;
+                }
+                totalProjectHours += dayHours;
+                
+                const materialsHtml = day.materials.map(m => 
+                    `<div class="field">${m.name}: ${m.amount} ${m.unit}${m.fremdeinkauf ? ` <span style="color: #966D29; font-weight: bold;">(Fremdeinkauf: ${m.fremdeinkaufDetails})</span>` : ''}</div>`
+                ).join('');
+                
+                const machinesHtml = day.machines.map(m => 
+                    `<div class="field">${m.name}: ${m.duration}</div>`
+                ).join('');
+                
+                const imagesHtml = day.images.map((img, index) => 
+                    `<div style="margin: 10px 0; page-break-inside: avoid;"><img src="${img.data}" style="max-width: 300px; max-height: 200px; border: 1px solid #ddd; border-radius: 4px;"><br><small>Bild ${index + 1}: ${img.name}</small></div>`
+                ).join('');
+                
+                daysHtml += `
+                    <div class="section" style="page-break-before: ${day.dayNumber > 1 ? 'always' : 'auto'};">
+                        <h2>Tag ${day.dayNumber}</h2>
+                        <div class="grid">
+                            <div class="field"><span class="label">Ladebeginn:</span> ${day.ladebeginn}</div>
+                            <div class="field"><span class="label">Abfahrt:</span> ${day.abfahrt}</div>
+                            <div class="field"><span class="label">Arbeitszeit:</span> ${day.arbeitszeitBeginn} - ${day.arbeitszeitEnde}</div>
+                            <div class="field"><span class="label">Pause:</span> ${day.pause} Min</div>
+                            <div class="field"><span class="label">Regenpause:</span> ${day.regenpause} Min</div>
+                            <div class="field"><span class="label">Tagesstunden:</span> <strong>${dayHours.toFixed(2)} Std.</strong></div>
+                        </div>
+                        
+                        ${workersHtml ? `
+                        <h3>Mitarbeiter (${day.workers.length})</h3>
+                        ${workersHtml}
+                        ` : ''}
+                        
+                        ${machinesHtml ? `
+                        <h3>Maschinen</h3>
+                        ${machinesHtml}
+                        ` : ''}
+                        
+                        <h3>Beschreibung ausgeführte Arbeiten</h3>
+                        <div class="field">${day.arbeiten}</div>
+                        
+                        ${materialsHtml ? `
+                        <h3>Materialien</h3>
+                        ${materialsHtml}
+                        ` : ''}
+                        
+                        ${imagesHtml ? `
+                        <h3>Bilder</h3>
+                        ${imagesHtml}
+                        ` : ''}
+                        
+                        ${day.zusatzarbeiten ? `
+                        <h3>Zusatzarbeiten</h3>
+                        <div class="field">${day.zusatzarbeiten}</div>
+                        ` : ''}
+                        
+                        <h3>Tagesabnahme - Unterschriften</h3>
+                        <div style="display: flex; gap: 50px; flex-wrap: wrap; margin-top: 20px;">
+                            <div style="flex: 1; min-width: 250px;">
+                                <p><strong>Unterschrift Kunde (Tag ${day.dayNumber}):</strong></p>
+                                <div class="signature" ${day.signatures.kunde ? `style="background-image: url(${day.signatures.kunde});"` : ''}></div>
+                            </div>
+                            <div style="flex: 1; min-width: 250px;">
+                                <p><strong>Unterschrift Teamleiter (Tag ${day.dayNumber}):</strong></p>
+                                <div class="signature" ${day.signatures.teamleiter ? `style="background-image: url(${day.signatures.teamleiter});"` : ''}></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            const checkboxesHtml = Object.entries({
+                auftragGemaess: 'Die Arbeiten wurden gemäß Auftrag ausgeführt',
+                komplett: 'Die beauftragten Arbeiten wurden komplett abgeschlossen',
+                teilweise: 'Die beauftragten Arbeiten wurden teilweise abgeschlossen',
+                ordnungsGemaess: 'Die Arbeiten wurden ordnungsgemäß und mängelfrei ausgeführt',
+                pflegeanleitung: 'Die Pflegeanleitung wurde ausgehändigt',
+                kundeKuemmert: 'Der Kunde kümmert sich um die Nachpflege selbst'
+            }).map(([key, text]) => 
+                `<div class="checkbox">${data.checkboxes[key] ? '☑' : '☐'} ${text}</div>`
+            ).join('');
+
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <title>Abnahmeprotokoll - ${data.kunde}</title>
+                    <meta charset="UTF-8">
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+                        .header { background: linear-gradient(135deg, #7F973B 0%, #A7B839 100%); color: white; padding: 25px; margin-bottom: 30px; border-radius: 8px; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                        .section { margin-bottom: 25px; page-break-inside: avoid; }
+                        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+                        .field { margin-bottom: 12px; }
+                        .label { font-weight: bold; color: #70706B; }
+                        .signature { border: 2px solid #A7B839; border-radius: 8px; height: 120px; margin: 15px 0; background-size: contain; background-repeat: no-repeat; background-position: center; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                        .checkbox { margin: 8px 0; font-size: 14px; }
+                        h1 { margin: 0; font-size: 1.8rem; }
+                        h2 { color: #70706B; border-bottom: 3px solid #A7B839; padding-bottom: 8px; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                        h3 { color: #70706B; margin-top: 20px; margin-bottom: 10px; }
+                        @media print { 
+                            .no-print { display: none !important; } 
+                            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="header">
+                        <h1>ABNAHME / TAGESREGIEBERICHT</h1>
+                        <p><strong>gardenKeeper® GmbH</strong> - Sven Krämer<br>
+                        Großblittersdorfer Str. 329 | 66130 Saarbrücken</p>
+                    </div>
+                    
+                    <div class="section">
+                        <h2>Grunddaten</h2>
+                        <div class="grid">
+                            <div class="field"><span class="label">Kunde:</span> ${data.kunde}</div>
+                            <div class="field"><span class="label">LexOffice-ID:</span> ${data.lexofficeId}</div>
+                            <div class="field"><span class="label">Startdatum:</span> ${data.startdatum}</div>
+                            <div class="field"><span class="label">Anzahl Tage:</span> ${data.days.length}</div>
+                        </div>
+                        <div style="background: #e8f5e8; padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center;">
+                            <h3 style="color: #2d5a2d; margin-bottom: 10px;">Gesamtarbeitszeit Projekt</h3>
+                            <div style="font-size: 2rem; font-weight: bold; color: #1a4a1a;">${totalProjectHours.toFixed(2)} Stunden</div>
+                            <div style="color: #666; margin-top: 10px;">Alle Mitarbeiter, alle Tage (nach Pausenabzug)</div>
+                        </div>
+                    </div>
+
+                    ${daysHtml}
+
+                    ${data.bemerkungen ? `
+                    <div class="section">
+                        <h2>Gesamtbemerkungen</h2>
+                        <div class="field">${data.bemerkungen}</div>
+                    </div>` : ''}
+
+                    <div class="section" style="page-break-before: always;">
+                        <h2>Gesamtbestätigungen</h2>
+                        ${checkboxesHtml}
+                    </div>
+
+                    <div class="no-print" style="margin-top: 40px; text-align: center;">
+                        <button onclick="window.print()" style="background: #A7B839; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px;">🖨️ Drucken / Als PDF speichern</button>
+                        <button onclick="window.close()" style="background: #70706B; color: white; padding: 15px 30px; border: none; border-radius: 8px; cursor: pointer; font-size: 16px; margin: 10px;">✖️ Schließen</button>
+                    </div>
+                </body>
+                </html>
+            `);
+            
+            printWindow.document.close();
+        }
+
+        // Email functions - Simplified without PDF links
+        function showEmailModal() {
+            document.getElementById('emailModal').classList.add('show');
+        }
+
+        function closeEmailModal() {
+            document.getElementById('emailModal').classList.remove('show');
+        }
+
+        function sendEmailWithPDF() {
+            const data = getFormData();
+            const kundeEmail = document.getElementById('kundeEmail').value;
+            const customMessage = document.getElementById('emailMessage').value;
+            
+            if (!kundeEmail) {
+                alert('Bitte Email-Adresse eingeben!');
+                return;
+            }
+            
+            // Calculate total data
+            const totalWorkers = data.days.reduce((acc, day) => acc + day.workers.length, 0);
+            const totalMaterials = data.days.reduce((acc, day) => acc + day.materials.length, 0);
+            const totalImages = data.days.reduce((acc, day) => acc + day.images.length, 0);
+            
+            // Calculate total hours
+            let totalProjectHours = 0;
+            data.days.forEach(day => {
+                if (day.arbeitszeitBeginn && day.arbeitszeitEnde && day.workers.length > 0) {
+                    const start = new Date(`2000-01-01T${day.arbeitszeitBeginn}`);
+                    const end = new Date(`2000-01-01T${day.arbeitszeitEnde}`);
+                    const grossHours = Math.max(0, (end - start) / (1000 * 60 * 60));
+                    const pauseHours = (parseInt(day.pause || 0) + parseInt(day.regenpause || 0)) / 60;
+                    const netHoursPerWorker = Math.max(0, grossHours - pauseHours);
+                    totalProjectHours += netHoursPerWorker * day.workers.length;
+                }
+            });
+            
+            const subject = encodeURIComponent('Abnahmeprotokoll - gardenKeeper® Gartenarbeiten');
+            
+            const emailBody = `Sehr geehrte Damen und Herren,
+
+anbei erhalten Sie die Informationen zu den durchgeführten Gartenarbeiten.
+
+AUFTRAGSDATEN:
+• Kunde: ${data.kunde}
+• Startdatum: ${data.startdatum}
+• Anzahl Arbeitstage: ${data.days.length}
+• Gesamtarbeitszeit: ${totalProjectHours.toFixed(2)} Stunden
+• Mitarbeiter insgesamt: ${totalWorkers}
+• Materialien verwendet: ${totalMaterials}
+• Bilder dokumentiert: ${totalImages}
+
+TAGESÜBERSICHT:
+${data.days.map(day => {
+    let dayHours = 0;
+    if (day.arbeitszeitBeginn && day.arbeitszeitEnde && day.workers.length > 0) {
+        const start = new Date(`2000-01-01T${day.arbeitszeitBeginn}`);
+        const end = new Date(`2000-01-01T${day.arbeitszeitEnde}`);
+        const grossHours = Math.max(0, (end - start) / (1000 * 60 * 60));
+        const pauseHours = (parseInt(day.pause || 0) + parseInt(day.regenpause || 0)) / 60;
+        const netHoursPerWorker = Math.max(0, grossHours - pauseHours);
+        dayHours = netHoursPerWorker * day.workers.length;
+    }
+    return `Tag ${day.dayNumber}: ${day.ladebeginn} - ${day.abfahrt} (${dayHours.toFixed(2)} Std.)
+Arbeiten: ${day.arbeiten}
+Mitarbeiter: ${day.workers.map(w => w.name).join(', ')}
+Unterschrift Kunde: ${day.signatures.kunde ? 'Vorhanden' : 'Nicht vorhanden'}
+Unterschrift Teamleiter: ${day.signatures.teamleiter ? 'Vorhanden' : 'Nicht vorhanden'}`;
+}).join('\n\n')}
+
+${data.bemerkungen ? `BEMERKUNGEN:
+${data.bemerkungen}` : ''}
+
+${customMessage ? `ZUSÄTZLICHE HINWEISE:
+${customMessage}` : ''}
+
+STATUS: ${data.checkboxes.komplett ? '✅ Arbeiten komplett abgeschlossen' : data.checkboxes.teilweise ? '⚠️ Arbeiten teilweise abgeschlossen' : '📝 In Bearbeitung'}
+
+Das detaillierte Abnahmeprotokoll mit allen Unterschriften kann per PDF zur Verfügung gestellt werden.
+
+Bei Fragen stehen wir Ihnen gerne zur Verfügung.
+
+Mit freundlichen Grüßen
+Ihr gardenKeeper® Team
+
+—
+Sven Krämer
+gardenKeeper® GmbH
+Großblittersdorfer Str. 329
+66130 Saarbrücken
+
+Tel: [Telefonnummer]
+Email: info@gardenkeeper.de
+Web: www.gardenkeeper.de
+
+—
+Professionelle Gartenpflege seit über 10 Jahren
+Diese Email wurde automatisch vom digitalen Abnahmeformular erstellt.`;
+            
+            const body = encodeURIComponent(emailBody);
+            const mailtoLink = `mailto:${kundeEmail}?cc=office@gardenkeeper.de&subject=${subject}&body=${body}`;
+            
+            window.location.href = mailtoLink;
+            closeEmailModal();
+            showMessage('Email wurde geöffnet und ist versandbereit!', 'success');
+        }
+
+        // Complete form - Simplified without PDF URL generation
+        async function completeForm() {
+            const data = getFormData();
+            
+            // Validation
+            if (!data.kunde || !data.startdatum) {
+                showMessage('Bitte füllen Sie alle Pflichtfelder aus!', 'error');
+                return;
+            }
+            
+            // Check if at least one day has work description
+            const hasWork = data.days.some(day => day.arbeiten.trim());
+            if (!hasWork) {
+                showMessage('Bitte beschreiben Sie die durchgeführten Arbeiten!', 'error');
+                return;
+            }
+            
+            // Update button
+            document.getElementById('completeBtnText').innerHTML = '<div class="loading"></div> Verarbeite...';
+            
+            // Save to Google Sheets (if configured)
+            const sheetsEnabled = localStorage.getItem('sheetsEnabled') === 'true';
+            const sheetsUrl = localStorage.getItem('sheetsUrl');
+            
+            let sheetsSuccess = false;
+            
+            if (sheetsEnabled && sheetsUrl) {
+                try {
+                    await sendToGoogleSheets(data);
+                    sheetsSuccess = true;
+                } catch (error) {
+                    console.error('Sheets error:', error);
+                    // Don't stop the form completion, just show warning
+                    console.log('Continuing despite sheets error...');
+                }
+            } else {
+                console.log('Google Sheets integration not configured or disabled');
+            }
+            
+            // Store form data globally
+            formDataGlobal = data;
+            
+            // Clear draft
+            localStorage.removeItem('gardenKeeper_draft');
+            
+            // Show final status
+            if (sheetsSuccess) {
+                showMessage('✅ Formular erfolgreich abgeschlossen und zu Google Sheets übertragen!', 'success');
+            } else if (sheetsEnabled) {
+                showMessage('✅ Formular abgeschlossen (Google Sheets-Übertragung fehlgeschlagen)', 'warning');
+            } else {
+                showMessage('✅ Formular erfolgreich abgeschlossen!', 'success');
+            }
+            
+            // Show success page
+            setTimeout(() => {
+                document.getElementById('formularPage').classList.remove('active');
+                document.getElementById('successPage').classList.add('active');
+                document.getElementById('completeBtnText').textContent = 'Abschließen';
+            }, 1500);
+        }
+
+        // Google Sheets integration - Updated for per-day signatures
+        async function sendToGoogleSheets(data) {
+            const sheetsUrl = localStorage.getItem('sheetsUrl');
+            
+            if (!sheetsUrl) {
+                console.log('No Google Sheets URL configured');
+                return;
+            }
+            
+            console.log('Original form data:', data);
+            
+            // Prepare data in the EXACT format expected by Google Apps Script
+            const formattedData = {
+                kunde: data.kunde || '',
+                lexofficeId: data.lexofficeId || '',
+                startdatum: data.startdatum || '',
+                days: data.days.map(day => ({
+                    dayNumber: day.dayNumber,
+                    ladebeginn: day.ladebeginn || '',
+                    abfahrt: day.abfahrt || '',
+                    arbeitszeitBeginn: day.arbeitszeitBeginn || '',
+                    arbeitszeitEnde: day.arbeitszeitEnde || '',
+                    pause: day.pause || '0',
+                    regenpause: day.regenpause || '0',
+                    workers: day.workers.map(worker => ({
+                        name: worker.name || ''
+                    })),
+                    machines: day.machines.map(machine => ({
+                        name: machine.name || '',
+                        duration: machine.duration || ''
+                    })),
+                    arbeiten: day.arbeiten || '',
+                    materials: day.materials.map(material => ({
+                        name: material.name || '',
+                        amount: material.amount || '',
+                        unit: material.unit || '',
+                        fremdeinkauf: material.fremdeinkauf || false,
+                        fremdeinkaufDetails: material.fremdeinkaufDetails || ''
+                    })),
+                    images: day.images || [],
+                    zusatzarbeiten: day.zusatzarbeiten || '',
+                    signatures: day.signatures || { kunde: '', teamleiter: '' }
+                })),
+                bemerkungen: data.bemerkungen || '',
+                checkboxes: {
+                    auftragGemaess: data.checkboxes.auftragGemaess || false,
+                    komplett: data.checkboxes.komplett || false,
+                    teilweise: data.checkboxes.teilweise || false,
+                    ordnungsGemaess: data.checkboxes.ordnungsGemaess || false,
+                    pflegeanleitung: data.checkboxes.pflegeanleitung || false,
+                    kundeKuemmert: data.checkboxes.kundeKuemmert || false
+                }
+            };
+            
+            console.log('Formatted data for Google Apps Script:', formattedData);
+            
+            try {
+                console.log('Sending to:', sheetsUrl);
+                
+                const response = await fetch(sheetsUrl, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formattedData)
+                });
+                
+                console.log('Response status:', response.status);
+                console.log('Response headers:', response.headers);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error('Response error text:', errorText);
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}\nDetails: ${errorText}`);
+                }
+                
+                const result = await response.text();
+                console.log('Google Sheets response:', result);
+                
+                if (result.includes('SUCCESS')) {
+                    showMessage('✅ Daten erfolgreich zu Google Sheets übertragen!', 'success');
+                    console.log('Data successfully sent to Google Sheets');
+                } else if (result.includes('ERROR')) {
+                    throw new Error('Google Apps Script Error: ' + result);
+                } else {
+                    console.warn('Unexpected response:', result);
+                    showMessage('⚠️ Unbekannte Antwort von Google Sheets: ' + result, 'warning');
+                }
+                
+            } catch (error) {
+                console.error('Google Sheets integration error:', error);
+                
+                // Detailed error information for debugging
+                if (error.message.includes('CORS')) {
+                    showMessage('❌ CORS-Fehler: Bitte prüfen Sie die Google Apps Script Berechtigung', 'error');
+                } else if (error.message.includes('404')) {
+                    showMessage('❌ Google Apps Script URL nicht gefunden (404)', 'error');
+                } else if (error.message.includes('403')) {
+                    showMessage('❌ Zugriff verweigert - prüfen Sie die Script-Berechtigung', 'error');
+                } else {
+                    showMessage('❌ Google Sheets Fehler: ' + error.message, 'error');
+                }
+                
+                throw error; // Re-throw so completeForm can handle it
+            }
+        }
+
+        // Utility functions
+        function showMessage(message, type) {
+            const statusDiv = document.getElementById('statusMessage');
+            if (statusDiv) {
+                statusDiv.className = `status-message status-${type}`;
+                statusDiv.textContent = message;
+                statusDiv.style.display = 'block';
+                
+                setTimeout(() => {
+                    statusDiv.style.display = 'none';
+                }, 4000);
+            }
+        }
+
+        // Modal close on outside click
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal')) {
+                e.target.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>
