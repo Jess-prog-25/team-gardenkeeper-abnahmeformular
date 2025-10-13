@@ -1642,9 +1642,9 @@
                     method: 'POST',
                     mode: 'no-cors',
                     headers: {
-                        'Content-Type': 'application/json',
+                        'Content-Type': 'text/plain',
                     },
-                    body: JSON.stringify(payload)
+                     body: JSON.stringify(data)
                 });
 
                 return { success: true, message: 'Erfolgreich in Google Drive gespeichert' };
@@ -1665,7 +1665,7 @@
                         method: 'POST',
                         mode: 'no-cors',
                         headers: {
-                            'Content-Type': 'application/json',
+                            'Content-Type': 'text/plain',
                         },
                         body: JSON.stringify(testPayload)
                     });
@@ -1697,7 +1697,7 @@
                         method: 'POST',
                         mode: 'no-cors',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'text/plain'
                         },
                         body: JSON.stringify(payload)
                     });
