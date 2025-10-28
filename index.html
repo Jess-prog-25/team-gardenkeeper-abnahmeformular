@@ -906,13 +906,204 @@
             height: 150px;
         }
     }
+    /*
+ * 🌱 gardenKeeper® - MOBILE STICKY BUTTONS FIX
+ * 
+ * Diese CSS-Regeln einfach NACH dem bestehenden CSS einfügen
+ * (vor dem schließenden style Tag)
+ * 
+ * ✅ Macht die Action-Buttons auf Mobile "sticky" (bleiben unten)
+ * ✅ Buttons sind immer erreichbar ohne Scrollen
+ */
+
+/* ===== STICKY ACTION BAR FÜR MOBILE ===== */
+
+/* Wrapper für die Action-Buttons */
+.form-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Mobile: Sticky Bottom Bar */
+@media (max-width: 768px) {
+    
+    /* Sticky Container für Buttons */
+    .form-buttons.sticky-mobile {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(245, 243, 240, 0.98) 0%, rgba(245, 243, 240, 0.95) 100%);
+        backdrop-filter: blur(10px);
+        padding: 15px;
+        margin: 0;
+        box-shadow: 0 -4px 20px rgba(45, 62, 45, 0.15);
+        z-index: 1000;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        border-top: 2px solid var(--border-light);
+    }
+    
+    /* Platz am Ende des Inhalts schaffen */
+    .form-content.has-sticky-buttons {
+        padding-bottom: 100px !important;
+    }
+    
+    /* Buttons auf Mobile kleiner und gestapelt */
+    .form-buttons.sticky-mobile .btn {
+        flex: 1;
+        min-width: auto;
+        padding: 12px 16px;
+        font-size: 14px;
+        justify-content: center;
+        white-space: nowrap;
+    }
+    
+    /* Icons auf Mobile kleiner */
+    .form-buttons.sticky-mobile .btn svg,
+    .form-buttons.sticky-mobile .btn::before {
+        font-size: 16px;
+    }
+    
+    /* Bei mehr als 2 Buttons: 2 Zeilen */
+    .form-buttons.sticky-mobile {
+        flex-wrap: wrap;
+    }
+    
+    .form-buttons.sticky-mobile .btn {
+        flex: 0 0 calc(50% - 6px);
+    }
+    
+    /* Hauptbutton hervorheben */
+    .form-buttons.sticky-mobile .btn-primary {
+        order: -1; /* Immer als erstes */
+        flex: 0 0 100%;
+        font-size: 15px;
+        padding: 14px 20px;
+    }
+}
+
+/* Tablet: Leicht angepasst */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .form-buttons {
+        gap: 15px;
+    }
+    
+    .btn {
+        padding: 13px 26px;
+        font-size: 14px;
+    }
+}
+
+/* ===== ALTERNATIVE: Floating Action Button ===== */
+/* Falls Sie lieber einen einzelnen FAB möchten */
+
+.fab-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sage-green), var(--light-moss));
+    color: white;
+    border: none;
+    box-shadow: 0 4px 20px rgba(143, 166, 143, 0.4);
+    cursor: pointer;
+    display: none; /* Standardmäßig versteckt */
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    z-index: 999;
+    transition: all 0.3s ease;
+}
+
+.fab-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(143, 166, 143, 0.6);
+}
+
+@media (max-width: 768px) {
+    .fab-button {
+        display: flex;
+    }
+}
+
+/* ===== SCROLL INDICATOR ===== */
+/* Zeigt an, dass man scrollen kann */
+
+.scroll-indicator {
+    display: none;
+    position: fixed;
+    bottom: 110px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(143, 166, 143, 0.9);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    z-index: 998;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+@media (max-width: 768px) {
+    .scroll-indicator.show {
+        display: block;
+    }
+}
+
+/* ===== VERBESSERUNGEN FÜR TOUCH-GERÄTE ===== */
+
+@media (max-width: 768px) {
+    /* Größere Touch-Targets */
+    .btn {
+        min-height: 44px; /* Apple's empfohlene Mindestgröße */
+    }
+    
+    /* Besseres Spacing */
+    .form-section {
+        padding: 20px 15px;
+        margin-bottom: 20px;
+    }
+    
+    /* Vereinfachte Header auf Mobile */
+    .form-header {
+        padding: 25px 20px;
+    }
+    
+    .form-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    /* Modal auf Mobile fullscreen */
+    .modal-content {
+        max-width: 95%;
+        margin: 10px;
+    }
+}
 </style>
 </head>
 <body>
     <!-- === LAUNCHER PAGE === -->
     <div class="launcher" id="launcherPage">
         <div class="launcher-container">
-            <div class="logo">🌱</div>
+            <div class="logo">🍁</div>
             <h1>gardenKeeper®</h1>
             <div class="subtitle">Professionelle Gartenpflege</div>
         <div class="company-slogan">
@@ -920,7 +1111,7 @@
             <p class="sub-slogan">"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</p>
         </div>
         
-        <button class="launcher-btn" onclick="openForm(); return false;">
+        <button id="openFormBtn" class="launcher-btn" onclick="openForm(); return false;">
             <span>📱</span>
             <span>Abnahmeformular öffnen</span>
         </button>
@@ -1016,6 +1207,18 @@
                         <label>Kunde Email-Adresse</label>
                         <input type="email" id="kundenEmail" placeholder="kunde@beispiel.de">
                     </div>
+                    <div class="form-group">
+    <label for="abrechnungsart" style="font-size: 16px; font-weight: 600;">
+        💰 Abrechnungsart
+    </label>
+    <select id="abrechnungsart" style="width: 100%; padding: 12px; border: 2px solid var(--border-light); border-radius: 10px; font-size: 15px;">
+        <option value="tagesregie">⏱️ Tagesregie (mit Zeiterfassung)</option>
+        <option value="pauschal">💵 Pauschal (ohne Zeitangaben für Kunde)</option>
+    </select>
+    <small style="color: var(--soft-clay); font-style: italic;">
+        Bei Pauschal-Projekten werden Zeiten nur intern erfasst
+    </small>
+</div>
                     <div class="field">
                         <label>LexOffice-ID</label>
                         <input type="text" id="lexofficeId" placeholder="z.B. LEX-2025-001">
@@ -1663,6 +1866,15 @@
             completeBtn.textContent = 'Verarbeite...';
             
             const formData = getFormData();
+            // Bilder mit Kundenname für E-Mail vorbereiten
+formData.images = uploadedImages.map((img, index) => ({
+    data: img.data,
+    mimeType: img.type || 'image/jpeg',
+    filename: img.name,
+    dayNumber: img.dayNumber || 1,
+    description: img.description || `Bild ${index + 1}`,
+    customerName: formData.kunde
+}));
             const errors = validateFormData(formData);
             
             if (errors.length > 0) {
@@ -2194,7 +2406,8 @@ setTimeout(() => {
                 type: file.type,
                 category: 'arbeitsfortschritt',
                 description: '',
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                customerName: document.getElementById('kunde')?.value || 'Kunde'  // NEU!
             };
             
             uploadedImages.push(imageData);
@@ -2295,6 +2508,7 @@ setTimeout(() => {
     function getFormData() {
         const data = {
             kunde: document.getElementById('kunde').value.trim(),
+            istPauschal: document.getElementById('abrechnungsart')?.value === 'pauschal',
             kundenEmail: document.getElementById('kundenEmail').value.trim(),
             lexofficeId: document.getElementById('lexofficeId').value.trim(),
             startdatum: document.getElementById('startdatum').value,
@@ -3481,7 +3695,7 @@ ${data.images && data.images.length > 0 ? `
 </div>
 </body>
 </html>`;
-        }
+    } // Ende der generatePDFHTML Funktion
     // ========================================
     // 💾 HTML DOWNLOAD
     // ========================================
@@ -3655,10 +3869,10 @@ ${data.images && data.images.length > 0 ? `
     }
 
     // ========================================
-// 🚀 INITIALISIERUNG
-// ========================================
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🌱 gardenKeeper® System wird initialisiert...');
+    // 🚀 INITIALISIERUNG
+    // ========================================
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log('🌱 gardenKeeper® System wird initialisiert...');
     
     try {
         // WICHTIG: Button Event Listener SOFORT hinzufügen
@@ -3716,8 +3930,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// BACKUP: Falls DOMContentLoaded schon vorbei ist
-if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    // BACKUP: Falls DOMContentLoaded schon vorbei ist
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
     setTimeout(() => {
         const openFormBtn = document.getElementById('openFormBtn');
         if (openFormBtn && !openFormBtn.onclick) {
@@ -3757,29 +3971,236 @@ if (document.readyState === 'complete' || document.readyState === 'interactive')
         optimizeImagesForPDF,
         version: 'gardenKeeper® v2025 - MIT BILD-PDF-INTEGRATION UND UPLOAD-FIX'
     };
+    /**
+     * 🌱 gardenKeeper® - MOBILE STICKY BUTTONS JAVASCRIPT
+     * 
+     * Diesen Code am Ende des bestehenden JavaScript einfügen
+     * (vor dem schließenden script Tag)
+     * 
+     * ✅ Aktiviert Sticky-Buttons auf Mobile
+     * ✅ Scroll-Detection
+     * ✅ Touch-optimiert
+     */
 
-    console.log(`
-╔══════════════════════════════════════════════════════════════╗
-║                                                              ║
-║    🌱 gardenKeeper® ABNAHMEFORMULAR v2025                   ║
-║                                                              ║
-║    ✅ NEUES DESIGN NACH IHREN FARBVORGABEN                 ║
-║    ✅ Sanfte Grün- und Brauntöne                           ║
-║    ✅ Modernes, professionelles Layout                     ║
-║    ✅ Vollständige Funktionalität                          ║
-║    ✅ Touch-optimiert für Tablet-Nutzung                   ║
-║    ✅ PDF-Export mit gardenKeeper® Branding                ║
-║    ✅ Unterschriften-System                                 ║
-║    ✅ Email-Integration                                     ║
-║    📷 BILD-UPLOAD-FIX VOLLSTÄNDIG INTEGRIERT!             ║
-║    📤 BATCH-UPLOAD ZU GOOGLE DRIVE AKTIV!                 ║
-║    📧 E-MAILS MIT EINGEBETTETEN BILDERN!                  ║
-║                                                              ║
-║    🚀 SOFORT EINSATZBEREIT!                                ║
-║                                                              ║
-╚══════════════════════════════════════════════════════════════╝
-       `);
-	   
-    </script>
+    // ========================================
+    // 📱 MOBILE STICKY BUTTONS AKTIVIEREN
+    // ========================================
+
+    function initMobileStickyButtons() {
+    // Nur auf Mobile (< 768px)
+    if (window.innerWidth <= 768) {
+        console.log('📱 Aktiviere Mobile Sticky Buttons...');
+        
+        // Finde alle Button-Container im Formular
+        const formButtons = document.querySelectorAll('.form-buttons');
+        
+        formButtons.forEach(buttonContainer => {
+            // Füge sticky-mobile Klasse hinzu
+            buttonContainer.classList.add('sticky-mobile');
+            
+            // Füge Platz am Ende des Content hinzu
+            const formContent = buttonContainer.closest('.form-content');
+            if (formContent) {
+                formContent.classList.add('has-sticky-buttons');
+            }
+        });
+        
+        // Scroll-to-Top Button hinzufügen
+        addScrollToTopButton();
+        
+        console.log('✅ Sticky Buttons aktiviert');
+    }
+}
+
+    // ========================================
+    // ⬆️ SCROLL-TO-TOP BUTTON
+    // ========================================
+
+    function addScrollToTopButton() {
+    // Prüfe ob Button schon existiert
+    if (document.getElementById('scrollToTopBtn')) return;
+    
+    // Erstelle Button
+    const scrollBtn = document.createElement('button');
+    scrollBtn.id = 'scrollToTopBtn';
+    scrollBtn.className = 'fab-button';
+    scrollBtn.innerHTML = '⬆️';
+    scrollBtn.title = 'Nach oben scrollen';
+    scrollBtn.style.display = 'none';
+    
+    document.body.appendChild(scrollBtn);
+    
+    // Event Listener
+    scrollBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    // Zeige/Verstecke basierend auf Scroll-Position
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            scrollBtn.style.display = 'flex';
+        } else {
+            scrollBtn.style.display = 'none';
+        }
+    });
+}
+
+    // ========================================
+    // 🎯 SCROLL ZU BUTTONS
+    // ========================================
+
+    function scrollToActionButtons() {
+    const buttons = document.querySelector('.form-buttons.sticky-mobile');
+    if (buttons && window.innerWidth <= 768) {
+        // Auf Mobile sind die Buttons sticky - scrollen nicht nötig
+        console.log('ℹ️ Buttons sind bereits sichtbar (sticky)');
+    } else if (buttons) {
+        // Auf Desktop: Scroll zu den Buttons
+        buttons.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'center' 
+        });
+    }
+}
+
+    // ========================================
+    // 📐 WINDOW RESIZE HANDLER
+    // ========================================
+
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function() {
+        // Bei Größenänderung neu initialisieren
+        const formButtons = document.querySelectorAll('.form-buttons');
+        
+        if (window.innerWidth <= 768) {
+            // Mobile: Sticky aktivieren
+            formButtons.forEach(btn => {
+                btn.classList.add('sticky-mobile');
+                const formContent = btn.closest('.form-content');
+                if (formContent) {
+                    formContent.classList.add('has-sticky-buttons');
+                }
+            });
+        } else {
+            // Desktop: Sticky deaktivieren
+            formButtons.forEach(btn => {
+                btn.classList.remove('sticky-mobile');
+                const formContent = btn.closest('.form-content');
+                if (formContent) {
+                    formContent.classList.remove('has-sticky-buttons');
+                }
+            });
+            
+            // Scroll-to-Top Button entfernen
+            const scrollBtn = document.getElementById('scrollToTopBtn');
+            if (scrollBtn) {
+                scrollBtn.style.display = 'none';
+            }
+        }
+        
+        console.log(`📱 Window Resize: ${window.innerWidth}px - Sticky Buttons ${window.innerWidth <= 768 ? 'aktiviert' : 'deaktiviert'}`);
+    }, 250);
+});
+
+    // ========================================
+    // 🔄 INITIALISIERUNG
+    // ========================================
+
+    // Bei Seitenladen
+    document.addEventListener('DOMContentLoaded', function() {
+    console.log('🎬 Initialisiere Mobile Sticky Buttons...');
+    
+    // Kurze Verzögerung, damit DOM fertig geladen ist
+    setTimeout(function() {
+        initMobileStickyButtons();
+    }, 500);
+});
+
+    // Backup: Falls DOMContentLoaded schon vorbei ist
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+    setTimeout(function() {
+        initMobileStickyButtons();
+    }, 100);
+}
+
+    // ========================================
+    // 🎯 HELPER: BUTTON-KLICK FEEDBACK
+    // ========================================
+
+    // Visuelles Feedback für Button-Klicks auf Touch-Geräten
+    function addTouchFeedback() {
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(button => {
+        button.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+        });
+        
+        button.addEventListener('touchend', function() {
+            this.style.transform = '';
+        });
+    });
+}
+
+    // Touch-Feedback aktivieren
+    if ('ontouchstart' in window) {
+    document.addEventListener('DOMContentLoaded', addTouchFeedback);
+}
+
+    // ========================================
+    // 🎨 BUTTON ANIMATIONS
+    // ========================================
+
+    // Sanfte Pulse-Animation für wichtige Buttons
+    function addPulseToMainButton() {
+    const mainButtons = document.querySelectorAll('.btn-primary');
+    
+    mainButtons.forEach(button => {
+        // Füge Pulse-Effekt hinzu wenn Button länger als 3 Sek nicht geklickt wurde
+        let pulseTimeout;
+        
+        button.addEventListener('mouseenter', function() {
+            clearTimeout(pulseTimeout);
+        });
+        
+        button.addEventListener('mouseleave', function() {
+            pulseTimeout = setTimeout(() => {
+                button.style.animation = 'pulse 2s infinite';
+            }, 3000);
+        });
+        
+        button.addEventListener('click', function() {
+            clearTimeout(pulseTimeout);
+            button.style.animation = 'none';
+        });
+    });
+}
+
+    // CSS Animation für Pulse (falls nicht vorhanden)
+    const style = document.createElement('style');
+    style.textContent = `
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+            box-shadow: 0 8px 25px rgba(143, 166, 143, 0.2);
+        }
+        50% {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(143, 166, 143, 0.4);
+        }
+    }
+`;
+    document.head.appendChild(style);
+
+    // ========================================
+    // 📊 DEBUG INFO
+    // ========================================
+
+</script>
 </body>
 </html>
