@@ -13,13 +13,13 @@
     /* === FARBSCHEMA NACH IHREN VORGABEN === */
     :root {
         /* Sanfte Grüntöne */
-        --sage-green: #8fa68f;        /* Gedämpftes Salbeigrün (Hauptfarbe) */
-        --light-moss: #a8c09a;        /* Helles Moosgrün */
-        --pale-lime: #c1d4b1;         /* Zartes Lindgrün */
+        --sage-green: #8a9876;        /* Gedämpftes Salbeigrün (Hauptfarbe) */
+        --light-moss: #9ba687;        /* Helles Moosgrün */
+        --pale-lime: #9ba687;         /* Zartes Lindgrün */
 
         /* Sanfte Brauntöne */
-        --warm-chestnut: #8b7355;     /* Warmes Kastanienbraun */
-        --soft-clay: #a08879;         /* Sanftes Lehmbraun */
+        --warm-chestnut: #5a5045;     /* Warmes Kastanienbraun */
+        --soft-clay: #6b7456;         /* Sanftes Lehmbraun */
         --light-sand: #c4b5a0;        /* Helles Sandbraun */
         --olive-brown: #9ba687;       /* Olive-Braun (für Gradients) */
         --mid-brown: #6b7456;         /* Mittleres Braun */
@@ -29,7 +29,7 @@
         --teal-button: #00b4b4;       /* Türkis (Primary Button) */
         --teal-light: #00d4d4;        /* Helles Türkis (Hover) */
         --teal-dark: #008b8b;         /* Dunkles Türkis */
-        --success-green: #16a34a;     /* Success Grün für Gradients */
+        --success-green: #28a745;     /* Success Grün für Gradients */
 
         /* Neutrale Töne */
         --cream-white: #f5f3f0;       /* Cremeweiß (Hintergrund) */
@@ -960,7 +960,9 @@
 
     .image-item img {
         width: 100%;
-        height: 200px;
+        height: 180px;  /* Optimiert für A4 */
+        object-fit: cover;
+        display: block;
         object-fit: cover;
         display: block;
     }
@@ -974,7 +976,7 @@
 
     .image-category {
         font-weight: 600;
-        color: #8fa68f;
+        color: #8a9876;
         font-size: 0.8rem;
         text-transform: uppercase;
         margin-bottom: 5px;
@@ -1257,6 +1259,128 @@
         opacity: 1;
     }
 }
+
+
+    /* NEUE PROJEKTZUSAMMENFASSUNG */
+    .summary-box {
+        background: linear-gradient(135deg, rgba(155, 166, 135, 0.2) 0%, rgba(138, 152, 118, 0.2) 100%);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+        border: 2px solid #8a9876;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .summary-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 15px;
+    }
+    
+    .summary-main {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+        border-left: 4px solid #6b7456;
+    }
+    
+    .summary-main h3 {
+        color: #6b7456;
+        font-size: 14pt;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #8a9876;
+        padding-bottom: 6px;
+    }
+    
+    .summary-list {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .summary-list li {
+        padding: 6px 0;
+        font-size: 10pt;
+        color: #555;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .summary-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .summary-list li strong {
+        color: #6b7456;
+        display: inline-block;
+        min-width: 130px;
+    }
+    
+    .summary-highlight {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+    }
+    
+    .summary-highlight h3 {
+        color: #6b7456;
+        font-size: 11pt;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #8a9876;
+        padding-bottom: 6px;
+    }
+    
+    .summary-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .stat-item {
+        background: #faf8f5;
+        padding: 12px;
+        border-radius: 6px;
+        text-align: center;
+        border: 1px solid #e5e5e5;
+    }
+    
+    .stat-item strong {
+        display: block;
+        font-size: 8pt;
+        color: #666;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+    }
+    
+    .stat-item .value {
+        font-size: 18pt;
+        color: #6b7456;
+        font-weight: 700;
+    }
+    
+    .stat-item .unit {
+        font-size: 9pt;
+        color: #999;
+    }
+
+    /* ARBEITEN-BOXEN */
+    .arbeiten-box {
+        background: linear-gradient(135deg, rgba(155, 166, 135, 0.15) 0%, rgba(138, 152, 118, 0.15) 100%);
+        padding: 12px;
+        border-radius: 6px;
+        margin: 10px 0;
+        border-left: 3px solid #8a9876;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .arbeiten-box strong {
+        display: block;
+        color: #6b7456;
+        margin-bottom: 6px;
+        font-size: 10pt;
+    }
 
 </style>
 </head>
@@ -1677,7 +1801,7 @@
                 <span>💾</span>
                 HTML Download
             </button>
-            <button class="launcher-btn" onclick="location.reload()" style="background: linear-gradient(135deg, #22c55e, #16a34a);">
+            <button class="launcher-btn" onclick="location.reload()" style="background: linear-gradient(135deg, #22c55e, #28a745);">
                 <span>🔄</span>
                 Neues Formular
             </button>
@@ -2128,7 +2252,7 @@
                     ${tagesDetails}
                     ${imagesHTML}
                     
-                    <div style="background: linear-gradient(135deg, #c1d4b1, #f5f3f0); padding: 20px; border-radius: 10px; margin: 25px 0; text-align: center;">
+                    <div style="background: linear-gradient(135deg, #9ba687, #f5f3f0); padding: 20px; border-radius: 10px; margin: 25px 0; text-align: center;">
                         <h3 style="color: #2d3e2d; margin: 0 0 10px 0;">🌟 Vielen Dank für Ihr Vertrauen!</h3>
                         <p style="margin: 0;">Bei Fragen oder weiteren Wünschen stehen wir Ihnen gerne zur Verfügung.</p>
                     </div>
@@ -2178,13 +2302,18 @@ formData.images = uploadedImages.map((img, index) => ({
             // SCHRITT 1: Bilder zu Google Drive hochladen
             let uploadResult = null;
             if (uploadedImages && uploadedImages.length > 0) {
-                showMessage(`📷 Verarbeite ${uploadedImages.length} Bilder...`, 'info');
-                uploadResult = await uploadImagesToGoogleDrive(uploadedImages, projectId);
-                
-                if (uploadResult.success) {
-                    showMessage(`✅ ${uploadResult.uploadedCount} Bilder erfolgreich hochgeladen!`, 'success');
-                } else {
-                    showMessage('⚠️ Einige Bilder konnten nicht hochgeladen werden', 'warning');
+                try {
+                    showMessage(`📷 Verarbeite ${uploadedImages.length} Bilder...`, 'info');
+                    uploadResult = await uploadImagesToGoogleDrive(uploadedImages, projectId);
+
+                    if (uploadResult.success) {
+                        showMessage(`✅ ${uploadResult.uploadedCount} Bilder erfolgreich hochgeladen!`, 'success');
+                    } else {
+                        showMessage('⚠️ Einige Bilder konnten nicht hochgeladen werden', 'warning');
+                    }
+                } catch (uploadError) {
+                    console.error('⚠️ Bild-Upload Fehler:', uploadError);
+                    showMessage('⚠️ Bild-Upload hatte Probleme - Formular wird trotzdem fortgesetzt', 'warning');
                 }
             }
             
@@ -2200,40 +2329,56 @@ formData.images = uploadedImages.map((img, index) => ({
             // SCHRITT 3: PDF-HTML erstellen (mit Bildern)
             showMessage('📄 Erstelle PDF-HTML mit Bildern...', 'info');
             const pdfHTML = generatePDFHTML(projectData);
-            currentPDFUrl = createPDFBlob(projectData); // Für Browser-Vorschau
+            // currentPDFUrl = createPDFBlob(projectData); // ⚠️ DEAKTIVIERT - Funktion fehlt und wird nicht verwendet
 
             // SCHRITT 4: Daten zu Google Sheets
-            showMessage('📊 Archiviere Daten...', 'info');
-            await sendToGoogleSheets(projectData, false);
+            try {
+                showMessage('📊 Archiviere Daten in Google Sheets...', 'info');
+                const sheetsResult = await sendToGoogleSheets(projectData, false);
+                if (sheetsResult.success) {
+                    console.log('✅ Google Sheets Update erfolgreich');
+                } else {
+                    console.warn('⚠️ Google Sheets Update hatte Probleme:', sheetsResult);
+                }
+            } catch (sheetsError) {
+                console.error('⚠️ Google Sheets Fehler:', sheetsError);
+                showMessage('⚠️ Archivierung hatte Probleme - Daten wurden lokal gesichert', 'warning');
+            }
 
             // SCHRITT 5: E-Mail mit PDF an Kunde + CC an info@gardenkeeper.de
             if (projectData.kundenEmail) {
-                showMessage('📧 Sende E-Mail mit PDF an Kunde und gardenKeeper...', 'info');
+                try {
+                    showMessage('📧 Sende E-Mail mit PDF an Kunde und gardenKeeper...', 'info');
 
-                const emailHTML = generateEmailWithImages(projectData, uploadResult?.images || []);
+                    const emailHTML = generateEmailWithImages(projectData, uploadResult?.images || []);
 
-                // ✅ NEU: PDF-HTML direkt an Apps Script senden für PDF-Generierung
-                await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: {
-                        'Content-Type': 'text/plain'
-                    },
-                    body: JSON.stringify({
-                        action: 'sendEmailWithPDF',  // ✅ Neue Action für PDF-Generierung
-                        to: projectData.kundenEmail,
-                        cc: 'info@gardenkeeper.de',  // ✅ CC an gardenKeeper
-                        subject: `✅ Ihr gardenKeeper® Projekt ist abgeschlossen - Abnahmeprotokoll`,
-                        projectData: projectData,
-                        emailHTML: emailHTML,  // E-Mail-Body
-                        pdfHTML: pdfHTML,  // ✅ HTML-Content für PDF-Generierung
-                        pdfFilename: `Abnahmeprotokoll_${projectData.kunde.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`,
-                        abrechnungsart: projectData.abrechnungsart,
-                        timestamp: new Date().toISOString()
-                    })
-                });
+                    // ✅ NEU: PDF-HTML direkt an Apps Script senden für PDF-Generierung
+                    const emailResponse = await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'text/plain'
+                        },
+                        body: JSON.stringify({
+                            action: 'sendEmailWithPDF',  // ✅ Neue Action für PDF-Generierung
+                            to: projectData.kundenEmail,
+                            cc: 'info@gardenkeeper.de',  // ✅ CC an gardenKeeper
+                            subject: `✅ Ihr gardenKeeper® Projekt ist abgeschlossen - Abnahmeprotokoll`,
+                            projectData: projectData,
+                            emailHTML: emailHTML,  // E-Mail-Body
+                            pdfHTML: pdfHTML,  // ✅ HTML-Content für PDF-Generierung
+                            pdfFilename: `Abnahmeprotokoll_${projectData.kunde.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`,
+                            abrechnungsart: projectData.abrechnungsart,
+                            timestamp: new Date().toISOString()
+                        })
+                    });
 
-                showMessage('✅ E-Mail mit PDF versendet an Kunde + gardenKeeper!', 'success');
+                    showMessage('✅ E-Mail mit PDF wurde versendet an Kunde + gardenKeeper!', 'success');
+                    console.log('✅ Email-Request erfolgreich gesendet');
+                } catch (emailError) {
+                    console.error('⚠️ Email-Versand Fehler:', emailError);
+                    showMessage('⚠️ Email konnte nicht versendet werden. Daten wurden aber gespeichert.', 'warning');
+                }
             } else {
                 showMessage('ℹ️ Keine Kunden-Email angegeben - nur archiviert', 'info');
             }
@@ -3468,6 +3613,13 @@ setTimeout(() => {
         document.getElementById('emailModal').classList.remove('show');
     }
 
+    // ========================================
+    // 📧 E-MAIL MIT PDF - GOOGLE APPS SCRIPT VERSION
+    // ========================================
+    // WICHTIG: Für automatischen PDF-Versand muss Google Apps Script aktiviert sein!
+    // Anleitung siehe: Code.gs Datei
+    // ========================================
+    
     function sendEmailWithPDF() {
         const kundeEmail = document.getElementById('emailKundeAddress').value.trim();
         const emailMessage = document.getElementById('emailMessage').value.trim();
@@ -3479,59 +3631,107 @@ setTimeout(() => {
         
         const formData = getFormData();
         
-        const subject = encodeURIComponent('✅ Ihr gardenKeeper® Projekt ist abgeschlossen - Abnahmeprotokoll');
-        
-        const emailContent = `Sehr geehrte Damen und Herren,
+        // Prüfe ob Google Apps Script verfügbar ist
+        if (typeof google !== 'undefined' && google.script && google.script.run) {
+            // ✅ GOOGLE APPS SCRIPT VERSION (Automatisch)
+            console.log('📧 Verwende Google Apps Script für automatischen PDF-Versand...');
+            
+            showMessage('📧 Erstelle PDF und versende E-Mail...', 'info');
+            
+            // Generiere PDF HTML
+            const pdfHTML = generatePDFHTML(formData);
+            
+            // Sende an Google Apps Script
+            google.script.run
+                .withSuccessHandler(function(response) {
+                    if (response.success) {
+                        showMessage('✅ E-Mail mit PDF erfolgreich versendet!', 'success');
+                        console.log('✅ PDF-Link:', response.pdfUrl);
+                        closeEmailModal();
+                    } else {
+                        showMessage('❌ Fehler: ' + response.message, 'error');
+                    }
+                })
+                .withFailureHandler(function(error) {
+                    showMessage('❌ Fehler beim Versand: ' + error.message, 'error');
+                    console.error('❌ Fehler:', error);
+                })
+                .sendEmailWithPDFAttachment(kundeEmail, formData, pdfHTML);
+                
+        } else {
+            // ⚠️ FALLBACK: MAILTO VERSION (Manuell)
+            console.log('⚠️ Google Apps Script nicht verfügbar, verwende mailto...');
+            
+            const subject = encodeURIComponent('Ihr gardenKeeper Projekt ist abgeschlossen - Abnahmeprotokoll');
+            
+            const emailContent = `Sehr geehrte Damen und Herren,
 
-Ihr gardenKeeper® Projekt wurde erfolgreich abgeschlossen!
+Ihr gardenKeeper Projekt wurde erfolgreich abgeschlossen!
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-📋 PROJEKT-ÜBERSICHT:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+=========================================================
+PROJEKT-UEBERSICHT:
+=========================================================
 
 Kunde: ${formData.kunde}
 Zeitraum: ${formData.startdatum} (${formData.days.length} Tag${formData.days.length > 1 ? 'e' : ''})
-Status: ${formData.checkboxes.komplett ? '✅ Vollständig abgeschlossen' : formData.checkboxes.teilweise ? '⚠️ Teilweise abgeschlossen' : '📝 In Bearbeitung'}
+Status: ${formData.checkboxes.komplett ? 'Vollstaendig abgeschlossen' : formData.checkboxes.teilweise ? 'Teilweise abgeschlossen' : 'In Bearbeitung'}
 Team: ${getAllWorkers(formData.days).join(', ')}
 
-🔧 DURCHGEFÜHRTE ARBEITEN:
-${formData.days.map(day => `• Tag ${day.dayNumber}: ${day.beschreibungArbeiten}`).join('\n')}
+DURCHGEFUEHRTE ARBEITEN:
+${formData.days.map(day => `- Tag ${day.dayNumber}: ${day.beschreibungArbeiten}`).join('\n')}
 
-${emailMessage ? `💬 ZUSÄTZLICHE HINWEISE:\n${emailMessage}\n\n` : ''}
+${emailMessage ? `ZUSAETZLICHE HINWEISE:\n${emailMessage}\n\n` : ''}
 
-Bei Fragen, Wünschen oder Anregungen stehen wir Ihnen jederzeit
-gerne zur Verfügung. Empfehlen Sie uns weiter - das ist das
-schönste Kompliment für unsere Arbeit!
+WICHTIG: Bitte haengen Sie das PDF manuell an die E-Mail an!
+1. Erstellen Sie zuerst das PDF (Button "PDF erstellen")
+2. Speichern Sie das PDF
+3. Haengen Sie es an diese E-Mail an
 
-Mit grünen Grüßen und herzlichem Dank für Ihr Vertrauen
-Ihr gardenKeeper® Team
+Bei Fragen, Wuenschen oder Anregungen stehen wir Ihnen jederzeit
+gerne zur Verfuegung. Empfehlen Sie uns weiter - das ist das
+schoenste Kompliment fuer unsere Arbeit!
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-🌱 Sven Krämer
-gardenKeeper® GmbH
-Großblittersdorfer Str. 329
-66130 Saarbrücken
+Mit gruenen Gruessen und herzlichem Dank fuer Ihr Vertrauen
+Ihr gardenKeeper Team
 
-📞 Tel: 0681 9378 4009
-📧 Email: info@gardenkeeper.de
-🌐 Web: www.gardenkeeper.de
+=========================================================
+Sven Kraemer
+gardenKeeper GmbH
+Grossblittersdorfer Str. 329
+66130 Saarbruecken
 
-🌟 "Weil Ihr Zuhause es verdient - made by gardenKeeper®" 🌟
+Tel: 0681 9378 4009
+Email: info@gardenkeeper.de
+Web: www.gardenkeeper.de
+
+"Weil Ihr Zuhause es verdient - made by gardenKeeper"
+=========================================================
 `;
-        const body = encodeURIComponent(emailContent);
-        const mailtoLink = `mailto:${kundeEmail}?cc=info@gardenkeeper.de&subject=${subject}&body=${body}`;
-        
-        try {
-            window.location.href = mailtoLink;
-            closeEmailModal();
-            showMessage('📧 Email-Client geöffnet! Email ist versandbereit.', 'success');
-        } catch (error) {
-            navigator.clipboard.writeText(emailContent).then(() => {
-                showMessage('📧 Email-Text in Zwischenablage kopiert!', 'success');
-            }).catch(() => {
-                showMessage('📧 Bitte Email-Client manuell öffnen', 'info');
-            });
-            closeEmailModal();
+            const body = encodeURIComponent(emailContent);
+            const mailtoLink = `mailto:${kundeEmail}?cc=info@gardenkeeper.de&subject=${subject}&body=${body}`;
+            
+            try {
+                window.location.href = mailtoLink;
+                closeEmailModal();
+                showMessage('📧 Email-Client geöffnet! Bitte PDF manuell anhängen.', 'success');
+                
+                // Zeige Hinweis nach 2 Sekunden
+                setTimeout(() => {
+                    alert('💡 WICHTIGER HINWEIS:\n\n' +
+                          'Die E-Mail wurde geöffnet, aber das PDF muss noch manuell angehängt werden!\n\n' +
+                          '1. Erstellen Sie das PDF (Button "PDF erstellen")\n' +
+                          '2. Speichern Sie das PDF\n' +
+                          '3. Hängen Sie es an die E-Mail an\n\n' +
+                          'Für automatischen PDF-Versand verwenden Sie Google Apps Script!');
+                }, 2000);
+            } catch (error) {
+                navigator.clipboard.writeText(emailContent).then(() => {
+                    showMessage('📧 Email-Text in Zwischenablage kopiert!', 'success');
+                }).catch(() => {
+                    showMessage('📧 Bitte Email-Client manuell öffnen', 'info');
+                });
+                closeEmailModal();
+            }
         }
     }
 
@@ -3625,7 +3825,8 @@ Großblittersdorfer Str. 329
     <title>Abnahmeprotokoll - ${data.kunde}</title>
     <style>
         @media print { 
-            body { margin: 0; font-size: 12px; } 
+            @page { size: A4; margin: 15mm; }
+            body { margin: 0; font-size: 11pt; } 
             .page-break { page-break-before: always; }
             * { 
                 -webkit-print-color-adjust: exact !important; 
@@ -3640,7 +3841,7 @@ Großblittersdorfer Str. 329
     }
     
     .header { 
-        background: linear-gradient(135deg, #8fa68f 0%, #a8c09a 100%);
+        background: linear-gradient(135deg, #9ba687 0%, #6b7456 50%, #4a4539 100%);
         color: white;
         text-align: center;
         padding: 40px;
@@ -3707,20 +3908,20 @@ Großblittersdorfer Str. 329
     }
     
     .field strong {
-        color: #8fa68f;
+        color: #8a9876;
         display: inline-block;
         min-width: 140px;
         font-weight: 600;
     }
     
     .day-section {
-        border-left: 4px solid #8fa68f;
+        border-left: 4px solid #8a9876;
         margin-bottom: 25px;
         padding-left: 20px;
     }
     
     .day-header {
-        background: linear-gradient(135deg, #8fa68f, #a8c09a);
+        background: linear-gradient(135deg, #8a9876, #9ba687);
         color: white;
         padding: 12px 20px;
         margin-left: -20px;
@@ -3749,8 +3950,8 @@ Großblittersdorfer Str. 329
     }
     
     .highlight-box {
-        background: linear-gradient(135deg, #c1d4b1, #f5f3f0);
-        border: 2px solid #8fa68f;
+        background: linear-gradient(135deg, #9ba687, #f5f3f0);
+        border: 2px solid #8a9876;
         border-radius: 10px;
         padding: 20px;
         margin: 20px 0;
@@ -3810,7 +4011,9 @@ Großblittersdorfer Str. 329
 
     .image-item img {
         width: 100%;
-        height: 200px;
+        height: 180px;  /* Optimiert für A4 */
+        object-fit: cover;
+        display: block;
         object-fit: cover;
         display: block;
     }
@@ -3824,7 +4027,7 @@ Großblittersdorfer Str. 329
 
     .image-category {
         font-weight: 600;
-        color: #8fa68f;
+        color: #8a9876;
         font-size: 0.8rem;
         text-transform: uppercase;
         margin-bottom: 5px;
@@ -3844,13 +4047,13 @@ Großblittersdorfer Str. 329
     .footer {
         margin-top: 50px;
         text-align: center;
-        border-top: 3px solid #8fa68f;
+        border-top: 3px solid #8a9876;
         padding-top: 25px;
         color: #666;
     }
     
     .footer .company-info {
-        color: #8fa68f;
+        color: #8a9876;
         font-weight: 600;
         font-size: 1.2rem;
         margin-bottom: 8px;
@@ -3943,6 +4146,128 @@ Großblittersdorfer Str. 329
     }
 }
 
+
+    /* NEUE PROJEKTZUSAMMENFASSUNG */
+    .summary-box {
+        background: linear-gradient(135deg, rgba(155, 166, 135, 0.2) 0%, rgba(138, 152, 118, 0.2) 100%);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+        border: 2px solid #8a9876;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .summary-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 15px;
+    }
+    
+    .summary-main {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+        border-left: 4px solid #6b7456;
+    }
+    
+    .summary-main h3 {
+        color: #6b7456;
+        font-size: 14pt;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #8a9876;
+        padding-bottom: 6px;
+    }
+    
+    .summary-list {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .summary-list li {
+        padding: 6px 0;
+        font-size: 10pt;
+        color: #555;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .summary-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .summary-list li strong {
+        color: #6b7456;
+        display: inline-block;
+        min-width: 130px;
+    }
+    
+    .summary-highlight {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+    }
+    
+    .summary-highlight h3 {
+        color: #6b7456;
+        font-size: 11pt;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #8a9876;
+        padding-bottom: 6px;
+    }
+    
+    .summary-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .stat-item {
+        background: #faf8f5;
+        padding: 12px;
+        border-radius: 6px;
+        text-align: center;
+        border: 1px solid #e5e5e5;
+    }
+    
+    .stat-item strong {
+        display: block;
+        font-size: 8pt;
+        color: #666;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+    }
+    
+    .stat-item .value {
+        font-size: 18pt;
+        color: #6b7456;
+        font-weight: 700;
+    }
+    
+    .stat-item .unit {
+        font-size: 9pt;
+        color: #999;
+    }
+
+    /* ARBEITEN-BOXEN */
+    .arbeiten-box {
+        background: linear-gradient(135deg, rgba(155, 166, 135, 0.15) 0%, rgba(138, 152, 118, 0.15) 100%);
+        padding: 12px;
+        border-radius: 6px;
+        margin: 10px 0;
+        border-left: 3px solid #8a9876;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .arbeiten-box strong {
+        display: block;
+        color: #6b7456;
+        margin-bottom: 6px;
+        font-size: 10pt;
+    }
+
 </style>
 </head>
 <body>
@@ -4000,14 +4325,14 @@ ${data.days.map((day, index) => `
             </div>
         </div>
         
-        <h4>🔨 Durchgeführte Arbeiten:</h4>
-        <div style="background: #f5f3f0; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #8fa68f;">
-            ${day.beschreibungArbeiten || 'Keine Beschreibung verfügbar'}
+        <div class="arbeiten-box">
+            <strong>🔨 Durchgeführte Arbeiten:</strong>
+            <p>${day.beschreibungArbeiten || 'Keine Beschreibung verfügbar'}</p>
         </div>
         
         ${day.zusatzarbeiten ? `
             <h4>➕ Zusatzarbeiten:</h4>
-            <div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #8b7355;">
+            <div style="background: #fff3cd; padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #5a5045;">
                 ${day.zusatzarbeiten}
             </div>
         ` : ''}
@@ -4029,7 +4354,7 @@ ${data.days.map((day, index) => `
                             <td>${mat.material}</td>
                             <td>${mat.amount}</td>
                             <td>${MATERIALS.find(m => m.name === mat.material)?.unit || ''}</td>
-                            <td>${mat.fremdeinkauf ? '<span style="color: #8b7355; font-weight: 600;">Fremdeinkauf</span>' : ''}</td>
+                            <td>${mat.fremdeinkauf ? '<span style="color: #5a5045; font-weight: 600;">Fremdeinkauf</span>' : ''}</td>
                         </tr>
                     `).join('')}
                 </tbody>
@@ -4097,13 +4422,45 @@ ${data.images && data.images.length > 0 ? `
         📊 Projektzusammenfassung
     </div>
     <div class="section-content">
-        <div class="highlight-box">
-            <div class="grid grid-3">
-                <div><strong>Gesamtstunden:</strong> ${totalHours.toFixed(2)} Std.</div>
-                <div><strong>Mitarbeiter:</strong> ${allWorkers.length}</div>
-                <div><strong>Materialien:</strong> ${data.days.reduce((total, day) => total + (day.materials?.length || 0), 0)}</div>
-                <div><strong>Maschinen:</strong> ${data.days.reduce((total, day) => total + (day.machines?.length || 0), 0)}</div>
-                ${data.images ? `<div><strong>Bilder:</strong> ${data.images.length}</div>` : ''}
+        <div class="summary-box">
+            <div class="summary-content">
+                <div class="summary-main">
+                    <h3>Leistungsübersicht</h3>
+                    <ul class="summary-list">
+                        <li><strong>Gesamtstunden:</strong> ${totalHours.toFixed(2)} Std.</li>
+                        <li><strong>Mitarbeiter:</strong> ${allWorkers.length}</li>
+                        <li><strong>Materialien:</strong> ${data.days.reduce((total, day) => total + (day.materials?.length || 0), 0)}</li>
+                        <li><strong>Maschinen:</strong> ${data.days.reduce((total, day) => total + (day.machines?.length || 0), 0)}</li>
+                        ${data.images ? `<li><strong>Bilder:</strong> ${data.images.length}</li>` : ''}
+                        <li><strong>Status:</strong> ${data.checkboxes.komplett ? '✅ Vollständig abgeschlossen' : data.checkboxes.teilweise ? '⚠️ Teilweise abgeschlossen' : '📝 In Bearbeitung'}</li>
+                    </ul>
+                </div>
+                
+                <div class="summary-highlight">
+                    <h3>Kennzahlen</h3>
+                    <div class="summary-stats">
+                        <div class="stat-item">
+                            <strong>Gesamt</strong>
+                            <div class="value">${totalHours.toFixed(2)}</div>
+                            <div class="unit">Stunden</div>
+                        </div>
+                        <div class="stat-item">
+                            <strong>Team</strong>
+                            <div class="value">${allWorkers.length}</div>
+                            <div class="unit">Mitarbeiter</div>
+                        </div>
+                        <div class="stat-item">
+                            <strong>Material</strong>
+                            <div class="value">${data.days.reduce((total, day) => total + (day.materials?.length || 0), 0)}</div>
+                            <div class="unit">Positionen</div>
+                        </div>
+                        <div class="stat-item">
+                            <strong>Maschinen</strong>
+                            <div class="value">${data.days.reduce((total, day) => total + (day.machines?.length || 0), 0)}</div>
+                            <div class="unit">Geräte</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -4517,6 +4874,52 @@ ${data.images && data.images.length > 0 ? `
             margin-top: 15px;
         }
 
+        /* ✅ BILDER-SEKTION STYLES */
+        .images-section {
+            page-break-before: always;
+            margin-top: 30px;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .image-item {
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            page-break-inside: avoid;
+            background: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .image-item img {
+        width: 100%;
+        height: 180px;  /* Optimiert für A4 */
+        object-fit: cover;
+        display: block;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-caption {
+            padding: 12px 15px;
+            background: #f9f9f9;
+            border-top: 1px solid #e0e0e0;
+            font-size: 11px;
+        }
+
+        .image-category {
+            font-weight: 600;
+            color: #7F973B;
+            font-size: 10px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
         /* PRINT-OPTIMIERUNG */
         @media print {
             @page {
@@ -4547,7 +4950,129 @@ ${data.images && data.images.length > 0 ? `
                 page-break-inside: avoid;
             }
         }
-    </style>
+    
+    /* NEUE PROJEKTZUSAMMENFASSUNG */
+    .summary-box {
+        background: linear-gradient(135deg, rgba(155, 166, 135, 0.2) 0%, rgba(138, 152, 118, 0.2) 100%);
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+        border: 2px solid #8a9876;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .summary-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 15px;
+    }
+    
+    .summary-main {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+        border-left: 4px solid #6b7456;
+    }
+    
+    .summary-main h3 {
+        color: #6b7456;
+        font-size: 14pt;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #8a9876;
+        padding-bottom: 6px;
+    }
+    
+    .summary-list {
+        list-style: none;
+        padding: 0;
+    }
+    
+    .summary-list li {
+        padding: 6px 0;
+        font-size: 10pt;
+        color: #555;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .summary-list li:last-child {
+        border-bottom: none;
+    }
+    
+    .summary-list li strong {
+        color: #6b7456;
+        display: inline-block;
+        min-width: 130px;
+    }
+    
+    .summary-highlight {
+        background: white;
+        padding: 15px;
+        border-radius: 6px;
+    }
+    
+    .summary-highlight h3 {
+        color: #6b7456;
+        font-size: 11pt;
+        margin-bottom: 10px;
+        border-bottom: 1px solid #8a9876;
+        padding-bottom: 6px;
+    }
+    
+    .summary-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .stat-item {
+        background: #faf8f5;
+        padding: 12px;
+        border-radius: 6px;
+        text-align: center;
+        border: 1px solid #e5e5e5;
+    }
+    
+    .stat-item strong {
+        display: block;
+        font-size: 8pt;
+        color: #666;
+        margin-bottom: 4px;
+        text-transform: uppercase;
+    }
+    
+    .stat-item .value {
+        font-size: 18pt;
+        color: #6b7456;
+        font-weight: 700;
+    }
+    
+    .stat-item .unit {
+        font-size: 9pt;
+        color: #999;
+    }
+
+    /* ARBEITEN-BOXEN */
+    .arbeiten-box {
+        background: linear-gradient(135deg, rgba(155, 166, 135, 0.15) 0%, rgba(138, 152, 118, 0.15) 100%);
+        padding: 12px;
+        border-radius: 6px;
+        margin: 10px 0;
+        border-left: 3px solid #8a9876;
+        page-break-inside: avoid;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    .arbeiten-box strong {
+        display: block;
+        color: #6b7456;
+        margin-bottom: 6px;
+        font-size: 10pt;
+    }
+
+</style>
 </head>
 <body>
     <!-- HEADER -->
@@ -4683,6 +5208,26 @@ ${data.images && data.images.length > 0 ? `
         <h2><span class="icon">💬</span>Bemerkungen</h2>
         <div class="bemerkungen-box">
             <p>${data.bemerkungen}</p>
+        </div>
+    </div>
+    ` : ''}
+
+    <!-- ✅ BILDER-SEKTION -->
+    ${data.images && data.images.length > 0 ? `
+    <div class="images-section">
+        <div class="pdf-section">
+            <h2><span class="icon">📷</span>Projekt-Bilder (${data.images.length} Bilder)</h2>
+            <div class="images-grid">
+                ${data.images.map((image, idx) => `
+                    <div class="image-item">
+                        <img src="${image.data}" alt="${image.name || `Bild ${idx + 1}`}">
+                        <div class="image-caption">
+                            <div class="image-category">${getCategoryDisplayName(image.category)}</div>
+                            <div>${image.name || `Bild ${idx + 1}`}</div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
         </div>
     </div>
     ` : ''}
