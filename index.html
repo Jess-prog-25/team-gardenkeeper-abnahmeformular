@@ -2226,7 +2226,15 @@
             `;
         }
 
-        return `
+        return `<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gardenKeeper® Abnahmeprotokoll</title>
+</head>
+<body style="margin: 0; padding: 0; background: #f0f0f0;">
             <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
                 <div style="background: linear-gradient(135deg, #9ba687, #6b7456); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
                     <h1 style="margin: 0; font-size: 24px;">🌱 gardenKeeper® Abnahmeprotokoll</h1>
@@ -2265,6 +2273,8 @@
                     <p style="margin: 10px 0 0 0; font-style: italic; opacity: 0.9;">"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</p>
                 </div>
             </div>
+</body>
+</html>
         `;
     }
 
@@ -3822,15 +3832,24 @@ Web: www.gardenkeeper.de
 <html lang="de">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Abnahmeprotokoll - ${data.kunde}</title>
     <style>
-        @media print { 
+        /* ✅ FARB-ERHALTUNG - IMMER AKTIV! */
+        * {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+        }
+
+        @media print {
             @page { size: A4; margin: 15mm; }
-            body { margin: 0; font-size: 11pt; } 
+            body { margin: 0; font-size: 11pt; }
             .page-break { page-break-before: always; }
-            * { 
-                -webkit-print-color-adjust: exact !important; 
-                print-color-adjust: exact !important; 
+            * {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                color-adjust: exact !important;
             }
         }
     body { 
