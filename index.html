@@ -993,13 +993,13 @@
         }
     }
     /*
- * 🌱 gardenKeeper® - MOBILE STICKY BUTTONS FIX
+ * &#127793; gardenKeeper® - MOBILE STICKY BUTTONS FIX
  * 
  * Diese CSS-Regeln einfach NACH dem bestehenden CSS einfügen
  * (vor dem schließenden style Tag)
  * 
- * ✅ Macht die Action-Buttons auf Mobile "sticky" (bleiben unten)
- * ✅ Buttons sind immer erreichbar ohne Scrollen
+ * &#9989; Macht die Action-Buttons auf Mobile "sticky" (bleiben unten)
+ * &#9989; Buttons sind immer erreichbar ohne Scrollen
  */
 
 /* ===== STICKY ACTION BAR FÜR MOBILE ===== */
@@ -1402,7 +1402,7 @@
         </button>
         
         <div class="instructions">
-            <h3>📋 Arbeitsschritte:</h3>
+            <h3>&#128203; Arbeitsschritte:</h3>
             <ol>
                 <li>Formular öffnen und alle Projektdaten eingeben</li>
                 <li>Mehrtägige Projekte über Tage-Tabs erfassen</li>
@@ -1415,15 +1415,15 @@
         </div>
         
         <div class="support-info">
-            <h4>📞 Bei Fragen oder Problemen:</h4>
+            <h4>&#128222; Bei Fragen oder Problemen:</h4>
             <p><strong>Wenden Sie sich an Chef oder Chefin</strong></p>
         </div>
         
         <div style="margin-top: 35px; font-size: 0.95rem; opacity: 0.8; color: var(--dark-forest);">
             © copyright by gardenKeeper 2025<br>
-            ✅ Alle Funktionen verfügbar<br>
-            ✅ Web App vollständig funktionsfähig<br>
-            ✅ Sofort einsatzbereit
+            &#9989; Alle Funktionen verfügbar<br>
+            &#9989; Web App vollständig funktionsfähig<br>
+            &#9989; Sofort einsatzbereit
         </div>
     </div>
 </div>
@@ -1453,9 +1453,9 @@
                     <span>💾</span>
                     HTML Download
                 </button>
-                <!-- ✅ Türkiser Button für finale Aktion -->
+                <!-- &#9989; Türkiser Button für finale Aktion -->
                 <button onclick="completeFormWithImages()" class="btn btn-primary btn-teal">
-                    <span>✅</span>
+                    <span>&#9989;</span>
                     <span id="completeBtnText">Abschließen & E-Mail senden</span>
                 </button>
             </div>
@@ -1467,11 +1467,24 @@
         <div class="form-content">
             <!-- Grunddaten -->
             <div class="section">
-                <h3>📋 Grunddaten des Projekts</h3>
+                <h3>&#128203; Grunddaten des Projekts</h3>
                 <div class="grid grid-3">
                     <div class="field">
-                        <label>Name Kunde *</label>
-                        <input type="text" id="kunde" placeholder="z.B. Familie Müller" required>
+                        <label>Anrede *</label>
+                        <select id="anrede" required style="width: 100%; padding: 15px; border: 2px solid var(--border-light); border-radius: 10px; font-size: 16px;">
+                            <option value="">Bitte wählen...</option>
+                            <option value="Liebe Frau">Liebe Frau</option>
+                            <option value="Lieber Herr">Lieber Herr</option>
+                            <option value="Guten Tag">Guten Tag (neutral)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Nachname *</label>
+                        <input type="text" id="nachname" placeholder="z.B. Wolf" required>
+                    </div>
+                    <div class="field">
+                        <label>Vorname / Firma</label>
+                        <input type="text" id="kunde" placeholder="z.B. Dorothee oder Familie">
                     </div>
                     <div class="field">
                         <label>Kunde Email-Adresse</label>
@@ -1482,8 +1495,8 @@
         💰 Abrechnungsart
     </label>
     <select id="abrechnungsart" style="width: 100%; padding: 12px; border: 2px solid var(--border-light); border-radius: 10px; font-size: 15px;">
-        <option value="tagesregie">⏱️ Tagesregie (mit Zeiterfassung)</option>
-        <option value="pauschal">💵 Pauschal (ohne Zeitangaben für Kunde)</option>
+        <option value="tagesregie">&#9201; Tagesregie (mit Zeiterfassung)</option>
+        <option value="pauschal">&#128181; Pauschal (ohne Zeitangaben für Kunde)</option>
     </select>
     <small style="color: var(--soft-clay); font-style: italic;">
         Bei Pauschal-Projekten werden Zeiten nur intern erfasst
@@ -1510,7 +1523,7 @@
 
             <!-- Tage-Tabs -->
             <div class="section">
-                <h3>📅 Erfassung pro Arbeitstag</h3>
+                <h3>&#128197; Erfassung pro Arbeitstag</h3>
                 <div class="day-tabs" id="dayTabs">
                     <div class="day-tab active" data-day="1" onclick="switchDay(1)">Tag 1</div>
                 </div>
@@ -1527,7 +1540,7 @@
                     
                     <!-- Arbeitszeiten -->
                     <div class="section">
-                        <h3>⏰ Arbeitszeiten und Pausen</h3>
+                        <h3>&#9200; Arbeitszeiten und Pausen</h3>
                         <div class="grid grid-4">
                             <div class="field">
                                 <label>Ladebeginn</label>
@@ -1560,7 +1573,7 @@
 
                     <!-- Mitarbeiter -->
                     <div class="section">
-                        <h3>👥 Ausführende Mitarbeiter</h3>
+                        <h3>&#128101; Ausführende Mitarbeiter</h3>
                         <div class="workers-container">
                             <div class="worker-row">
                                 <div class="field">
@@ -1595,7 +1608,7 @@
 
                     <!-- Maschinen -->
                     <div class="section">
-                        <h3>🚜 Eingesetzte Maschinen und Geräte</h3>
+                        <h3>&#128668; Eingesetzte Maschinen und Geräte</h3>
                         <div class="machines-container">
                             <div class="machine-row">
                                 <div class="field">
@@ -1619,7 +1632,7 @@
                                 Maschine hinzufügen
                             </button>
                             <button onclick="openMachineModal()" class="btn btn-secondary">
-                                <span>🚜</span>
+                                <span>&#128668;</span>
                                 Neue Maschine anlegen
                             </button>
                         </div>
@@ -1627,7 +1640,7 @@
 
                     <!-- Arbeiten -->
                     <div class="section">
-                        <h3>🔨 Beschreibung ausgeführte Arbeiten</h3>
+                        <h3>&#128296; Beschreibung ausgeführte Arbeiten</h3>
                         <div class="field">
                             <textarea class="beschreibung-arbeiten" rows="5" placeholder="Detaillierte Beschreibung der durchgeführten Arbeiten an diesem Tag..." required></textarea>
                         </div>
@@ -1635,7 +1648,7 @@
 
                     <!-- Materialien -->
                     <div class="section">
-                        <h3>📦 Materialien und Baustoffe</h3>
+                        <h3>&#128230; Materialien und Baustoffe</h3>
                         <div class="materials-container">
                             <div class="material-row">
                                 <div class="field">
@@ -1672,7 +1685,7 @@
                                 Material hinzufügen
                             </button>
                             <button onclick="openMaterialModal()" class="btn btn-secondary">
-                                <span>📦</span>
+                                <span>&#128230;</span>
                                 Neues Material anlegen
                             </button>
                         </div>
@@ -1680,7 +1693,7 @@
 
                     <!-- Bilder -->
                     <div class="section">
-                        <h3>📷 Projekt-Bilder</h3>
+                        <h3>&#128247; Projekt-Bilder</h3>
                         <div class="image-upload-area">
                             <div class="upload-zone" onclick="document.getElementById('imageInput').click()">
                                 <div style="font-size: 3em; margin-bottom: 15px;">📸</div>
@@ -1733,7 +1746,7 @@
 
             <!-- Gesamtbestätigungen -->
             <div class="section">
-                <h3>✅ Gesamtbestätigungen des Projekts</h3>
+                <h3>&#9989; Gesamtbestätigungen des Projekts</h3>
                 <div class="checkbox-group">
                     <div class="checkbox-item">
                         <input type="checkbox" id="auftragGemaess">
@@ -1776,7 +1789,7 @@
 <!-- === SUCCESS PAGE === -->
 <div class="success-page" id="successPage">
     <div class="success-container">
-        <div class="success-icon">✅</div>
+        <div class="success-icon">&#9989;</div>
         <h1>Abnahme erfolgreich!</h1>
         <p style="font-size: 1.3rem; margin: 25px 0;">Das Formular wurde erfolgreich verarbeitet und die Daten wurden gespeichert.</p>
         
@@ -1785,7 +1798,7 @@
             <p><strong>Herzlichen Glückwunsch!</strong> Du hast das Abnahmeformular erfolgreich ausgefüllt. Deine sorgfältige Dokumentation hilft uns dabei, unseren Kunden den bestmöglichen Service zu bieten.</p>
             <p style="margin-top: 20px;">Die Daten wurden automatisch in das System übertragen. Das PDF kann über den "PDF erstellen" Button generiert werden. Bei Fragen oder Problemen kannst du dich jederzeit an Jessika oder Sven wenden.</p>
             <p style="margin-top: 25px; padding: 20px; background: rgba(143, 166, 143, 0.2); border-radius: 10px; border-left: 4px solid var(--sage-green);">
-                <strong>🌱 gardenKeeper® - Professionelle Gartenpflege</strong><br>
+                <strong>&#127793; gardenKeeper® - Professionelle Gartenpflege</strong><br>
                 <em>"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</em><br><br>
                 <span style="font-size: 0.95rem;">Du trägst dazu bei, dass unsere Kunden stilvoll, gepflegt und verlässlich aufblühen können!</span>
             </p>
@@ -1830,7 +1843,7 @@
 <div class="modal" id="emailModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>📧 Email mit Abnahmeprotokoll versenden</h3>
+            <h3>&#128231; Email mit Abnahmeprotokoll versenden</h3>
             <button class="modal-close" onclick="closeEmailModal()">&times;</button>
         </div>
         <div class="field">
@@ -1871,7 +1884,7 @@
 <div class="modal" id="materialModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>📦 Neues Material hinzufügen</h3>
+            <h3>&#128230; Neues Material hinzufügen</h3>
             <button class="modal-close" onclick="closeMaterialModal()">&times;</button>
         </div>
         <div class="field">
@@ -1893,7 +1906,7 @@
 <div class="modal" id="machineModal">
     <div class="modal-content">
         <div class="modal-header">
-            <h3>🚜 Neue Maschine hinzufügen</h3>
+            <h3>&#128668; Neue Maschine hinzufügen</h3>
             <button class="modal-close" onclick="closeMachineModal()">&times;</button>
         </div>
         <div class="field">
@@ -1924,7 +1937,7 @@
     let maxDays = 1;
     let currentPDFUrl = null;
 
-    // 📷 BILD-MANAGEMENT
+    // &#128247; BILD-MANAGEMENT
     let uploadedImages = [];
 
     // ========================================
@@ -1953,7 +1966,7 @@
             localStorage.setItem('abnahme_images_timestamp', new Date().toISOString());
             console.log(`💾 ${imagesMetadata.length} Bild-Metadaten gespeichert`);
         } catch (error) {
-            console.warn('⚠️ Konnte Bilder nicht in localStorage speichern:', error);
+            console.warn('&#9888; Konnte Bilder nicht in localStorage speichern:', error);
         }
     }
 
@@ -1981,7 +1994,7 @@
     }
 
     // ========================================
-    // 📷 NEUE BILD-UPLOAD FIX FUNKTIONEN
+    // &#128247; NEUE BILD-UPLOAD FIX FUNKTIONEN
     // ========================================
 
     /**
@@ -2038,7 +2051,7 @@
             return { success: true, images: [], message: 'Keine Bilder vorhanden' };
         }
         
-        showMessage(`📷 Komprimiere ${images.length} Bilder...`, 'info');
+        showMessage(`&#128247; Komprimiere ${images.length} Bilder...`, 'info');
         
         // SCHRITT 1: Bilder komprimieren
         const compressedImages = [];
@@ -2051,7 +2064,7 @@
                     originalName: images[i].name
                 });
                 
-                showMessage(`📷 Bild ${i + 1}/${images.length} komprimiert...`, 'info');
+                showMessage(`&#128247; Bild ${i + 1}/${images.length} komprimiert...`, 'info');
             } catch (error) {
                 console.error(`Fehler beim Komprimieren von Bild ${i + 1}:`, error);
             }
@@ -2070,9 +2083,9 @@
                 const payload = {
                     action: 'saveImages',
                     projectId: projectId,
-                    customerName: batch[0]?.customerName || 'Kunde',  // ✅ Kundenname für Ordner
+                    customerName: batch[0]?.customerName || 'Kunde',  // &#9989; Kundenname für Ordner
                     images: batch.map(img => ({
-                        name: img.name,  // ✅ Intelligenter Name (Mueller_2025-11-05_Vorher_001.jpg)
+                        name: img.name,  // &#9989; Intelligenter Name (Mueller_2025-11-05_Vorher_001.jpg)
                         originalName: img.originalName,  // Original-Name als Backup
                         data: img.data,
                         category: img.category,
@@ -2093,7 +2106,7 @@
                 });
                 
                 // Da no-cors, können wir Response nicht lesen, aber Request wurde gesendet
-                console.log(`✅ Batch ${Math.floor(i / batchSize) + 1} gesendet (${batch.length} Bilder)`);
+                console.log(`&#9989; Batch ${Math.floor(i / batchSize) + 1} gesendet (${batch.length} Bilder)`);
                 
                 uploadedImages.push(...batch);
                 
@@ -2134,7 +2147,7 @@
             tagesDetails = `
                 <div style="margin: 30px 0;">
                     <h3 style="color: #4a4539; margin-bottom: 20px; border-bottom: 3px solid #00b4b4; padding-bottom: 10px;">
-                        📅 Tägliche Arbeitsnachweise
+                        &#128197; Tägliche Arbeitsnachweise
                     </h3>
                     ${projectData.days.map((day, index) => {
                         // Arbeitszeit berechnen
@@ -2153,14 +2166,14 @@
                             </h4>
 
                             <div style="background: #f5f3f0; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <p style="margin: 5px 0;"><strong>⏰ Arbeitszeit:</strong> ${day.arbeitszeitBeginn} - ${day.arbeitszeitEnde} Uhr</p>
-                                <p style="margin: 5px 0;"><strong>⏱️ Netto-Stunden:</strong> ${arbeitsstunden} Std. (Pausen: ${day.pause || 0} Min.)</p>
-                                ${day.regenpause ? `<p style="margin: 5px 0;"><strong>🌧️ Regenpause:</strong> ${day.regenpause} Min.</p>` : ''}
+                                <p style="margin: 5px 0;"><strong>&#9200; Arbeitszeit:</strong> ${day.arbeitszeitBeginn} - ${day.arbeitszeitEnde} Uhr</p>
+                                <p style="margin: 5px 0;"><strong>&#9201; Netto-Stunden:</strong> ${arbeitsstunden} Std. (Pausen: ${day.pause || 0} Min.)</p>
+                                ${day.regenpause ? `<p style="margin: 5px 0;"><strong>&#127783; Regenpause:</strong> ${day.regenpause} Min.</p>` : ''}
                             </div>
 
                             ${day.workers && day.workers.length > 0 ? `
                                 <div style="margin-bottom: 15px;">
-                                    <strong style="color: #4a4539;">👥 Eingesetzte Mitarbeiter:</strong>
+                                    <strong style="color: #4a4539;">&#128101; Eingesetzte Mitarbeiter:</strong>
                                     <ul style="margin: 8px 0; padding-left: 20px; color: #666;">
                                         ${day.workers.map(w => `<li>${w}</li>`).join('')}
                                     </ul>
@@ -2169,7 +2182,7 @@
 
                             ${day.beschreibungArbeiten ? `
                                 <div style="margin-bottom: 15px;">
-                                    <strong style="color: #4a4539;">🔨 Durchgeführte Arbeiten:</strong>
+                                    <strong style="color: #4a4539;">&#128296; Durchgeführte Arbeiten:</strong>
                                     <p style="margin: 8px 0 0 0; padding: 12px; background: #faf8f5; border-radius: 6px; color: #333; line-height: 1.6;">
                                         ${day.beschreibungArbeiten.replace(/\n/g, '<br>')}
                                     </p>
@@ -2178,7 +2191,7 @@
 
                             ${day.materials && day.materials.length > 0 ? `
                                 <div style="margin-bottom: 15px;">
-                                    <strong style="color: #4a4539;">📦 Verwendetes Material:</strong>
+                                    <strong style="color: #4a4539;">&#128230; Verwendetes Material:</strong>
                                     <table style="width: 100%; margin-top: 8px; border-collapse: collapse;">
                                         ${day.materials.map(mat => `
                                             <tr style="border-bottom: 1px solid #e8e5e2;">
@@ -2192,7 +2205,7 @@
 
                             ${day.machines && day.machines.length > 0 ? `
                                 <div>
-                                    <strong style="color: #4a4539;">🚜 Eingesetzte Maschinen:</strong>
+                                    <strong style="color: #4a4539;">&#128668; Eingesetzte Maschinen:</strong>
                                     <ul style="margin: 8px 0; padding-left: 20px; color: #666;">
                                         ${day.machines.map(m => `<li>${m.machine} (${m.duration})</li>`).join('')}
                                     </ul>
@@ -2210,15 +2223,22 @@
         if (imageLinks && imageLinks.length > 0) {
             imagesHTML = `
                 <div style="margin: 30px 0; background: linear-gradient(135deg, #e8f5e8, #f5f3f0); padding: 25px; border-radius: 12px; border: 2px solid #00b4b4;">
-                    <h3 style="color: #2d3e2d; margin-top: 0; margin-bottom: 15px;">📷 Ihre Projekt-Bilder</h3>
+                    <h3 style="color: #2d3e2d; margin-top: 0; margin-bottom: 15px;">&#128247; Ihre Projekt-Bilder</h3>
                     <p style="margin: 0; font-size: 16px;">
                         <strong>${imageLinks.length} Bilder</strong> wurden dokumentiert und befinden sich im <strong>angehängten PDF-Protokoll</strong>.
                     </p>
                     <div style="margin-top: 15px; padding: 15px; background: white; border-radius: 8px;">
                         ${imageLinks.map((img, idx) => `
-                            <div style="padding: 8px 0; border-bottom: 1px solid #e8e5e2;">
-                                <strong style="color: #00b4b4;">Bild ${idx + 1}:</strong>
-                                <span style="color: #666;">${getCategoryDisplayName(img.category)}</span>
+                            <div style="padding: 12px; margin-bottom: 8px; background: #faf8f5; border-radius: 6px; border-left: 3px solid #00b4b4;">
+                                <div style="margin-bottom: 5px;">
+                                    <strong style="color: #00b4b4;">Bild ${idx + 1}:</strong>
+                                    <span style="color: #666;">${getCategoryDisplayName(img.category)}</span>
+                                </div>
+                                ${img.description ? `
+                                    <div style="font-size: 14px; color: #666; font-style: italic; margin-top: 5px;">
+                                        "${img.description}"
+                                    </div>
+                                ` : ''}
                             </div>
                         `).join('')}
                     </div>
@@ -2226,55 +2246,63 @@
             `;
         }
 
-        return `<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>gardenKeeper® Abnahmeprotokoll</title>
-</head>
-<body style="margin: 0; padding: 0; background: #f0f0f0;">
+        return `
             <div style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto;">
                 <div style="background: linear-gradient(135deg, #9ba687, #6b7456); color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0;">
-                    <h1 style="margin: 0; font-size: 24px;">🌱 gardenKeeper® Abnahmeprotokoll</h1>
+                    <h1 style="margin: 0; font-size: 24px;">&#127793; gardenKeeper® Abnahmeprotokoll</h1>
                     <p style="margin: 10px 0 0 0; opacity: 0.9;">Professionelle Gartenpflege</p>
                 </div>
 
                 <div style="padding: 30px; background: #f5f3f0;">
-                    <h2 style="color: #2d3e2d;">Sehr geehrte/r ${kunde},</h2>
+                    <h2 style="color: #2d3e2d;">
+                        ${projectData.anrede || 'Guten Tag'} ${projectData.nachname || kunde},
+                    </h2>
                     <p style="font-size: 16px; line-height: 1.6;">
                         vielen Dank für Ihr Vertrauen! Ihr gardenKeeper® Projekt wurde erfolgreich abgeschlossen.
                         Im Anhang finden Sie das <strong>vollständige Abnahmeprotokoll als PDF</strong> mit allen Details und Bildern.
                     </p>
 
                     <div style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 4px solid #00b4b4;">
-                        <h3 style="color: #00b4b4; margin-top: 0;">📋 Projekt-Übersicht</h3>
+                        <h3 style="color: #00b4b4; margin-top: 0;">&#128203; Projekt-Übersicht</h3>
                         <p style="margin: 8px 0;"><strong>Startdatum:</strong> ${new Date(projectData.startdatum).toLocaleDateString('de-DE')}</p>
                         <p style="margin: 8px 0;"><strong>Anzahl Arbeitstage:</strong> ${projectData.days?.length || 0}</p>
-                        <p style="margin: 8px 0;"><strong>Abrechnungsart:</strong> ${istTagesregie ? '⏱️ Tagesregie' : '💵 Pauschal'}</p>
+                        <p style="margin: 8px 0;"><strong>Abrechnungsart:</strong> ${istTagesregie ? '&#9201; Tagesregie' : '&#128181; Pauschal'}</p>
                         ${lexofficeHTML}
-                        <p style="margin: 8px 0;"><strong>Status:</strong> ${projectData.checkboxes?.komplett ? '✅ Vollständig abgeschlossen' : '⚠️ Teilweise abgeschlossen'}</p>
+                        <p style="margin: 8px 0;"><strong>Status:</strong> ${projectData.checkboxes?.komplett ? '&#9989; Vollständig abgeschlossen' : '&#9888; Teilweise abgeschlossen'}</p>
                     </div>
 
                     ${tagesDetails}
                     ${imagesHTML}
                     
-                    <div style="background: linear-gradient(135deg, #9ba687, #f5f3f0); padding: 20px; border-radius: 10px; margin: 25px 0; text-align: center;">
-                        <h3 style="color: #2d3e2d; margin: 0 0 10px 0;">🌟 Vielen Dank für Ihr Vertrauen!</h3>
-                        <p style="margin: 0;">Bei Fragen oder weiteren Wünschen stehen wir Ihnen gerne zur Verfügung.</p>
+                    <div style="background: linear-gradient(135deg, #9ba687, #f5f3f0); padding: 25px; border-radius: 10px; margin: 25px 0; text-align: center; border: 2px solid #9ba687;">
+                        <h3 style="color: #2d3e2d; margin: 0 0 15px 0; font-size: 20px;">&#127775; Vielen Dank für Ihr Vertrauen!</h3>
+                        <p style="margin: 0 0 15px 0; line-height: 1.6; font-size: 15px;">
+                            Bei Fragen oder weiteren Wünschen stehen wir Ihnen gerne zur Verfügung:
+                        </p>
+                        <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <p style="margin: 5px 0; color: #2d3e2d;">
+                                <strong>&#128222; Telefon:</strong> 0681 99191820
+                            </p>
+                            <p style="margin: 5px 0; color: #2d3e2d;">
+                                <strong>&#128231; E-Mail:</strong> <a href="mailto:info@gardenkeeper.de" style="color: #00b4b4; text-decoration: none;">info@gardenkeeper.de</a>
+                            </p>
+                            <p style="margin: 5px 0; color: #2d3e2d;">
+                                <strong>&#127760; Web:</strong> <a href="https://www.gardenkeeper.de" style="color: #00b4b4; text-decoration: none;">www.gardenkeeper.de</a>
+                            </p>
+                        </div>
+                        <p style="margin: 15px 0 0 0; font-size: 14px; color: #666; font-style: italic;">
+                            &#9989; Einfach auf diese E-Mail antworten oder uns anrufen
+                        </p>
                     </div>
                 </div>
                 
                 <div style="background: linear-gradient(135deg, #4a4539, #3a3530); color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px;">
-                    <p style="margin: 0; font-size: 16px; font-weight: bold;">🌱 gardenKeeper® GmbH</p>
+                    <p style="margin: 0; font-size: 16px; font-weight: bold;">&#127793; gardenKeeper® GmbH</p>
                     <p style="margin: 5px 0 0 0; opacity: 0.9;">Sven Krämer</p>
-                    <p style="margin: 5px 0 0 0; opacity: 0.8;">📞 0681 99191820 | 📧 info@gardenkeeper.de</p>
+                    <p style="margin: 5px 0 0 0; opacity: 0.8;">&#128222; 0681 99191820 | &#128231; info@gardenkeeper.de</p>
                     <p style="margin: 10px 0 0 0; font-style: italic; opacity: 0.9;">"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</p>
                 </div>
             </div>
-</body>
-</html>
         `;
     }
 
@@ -2313,17 +2341,17 @@ formData.images = uploadedImages.map((img, index) => ({
             let uploadResult = null;
             if (uploadedImages && uploadedImages.length > 0) {
                 try {
-                    showMessage(`📷 Verarbeite ${uploadedImages.length} Bilder...`, 'info');
+                    showMessage(`&#128247; Verarbeite ${uploadedImages.length} Bilder...`, 'info');
                     uploadResult = await uploadImagesToGoogleDrive(uploadedImages, projectId);
 
                     if (uploadResult.success) {
-                        showMessage(`✅ ${uploadResult.uploadedCount} Bilder erfolgreich hochgeladen!`, 'success');
+                        showMessage(`&#9989; ${uploadResult.uploadedCount} Bilder erfolgreich hochgeladen!`, 'success');
                     } else {
-                        showMessage('⚠️ Einige Bilder konnten nicht hochgeladen werden', 'warning');
+                        showMessage('&#9888; Einige Bilder konnten nicht hochgeladen werden', 'warning');
                     }
                 } catch (uploadError) {
-                    console.error('⚠️ Bild-Upload Fehler:', uploadError);
-                    showMessage('⚠️ Bild-Upload hatte Probleme - Formular wird trotzdem fortgesetzt', 'warning');
+                    console.error('&#9888; Bild-Upload Fehler:', uploadError);
+                    showMessage('&#9888; Bild-Upload hatte Probleme - Formular wird trotzdem fortgesetzt', 'warning');
                 }
             }
             
@@ -2339,30 +2367,30 @@ formData.images = uploadedImages.map((img, index) => ({
             // SCHRITT 3: PDF-HTML erstellen (mit Bildern)
             showMessage('📄 Erstelle PDF-HTML mit Bildern...', 'info');
             const pdfHTML = generatePDFHTML(projectData);
-            // currentPDFUrl = createPDFBlob(projectData); // ⚠️ DEAKTIVIERT - Funktion fehlt und wird nicht verwendet
+            // currentPDFUrl = createPDFBlob(projectData); // &#9888; DEAKTIVIERT - Funktion fehlt und wird nicht verwendet
 
             // SCHRITT 4: Daten zu Google Sheets
             try {
                 showMessage('📊 Archiviere Daten in Google Sheets...', 'info');
                 const sheetsResult = await sendToGoogleSheets(projectData, false);
                 if (sheetsResult.success) {
-                    console.log('✅ Google Sheets Update erfolgreich');
+                    console.log('&#9989; Google Sheets Update erfolgreich');
                 } else {
-                    console.warn('⚠️ Google Sheets Update hatte Probleme:', sheetsResult);
+                    console.warn('&#9888; Google Sheets Update hatte Probleme:', sheetsResult);
                 }
             } catch (sheetsError) {
-                console.error('⚠️ Google Sheets Fehler:', sheetsError);
-                showMessage('⚠️ Archivierung hatte Probleme - Daten wurden lokal gesichert', 'warning');
+                console.error('&#9888; Google Sheets Fehler:', sheetsError);
+                showMessage('&#9888; Archivierung hatte Probleme - Daten wurden lokal gesichert', 'warning');
             }
 
             // SCHRITT 5: E-Mail mit PDF an Kunde + CC an info@gardenkeeper.de
             if (projectData.kundenEmail) {
                 try {
-                    showMessage('📧 Sende E-Mail mit PDF an Kunde und gardenKeeper...', 'info');
+                    showMessage('&#128231; Sende E-Mail mit PDF an Kunde und gardenKeeper...', 'info');
 
                     const emailHTML = generateEmailWithImages(projectData, uploadResult?.images || []);
 
-                    // ✅ NEU: PDF-HTML direkt an Apps Script senden für PDF-Generierung
+                    // &#9989; NEU: PDF-HTML direkt an Apps Script senden für PDF-Generierung
                     const emailResponse = await fetch(GOOGLE_SCRIPT_URL, {
                         method: 'POST',
                         mode: 'no-cors',
@@ -2370,24 +2398,24 @@ formData.images = uploadedImages.map((img, index) => ({
                             'Content-Type': 'text/plain'
                         },
                         body: JSON.stringify({
-                            action: 'sendEmailWithPDF',  // ✅ Neue Action für PDF-Generierung
+                            action: 'sendEmailWithPDF',  // &#9989; Neue Action für PDF-Generierung
                             to: projectData.kundenEmail,
-                            cc: 'info@gardenkeeper.de',  // ✅ CC an gardenKeeper
-                            subject: `✅ Ihr gardenKeeper® Projekt ist abgeschlossen - Abnahmeprotokoll`,
+                            cc: 'info@gardenkeeper.de',  // &#9989; CC an gardenKeeper
+                            subject: `&#9989; Ihr gardenKeeper® Projekt ist abgeschlossen - Abnahmeprotokoll`,
                             projectData: projectData,
                             emailHTML: emailHTML,  // E-Mail-Body
-                            pdfHTML: pdfHTML,  // ✅ HTML-Content für PDF-Generierung
+                            pdfHTML: pdfHTML,  // &#9989; HTML-Content für PDF-Generierung
                             pdfFilename: `Abnahmeprotokoll_${projectData.kunde.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`,
                             abrechnungsart: projectData.abrechnungsart,
                             timestamp: new Date().toISOString()
                         })
                     });
 
-                    showMessage('✅ E-Mail mit PDF wurde versendet an Kunde + gardenKeeper!', 'success');
-                    console.log('✅ Email-Request erfolgreich gesendet');
+                    showMessage('&#9989; E-Mail mit PDF wurde versendet an Kunde + gardenKeeper!', 'success');
+                    console.log('&#9989; Email-Request erfolgreich gesendet');
                 } catch (emailError) {
-                    console.error('⚠️ Email-Versand Fehler:', emailError);
-                    showMessage('⚠️ Email konnte nicht versendet werden. Daten wurden aber gespeichert.', 'warning');
+                    console.error('&#9888; Email-Versand Fehler:', emailError);
+                    showMessage('&#9888; Email konnte nicht versendet werden. Daten wurden aber gespeichert.', 'warning');
                 }
             } else {
                 showMessage('ℹ️ Keine Kunden-Email angegeben - nur archiviert', 'info');
@@ -2512,7 +2540,7 @@ formData.images = uploadedImages.map((img, index) => ({
     // ========================================
     function openForm() {
         try {
-            console.log('🌱 Öffne Formular...');
+            console.log('&#127793; Öffne Formular...');
             
             document.getElementById('launcherPage').style.display = 'none';
             document.getElementById('formularPage').classList.add('active');
@@ -2527,7 +2555,7 @@ formData.images = uploadedImages.map((img, index) => ({
             updateHoursSummary();
             setupDragAndDrop(); // Drag & Drop für Bilder initialisieren
             
-            console.log('✅ Formular erfolgreich geöffnet');
+            console.log('&#9989; Formular erfolgreich geöffnet');
             
         } catch (error) {
             console.error('❌ Fehler beim Öffnen des Formulars:', error);
@@ -2544,7 +2572,7 @@ formData.images = uploadedImages.map((img, index) => ({
             document.getElementById('successPage').classList.remove('active');
             document.getElementById('launcherPage').style.display = 'flex';
             
-            console.log('✅ Zurück zur Startseite erfolgreich');
+            console.log('&#9989; Zurück zur Startseite erfolgreich');
             
         } catch (error) {
             console.error('❌ Navigation Fehler:', error);
@@ -2573,7 +2601,7 @@ formData.images = uploadedImages.map((img, index) => ({
                     
                     const result = await this.saveToGoogleDrive(data, filename);
                     
-                    console.log('✅ Drive-Speicherung erfolgreich:', result);
+                    console.log('&#9989; Drive-Speicherung erfolgreich:', result);
                     return result;
                     
                 } catch (error) {
@@ -2662,11 +2690,11 @@ formData.images = uploadedImages.map((img, index) => ({
                     body: JSON.stringify(payload)
                 });
                 
-                console.log('✅ Sheets: Daten gesendet (no-cors mode)');
+                console.log('&#9989; Sheets: Daten gesendet (no-cors mode)');
                 return { success: true, message: 'Google Sheets Update erfolgreich', method: 'POST no-cors' };
                 
             } catch (postError) {
-                console.warn('⚠️ POST Methode fehlgeschlagen:', postError);
+                console.warn('&#9888; POST Methode fehlgeschlagen:', postError);
             }
             
             // METHODE 2: GET mit URL-Parametern (Fallback)
@@ -2682,15 +2710,15 @@ formData.images = uploadedImages.map((img, index) => ({
                 
                 // Verwende img-Tag Trick für no-cors GET
                 const img = new Image();
-                img.onload = () => console.log('✅ Sheets: GET Fallback erfolgreich');
-                img.onerror = () => console.log('✅ Sheets: GET Fallback gesendet (Fehler ist normal)');
+                img.onload = () => console.log('&#9989; Sheets: GET Fallback erfolgreich');
+                img.onerror = () => console.log('&#9989; Sheets: GET Fallback gesendet (Fehler ist normal)');
                 img.src = getUrl;
                 
-                console.log('✅ Sheets: GET Fallback verwendet');
+                console.log('&#9989; Sheets: GET Fallback verwendet');
                 return { success: true, message: 'Google Sheets Update über GET Fallback', method: 'GET fallback' };
                 
             } catch (getError) {
-                console.warn('⚠️ GET Fallback fehlgeschlagen:', getError);
+                console.warn('&#9888; GET Fallback fehlgeschlagen:', getError);
             }
             
             throw new Error('Alle Übertragungsmethoden fehlgeschlagen');
@@ -2779,16 +2807,16 @@ formData.images = uploadedImages.map((img, index) => ({
             console.error('❌ Test-Fehler:', error);
         }
         
-        const driveStatus = driveOk ? '✅ Funktioniert' : '⚠️ Überprüfung nötig';
-        const sheetsStatus = sheetsOk ? `✅ Funktioniert (${sheetsMethod})` : '⚠️ Überprüfung nötig';
+        const driveStatus = driveOk ? '&#9989; Funktioniert' : '&#9888; Überprüfung nötig';
+        const sheetsStatus = sheetsOk ? `&#9989; Funktioniert (${sheetsMethod})` : '&#9888; Überprüfung nötig';
         
         showMessage(`
             🔗 <strong>Google Integration Status:</strong><br><br>
             📁 <strong>Google Drive:</strong> ${driveStatus}<br>
             📊 <strong>Google Sheets:</strong> ${sheetsStatus}<br><br>
             ${driveOk && sheetsOk ? 
-                '<strong style="color: green;">🎉 Alle Systeme funktionieren!</strong><br><br>✅ <strong>PDFs</strong> werden in Google Drive gespeichert<br>✅ <strong>Daten</strong> werden in Google Sheets archiviert<br><br>Das System ist vollständig einsatzbereit!' :
-                '<strong style="color: orange;">📋 Status-Information:</strong><br><br>Das gardenKeeper® Formular funktioniert <strong>vollständig</strong>, auch wenn einzelne Cloud-Services gerade nicht verfügbar sind.<br><br>• ✅ <strong>Lokale Speicherung:</strong> Alle Daten werden lokal gesichert<br>• ✅ <strong>PDF-Erstellung:</strong> Funktioniert immer<br>• ✅ <strong>Email-Versand:</strong> Funktioniert unabhängig<br>• 🔄 <strong>Cloud-Sync:</strong> Wird nachgeholt sobald verfügbar'
+                '<strong style="color: green;">🎉 Alle Systeme funktionieren!</strong><br><br>&#9989; <strong>PDFs</strong> werden in Google Drive gespeichert<br>&#9989; <strong>Daten</strong> werden in Google Sheets archiviert<br><br>Das System ist vollständig einsatzbereit!' :
+                '<strong style="color: orange;">&#128203; Status-Information:</strong><br><br>Das gardenKeeper® Formular funktioniert <strong>vollständig</strong>, auch wenn einzelne Cloud-Services gerade nicht verfügbar sind.<br><br>• &#9989; <strong>Lokale Speicherung:</strong> Alle Daten werden lokal gesichert<br>• &#9989; <strong>PDF-Erstellung:</strong> Funktioniert immer<br>• &#9989; <strong>Email-Versand:</strong> Funktioniert unabhängig<br>• 🔄 <strong>Cloud-Sync:</strong> Wird nachgeholt sobald verfügbar'
             }<br><br>
             <small>🔧 <strong>Apps Script URL:</strong> ${GOOGLE_SCRIPT_URL.substring(0, 50)}...</small><br>
             <small>💡 <strong>Bei Problemen:</strong> An Chef u. Chefin wenden</small>
@@ -2802,7 +2830,7 @@ formData.images = uploadedImages.map((img, index) => ({
             const formData = getFormData();
             localStorage.setItem('gardenKeeper_draft', JSON.stringify(formData));
             showMessage('💾 Entwurf erfolgreich gespeichert!', 'success');
-            console.log('✅ Entwurf gespeichert');
+            console.log('&#9989; Entwurf gespeichert');
         } catch (error) {
             showMessage('❌ Fehler beim Speichern: ' + error.message, 'error');
             console.error('❌ Speicher-Fehler:', error);
@@ -2836,9 +2864,9 @@ textFields.forEach(fieldId => {
 
 setTimeout(() => {
     if (errorsFound > 0) {
-        showMessage(`⚠️ ${errorsFound} mögliche Rechtschreibfehler gefunden! Bitte überprüfen Sie die rot markierten Felder.`, 'warning');
+        showMessage(`&#9888; ${errorsFound} mögliche Rechtschreibfehler gefunden! Bitte überprüfen Sie die rot markierten Felder.`, 'warning');
     } else {
-        showMessage(`✅ Rechtschreibprüfung abgeschlossen! ${checkedFields} Felder geprüft, keine Fehler gefunden.`, 'success');
+        showMessage(`&#9989; Rechtschreibprüfung abgeschlossen! ${checkedFields} Felder geprüft, keine Fehler gefunden.`, 'success');
     }
 }, 1500);
 }
@@ -2905,7 +2933,7 @@ setTimeout(() => {
 
             const imageData = {
                 id: Date.now() + Math.random(),
-                name: smartName,  // ✅ Jetzt intelligenter Name!
+                name: smartName,  // &#9989; Jetzt intelligenter Name!
                 originalName: file.name,  // Original für Referenz
                 data: e.target.result,
                 type: file.type,
@@ -2917,8 +2945,8 @@ setTimeout(() => {
 
             uploadedImages.push(imageData);
             displayImagePreview(imageData);
-            saveImagesToLocalStorage();  // ✅ Auto-Save zu localStorage
-            showMessage(`📷 Bild "${smartName}" hinzugefügt`, 'success');
+            saveImagesToLocalStorage();  // &#9989; Auto-Save zu localStorage
+            showMessage(`&#128247; Bild "${smartName}" hinzugefügt`, 'success');
         };
         reader.readAsDataURL(file);
     }
@@ -2957,8 +2985,8 @@ setTimeout(() => {
             previewElement.remove();
         }
 
-        saveImagesToLocalStorage();  // ✅ Update localStorage
-        showMessage('📷 Bild entfernt', 'info');
+        saveImagesToLocalStorage();  // &#9989; Update localStorage
+        showMessage('&#128247; Bild entfernt', 'info');
     }
 
     function updateImageCategory(imageId, newCategory) {
@@ -2967,7 +2995,7 @@ setTimeout(() => {
             const oldCategory = image.category;
             image.category = newCategory;
 
-            // ✅ DATEINAME NEU GENERIEREN mit neuer Kategorie!
+            // &#9989; DATEINAME NEU GENERIEREN mit neuer Kategorie!
             const imageIndex = uploadedImages.indexOf(image);
             const newFilename = generateSmartFilename(
                 image.originalName || image.name,
@@ -3034,6 +3062,8 @@ setTimeout(() => {
 
     function getFormData() {
         const data = {
+            anrede: document.getElementById('anrede').value.trim(),
+            nachname: document.getElementById('nachname').value.trim(),
             kunde: document.getElementById('kunde').value.trim(),
             istPauschal: document.getElementById('abrechnungsart')?.value === 'pauschal',
             kundenEmail: document.getElementById('kundenEmail').value.trim(),
@@ -3118,7 +3148,7 @@ setTimeout(() => {
     }
 
     // ========================================
-    // ⏰ STUNDENBERECHNUNG
+    // &#9200; STUNDENBERECHNUNG
     // ========================================
     function updateHoursSummary() {
         const currentDayContent = document.querySelector('.day-content.active');
@@ -3171,7 +3201,7 @@ setTimeout(() => {
     }
 
     // ========================================
-    // 📅 TAG-MANAGEMENT
+    // &#128197; TAG-MANAGEMENT
     // ========================================
     function addDay() {
         maxDays++;
@@ -3198,7 +3228,7 @@ setTimeout(() => {
         daySignatures[maxDays] = { kunde: '', teamleiter: '' };
         
         switchDay(maxDays);
-        showMessage(`✅ Tag ${maxDays} hinzugefügt`, 'success');
+        showMessage(`&#9989; Tag ${maxDays} hinzugefügt`, 'success');
     }
 
     function switchDay(dayNumber) {
@@ -3249,7 +3279,7 @@ setTimeout(() => {
     }
 
     // ========================================
-    // 👥 MITARBEITER-MANAGEMENT
+    // &#128101; MITARBEITER-MANAGEMENT
     // ========================================
     function addWorker() {
         const currentDayContent = document.querySelector('.day-content.active');
@@ -3288,7 +3318,7 @@ setTimeout(() => {
             updateHoursSummary();
             showMessage('👷‍♂️ Mitarbeiter entfernt', 'info');
         } else {
-            showMessage('⚠️ Mindestens ein Mitarbeiter muss vorhanden sein', 'warning');
+            showMessage('&#9888; Mindestens ein Mitarbeiter muss vorhanden sein', 'warning');
         }
     }
 
@@ -3318,11 +3348,11 @@ setTimeout(() => {
         populateDropdowns();
         
         closeWorkerModal();
-        showMessage(`✅ Mitarbeiter "${name}" hinzugefügt`, 'success');
+        showMessage(`&#9989; Mitarbeiter "${name}" hinzugefügt`, 'success');
     }
 
     // ========================================
-    // 🚜 MASCHINEN-MANAGEMENT
+    // &#128668; MASCHINEN-MANAGEMENT
     // ========================================
     function addMachine() {
         const currentDayContent = document.querySelector('.day-content.active');
@@ -3353,12 +3383,12 @@ setTimeout(() => {
             newSelect.innerHTML += `<option value="${machine.name}" data-unit="${machine.unit}">${machine.name} (${machine.unit})</option>`;
         });
         
-        showMessage('🚜 Maschine hinzugefügt', 'info');
+        showMessage('&#128668; Maschine hinzugefügt', 'info');
     }
 
     function removeMachine(button) {
         button.closest('.machine-row').remove();
-        showMessage('🚜 Maschine entfernt', 'info');
+        showMessage('&#128668; Maschine entfernt', 'info');
     }
 
     function openMachineModal() {
@@ -3389,7 +3419,7 @@ setTimeout(() => {
         populateDropdowns();
         
         closeMachineModal();
-        showMessage(`✅ Maschine "${name}" hinzugefügt`, 'success');
+        showMessage(`&#9989; Maschine "${name}" hinzugefügt`, 'success');
     }
 
     // ========================================
@@ -3485,7 +3515,7 @@ setTimeout(() => {
         populateDropdowns();
         
         closeMaterialModal();
-        showMessage(`✅ Material "${name}" hinzugefügt`, 'success');
+        showMessage(`&#9989; Material "${name}" hinzugefügt`, 'success');
     }
 
     // ========================================
@@ -3589,11 +3619,11 @@ setTimeout(() => {
         signatureBox.classList.add('has-signature');
         signatureBox.innerHTML = `
             <img src="${signatureData}" style="max-width: 200px; max-height: 80px; border-radius: 4px;">
-            <div style="margin-top: 8px; font-size: 0.9rem;">✅ Unterschrieben</div>
+            <div style="margin-top: 8px; font-size: 0.9rem;">&#9989; Unterschrieben</div>
         `;
         
         closeSignature();
-        showMessage(`✅ Unterschrift ${currentSignatureType === 'kunde' ? 'Kunde' : 'Teamleiter'} für Tag ${currentSignatureDay} gespeichert`, 'success');
+        showMessage(`&#9989; Unterschrift ${currentSignatureType === 'kunde' ? 'Kunde' : 'Teamleiter'} für Tag ${currentSignatureDay} gespeichert`, 'success');
     }
 
     function closeSignature() {
@@ -3603,7 +3633,7 @@ setTimeout(() => {
     }
 
     // ========================================
-    // 📧 EMAIL-FUNKTION
+    // &#128231; EMAIL-FUNKTION
     // ========================================
     function showEmailModal() {
         const kundenEmail = document.getElementById('kundenEmail').value.trim();
@@ -3611,7 +3641,7 @@ setTimeout(() => {
         
         if (kundenEmail && emailField) {
             emailField.value = kundenEmail;
-            showMessage('📧 Kunden-Email automatisch übernommen!', 'success');
+            showMessage('&#128231; Kunden-Email automatisch übernommen!', 'success');
         } else if (!kundenEmail) {
             showMessage('💡 Bitte zuerst Kunden-Email in den Grunddaten eingeben', 'info');
         }
@@ -3624,7 +3654,7 @@ setTimeout(() => {
     }
 
     // ========================================
-    // 📧 E-MAIL MIT PDF - GOOGLE APPS SCRIPT VERSION
+    // &#128231; E-MAIL MIT PDF - GOOGLE APPS SCRIPT VERSION
     // ========================================
     // WICHTIG: Für automatischen PDF-Versand muss Google Apps Script aktiviert sein!
     // Anleitung siehe: Code.gs Datei
@@ -3643,10 +3673,10 @@ setTimeout(() => {
         
         // Prüfe ob Google Apps Script verfügbar ist
         if (typeof google !== 'undefined' && google.script && google.script.run) {
-            // ✅ GOOGLE APPS SCRIPT VERSION (Automatisch)
-            console.log('📧 Verwende Google Apps Script für automatischen PDF-Versand...');
+            // &#9989; GOOGLE APPS SCRIPT VERSION (Automatisch)
+            console.log('&#128231; Verwende Google Apps Script für automatischen PDF-Versand...');
             
-            showMessage('📧 Erstelle PDF und versende E-Mail...', 'info');
+            showMessage('&#128231; Erstelle PDF und versende E-Mail...', 'info');
             
             // Generiere PDF HTML
             const pdfHTML = generatePDFHTML(formData);
@@ -3655,8 +3685,8 @@ setTimeout(() => {
             google.script.run
                 .withSuccessHandler(function(response) {
                     if (response.success) {
-                        showMessage('✅ E-Mail mit PDF erfolgreich versendet!', 'success');
-                        console.log('✅ PDF-Link:', response.pdfUrl);
+                        showMessage('&#9989; E-Mail mit PDF erfolgreich versendet!', 'success');
+                        console.log('&#9989; PDF-Link:', response.pdfUrl);
                         closeEmailModal();
                     } else {
                         showMessage('❌ Fehler: ' + response.message, 'error');
@@ -3669,8 +3699,8 @@ setTimeout(() => {
                 .sendEmailWithPDFAttachment(kundeEmail, formData, pdfHTML);
                 
         } else {
-            // ⚠️ FALLBACK: MAILTO VERSION (Manuell)
-            console.log('⚠️ Google Apps Script nicht verfügbar, verwende mailto...');
+            // &#9888; FALLBACK: MAILTO VERSION (Manuell)
+            console.log('&#9888; Google Apps Script nicht verfügbar, verwende mailto...');
             
             const subject = encodeURIComponent('Ihr gardenKeeper Projekt ist abgeschlossen - Abnahmeprotokoll');
             
@@ -3723,7 +3753,7 @@ Web: www.gardenkeeper.de
             try {
                 window.location.href = mailtoLink;
                 closeEmailModal();
-                showMessage('📧 Email-Client geöffnet! Bitte PDF manuell anhängen.', 'success');
+                showMessage('&#128231; Email-Client geöffnet! Bitte PDF manuell anhängen.', 'success');
                 
                 // Zeige Hinweis nach 2 Sekunden
                 setTimeout(() => {
@@ -3736,9 +3766,9 @@ Web: www.gardenkeeper.de
                 }, 2000);
             } catch (error) {
                 navigator.clipboard.writeText(emailContent).then(() => {
-                    showMessage('📧 Email-Text in Zwischenablage kopiert!', 'success');
+                    showMessage('&#128231; Email-Text in Zwischenablage kopiert!', 'success');
                 }).catch(() => {
-                    showMessage('📧 Bitte Email-Client manuell öffnen', 'info');
+                    showMessage('&#128231; Bitte Email-Client manuell öffnen', 'info');
                 });
                 closeEmailModal();
             }
@@ -3795,8 +3825,8 @@ Web: www.gardenkeeper.de
                 printWindow.print();
             }, 800);
 
-            showMessage('✅ PDF geöffnet! Wählen Sie "Als PDF speichern".', 'success');
-            console.log('✅ PDF erfolgreich generiert');
+            showMessage('&#9989; PDF geöffnet! Wählen Sie "Als PDF speichern".', 'success');
+            console.log('&#9989; PDF erfolgreich generiert');
 
         } catch (error) {
             console.error('❌ PDF-Fehler:', error);
@@ -3832,24 +3862,15 @@ Web: www.gardenkeeper.de
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Abnahmeprotokoll - ${data.kunde}</title>
     <style>
-        /* ✅ FARB-ERHALTUNG - IMMER AKTIV! */
-        * {
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-            color-adjust: exact !important;
-        }
-
-        @media print {
+        @media print { 
             @page { size: A4; margin: 15mm; }
-            body { margin: 0; font-size: 11pt; }
+            body { margin: 0; font-size: 11pt; } 
             .page-break { page-break-before: always; }
-            * {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                color-adjust: exact !important;
+            * { 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
             }
         }
     body { 
@@ -4291,14 +4312,14 @@ Web: www.gardenkeeper.de
 </head>
 <body>
     <div class="header">
-        <h1>🌱 ABNAHME / TAGESREGIEBERICHT</h1>
+        <h1>&#127793; ABNAHME / TAGESREGIEBERICHT</h1>
         <div class="company">gardenKeeper® GmbH - Sven Krämer</div>
         <div class="tagline">Professionelle Gartenpflege mit Stil und ♥</div>
         <div class="date">Erstellt am: ${formattedDate} um ${formattedTime}</div>
     </div>
 <div class="section">
     <div class="section-header">
-        📋 Projektdaten
+        &#128203; Projektdaten
     </div>
     <div class="section-content">
         <div class="grid">
@@ -4316,7 +4337,7 @@ Web: www.gardenkeeper.de
 
 <div class="section">
     <div class="section-header">
-        👥 Projektteam
+        &#128101; Projektteam
     </div>
     <div class="section-content">
         <strong>Eingesetzte Mitarbeiter:</strong> ${allWorkers.join(', ')}
@@ -4327,25 +4348,25 @@ ${data.days.map((day, index) => `
     ${index > 0 ? '<div class="page-break"></div>' : ''}
     <div class="day-section">
         <div class="day-header">
-            📅 Tag ${day.dayNumber} - Detailbericht
+            &#128197; Tag ${day.dayNumber} - Detailbericht
         </div>
         
         <div class="grid">
             <div>
-                <h4>⏰ Zeiten:</h4>
+                <h4>&#9200; Zeiten:</h4>
                 <div><strong>Ladebeginn:</strong> ${day.ladebeginn || '---'}</div>
                 <div><strong>Abfahrt:</strong> ${day.abfahrt || '---'}</div>
                 <div><strong>Arbeitszeit:</strong> ${day.arbeitszeitBeginn || '---'} - ${day.arbeitszeitEnde || '---'}</div>
                 <div><strong>Pause:</strong> ${day.pause || 0} Min | <strong>Regenpause:</strong> ${day.regenpause || 0} Min</div>
             </div>
             <div>
-                <h4>👥 Mitarbeiter:</h4>
+                <h4>&#128101; Mitarbeiter:</h4>
                 ${(day.workers || []).map(worker => `<div>• ${worker}</div>`).join('')}
             </div>
         </div>
         
         <div class="arbeiten-box">
-            <strong>🔨 Durchgeführte Arbeiten:</strong>
+            <strong>&#128296; Durchgeführte Arbeiten:</strong>
             <p>${day.beschreibungArbeiten || 'Keine Beschreibung verfügbar'}</p>
         </div>
         
@@ -4381,7 +4402,7 @@ ${data.days.map((day, index) => `
         ` : ''}
         
         ${day.machines && day.machines.length > 0 ? `
-            <h4>🚜 Maschinen:</h4>
+            <h4>&#128668; Maschinen:</h4>
             <table>
                 <thead>
                     <tr>
@@ -4417,7 +4438,7 @@ ${data.images && data.images.length > 0 ? `
     <div class="images-section">
         <div class="section">
             <div class="section-header">
-                📷 Projekt-Bilder (${data.images.length} Bilder)
+                &#128247; Projekt-Bilder (${data.images.length} Bilder)
             </div>
             <div class="section-content">
                 <div class="images-grid">
@@ -4451,7 +4472,7 @@ ${data.images && data.images.length > 0 ? `
                         <li><strong>Materialien:</strong> ${data.days.reduce((total, day) => total + (day.materials?.length || 0), 0)}</li>
                         <li><strong>Maschinen:</strong> ${data.days.reduce((total, day) => total + (day.machines?.length || 0), 0)}</li>
                         ${data.images ? `<li><strong>Bilder:</strong> ${data.images.length}</li>` : ''}
-                        <li><strong>Status:</strong> ${data.checkboxes.komplett ? '✅ Vollständig abgeschlossen' : data.checkboxes.teilweise ? '⚠️ Teilweise abgeschlossen' : '📝 In Bearbeitung'}</li>
+                        <li><strong>Status:</strong> ${data.checkboxes.komplett ? '&#9989; Vollständig abgeschlossen' : data.checkboxes.teilweise ? '&#9888; Teilweise abgeschlossen' : '📝 In Bearbeitung'}</li>
                     </ul>
                 </div>
                 
@@ -4485,16 +4506,16 @@ ${data.images && data.images.length > 0 ? `
         
         <h4>Projektstatus:</h4>
         <p class="${data.checkboxes.komplett ? 'status-completed' : data.checkboxes.teilweise ? 'status-partial' : ''}">
-            ${data.checkboxes.komplett ? '✅ Vollständig abgeschlossen' : 
-              data.checkboxes.teilweise ? '⚠️ Teilweise abgeschlossen' : '📝 In Bearbeitung'}
+            ${data.checkboxes.komplett ? '&#9989; Vollständig abgeschlossen' : 
+              data.checkboxes.teilweise ? '&#9888; Teilweise abgeschlossen' : '📝 In Bearbeitung'}
         </p>
         
         <h4>Weitere Bestätigungen:</h4>
         <ul style="margin-left: 20px;">
-            ${data.checkboxes.auftragGemaess ? '<li>✅ Arbeiten wurden gemäß Auftrag ausgeführt</li>' : ''}
-            ${data.checkboxes.ordnungsGemaess ? '<li>✅ Arbeiten wurden ordnungsgemäß und mängelfrei ausgeführt</li>' : ''}
-            ${data.checkboxes.kundeZufrieden ? '<li>✅ Kunde ist mit dem Ergebnis zufrieden</li>' : ''}
-            ${data.checkboxes.arbeitsplatzSauber ? '<li>✅ Arbeitsplatz wurde ordentlich hinterlassen</li>' : ''}
+            ${data.checkboxes.auftragGemaess ? '<li>&#9989; Arbeiten wurden gemäß Auftrag ausgeführt</li>' : ''}
+            ${data.checkboxes.ordnungsGemaess ? '<li>&#9989; Arbeiten wurden ordnungsgemäß und mängelfrei ausgeführt</li>' : ''}
+            ${data.checkboxes.kundeZufrieden ? '<li>&#9989; Kunde ist mit dem Ergebnis zufrieden</li>' : ''}
+            ${data.checkboxes.arbeitsplatzSauber ? '<li>&#9989; Arbeitsplatz wurde ordentlich hinterlassen</li>' : ''}
         </ul>
     </div>
 </div>
@@ -4525,8 +4546,8 @@ ${data.images && data.images.length > 0 ? `
 </div>
 
 <div class="footer">
-    <div class="company-info">🌱 gardenKeeper® GmbH - Sven Krämer</div>
-    <div>📞 Tel: 0681 93784009 | 📧 Email: info@gardenkeeper.de | 🌐 Web: www.gardenkeeper.de</div>
+    <div class="company-info">&#127793; gardenKeeper® GmbH - Sven Krämer</div>
+    <div>&#128222; Tel: 0681 93784009 | &#128231; Email: info@gardenkeeper.de | 🌐 Web: www.gardenkeeper.de</div>
     <div class="tagline">"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</div>
     <div class="meta">
         © copyright by gardenKeeper 2025<br>
@@ -4893,7 +4914,7 @@ ${data.images && data.images.length > 0 ? `
             margin-top: 15px;
         }
 
-        /* ✅ BILDER-SEKTION STYLES */
+        /* &#9989; BILDER-SEKTION STYLES */
         .images-section {
             page-break-before: always;
             margin-top: 30px;
@@ -5096,7 +5117,7 @@ ${data.images && data.images.length > 0 ? `
 <body>
     <!-- HEADER -->
     <div class="pdf-header">
-        <h1>🌱 ABNAHME / TAGESREGIEBERICHT</h1>
+        <h1>&#127793; ABNAHME / TAGESREGIEBERICHT</h1>
         <div class="subtitle">gardenKeeper® GmbH - Sven Krämer</div>
         <div class="subtitle">Professionelle Gartenpflege mit Stil und ♥</div>
         <div class="created-at">Erstellt am: ${erstelltAm}</div>
@@ -5104,7 +5125,7 @@ ${data.images && data.images.length > 0 ? `
 
     <!-- PROJEKTDATEN -->
     <div class="pdf-section">
-        <h2><span class="icon">📋</span>Projektdaten</h2>
+        <h2><span class="icon">&#128203;</span>Projektdaten</h2>
         <div class="projekt-grid">
             <div class="projekt-item">
                 <strong>Kunde:</strong>
@@ -5131,7 +5152,7 @@ ${data.images && data.images.length > 0 ? `
 
     <!-- PROJEKTTEAM -->
     <div class="pdf-section">
-        <h2><span class="icon">👥</span>Projektteam</h2>
+        <h2><span class="icon">&#128101;</span>Projektteam</h2>
         <div style="padding: 10px; background: #f9f9f9; border-radius: 6px;">
             <strong>Eingesetzte Mitarbeiter:</strong> ${allWorkers.join(', ')}
         </div>
@@ -5141,7 +5162,7 @@ ${data.images && data.images.length > 0 ? `
     ${data.days.map((day, index) => {
         return `
         <div class="day-container no-break">
-            <h3>📅 Tag ${day.dayNumber} - Detailbericht</h3>
+            <h3>&#128197; Tag ${day.dayNumber} - Detailbericht</h3>
 
             <div class="day-info-grid">
                 <div class="day-info-box">
@@ -5155,14 +5176,14 @@ ${data.images && data.images.length > 0 ? `
                 </div>
 
                 <div class="day-info-box">
-                    <strong>👥 Mitarbeiter:</strong>
+                    <strong>&#128101; Mitarbeiter:</strong>
                     <div>${day.workers.join(', ')}</div>
                 </div>
             </div>
 
             ${day.beschreibungArbeiten ? `
             <div class="arbeiten-box">
-                <strong>🔨 Durchgeführte Arbeiten:</strong>
+                <strong>&#128296; Durchgeführte Arbeiten:</strong>
                 <p>${day.beschreibungArbeiten}</p>
             </div>
             ` : ''}
@@ -5198,7 +5219,7 @@ ${data.images && data.images.length > 0 ? `
 
             ${day.machines && day.machines.length > 0 ? `
             <div style="margin-top: 15px;">
-                <strong style="color: #7F973B; display: block; margin-bottom: 8px;">🚜 Maschinen:</strong>
+                <strong style="color: #7F973B; display: block; margin-bottom: 8px;">&#128668; Maschinen:</strong>
                 <table class="data-table">
                     <thead>
                         <tr>
@@ -5231,11 +5252,11 @@ ${data.images && data.images.length > 0 ? `
     </div>
     ` : ''}
 
-    <!-- ✅ BILDER-SEKTION -->
+    <!-- &#9989; BILDER-SEKTION -->
     ${data.images && data.images.length > 0 ? `
     <div class="images-section">
         <div class="pdf-section">
-            <h2><span class="icon">📷</span>Projekt-Bilder (${data.images.length} Bilder)</h2>
+            <h2><span class="icon">&#128247;</span>Projekt-Bilder (${data.images.length} Bilder)</h2>
             <div class="images-grid">
                 ${data.images.map((image, idx) => `
                     <div class="image-item">
@@ -5276,7 +5297,7 @@ ${data.images && data.images.length > 0 ? `
 
     <!-- FOOTER -->
     <div class="pdf-footer">
-        <div class="company-name">🌱 gardenKeeper® GmbH - Sven Krämer</div>
+        <div class="company-name">&#127793; gardenKeeper® GmbH - Sven Krämer</div>
         <div class="contact-info">
             <strong>☎</strong> Tel: 0681 93784009 |
             <strong>✉</strong> Email: info@gardenkeeper.de |
@@ -5360,7 +5381,7 @@ ${data.images && data.images.length > 0 ? `
         }
         
                     
-        showMessage('✅ Formular wurde komplett geleert und zurückgesetzt!', 'success');
+        showMessage('&#9989; Formular wurde komplett geleert und zurückgesetzt!', 'success');
     }
 
     // Projekt-ID generieren
@@ -5403,8 +5424,12 @@ ${data.images && data.images.length > 0 ? `
     function validateFormData(data) {
         const errors = [];
         
-        if (!data.kunde || !data.kunde.trim()) {
-            errors.push('• Kundenname fehlt');
+        if (!data.anrede || !data.anrede.trim()) {
+            errors.push('• Anrede fehlt (Liebe Frau / Lieber Herr)');
+        }
+        
+        if (!data.nachname || !data.nachname.trim()) {
+            errors.push('• Nachname fehlt');
         }
         
         if (!data.startdatum) {
@@ -5477,9 +5502,9 @@ ${data.images && data.images.length > 0 ? `
     // 🚀 INITIALISIERUNG
     // ========================================
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('🌱 gardenKeeper® System wird initialisiert...');
+        console.log('&#127793; gardenKeeper® System wird initialisiert...');
 
-    // ✅ Warnung bei Seitenreload aktivieren
+    // &#9989; Warnung bei Seitenreload aktivieren
     setupUnloadWarning();
 
     try {
@@ -5496,7 +5521,7 @@ ${data.images && data.images.length > 0 ? `
                 openForm();
             });
             
-            console.log('✅ Button Event Listener registriert');
+            console.log('&#9989; Button Event Listener registriert');
         } else {
             console.error('❌ openFormBtn nicht gefunden!');
         }
@@ -5517,20 +5542,20 @@ ${data.images && data.images.length > 0 ? `
         setTimeout(() => {
             showMessage(`
                 🎉 <strong>gardenKeeper® Abnahmeformular bereit!</strong><br><br>
-                ✅ Modernes Design nach Ihren Farbvorgaben<br>
-                ✅ Sanfte Grün- und Brauntöne integriert<br>
-                ✅ Vollständige Funktionalität<br>
-                ✅ Touch-optimiert für Tablets<br>
-                ✅ PDF-Generierung einsatzbereit<br>
-                ✅ Unterschriften-System aktiv<br>
-                ✅ Email-Integration verfügbar<br>
-                ✅ <strong>BILD-UPLOAD UND PDF-INTEGRATION AKTIV!</strong><br><br>
-                🌱 Das System ist sofort einsatzbereit!<br><br>
+                &#9989; Modernes Design nach Ihren Farbvorgaben<br>
+                &#9989; Sanfte Grün- und Brauntöne integriert<br>
+                &#9989; Vollständige Funktionalität<br>
+                &#9989; Touch-optimiert für Tablets<br>
+                &#9989; PDF-Generierung einsatzbereit<br>
+                &#9989; Unterschriften-System aktiv<br>
+                &#9989; Email-Integration verfügbar<br>
+                &#9989; <strong>BILD-UPLOAD UND PDF-INTEGRATION AKTIV!</strong><br><br>
+                &#127793; Das System ist sofort einsatzbereit!<br><br>
                 💡 <strong>Klicken Sie auf "Abnahmeformular öffnen"</strong>
             `, 'success');
         }, 1500);
         
-        console.log('✅ gardenKeeper® System erfolgreich initialisiert');
+        console.log('&#9989; gardenKeeper® System erfolgreich initialisiert');
         
     } catch (error) {
         console.error('❌ Initialisierungsfehler:', error);
@@ -5548,7 +5573,7 @@ ${data.images && data.images.length > 0 ? `
                 console.log('🎯 Backup Event Listener - öffne Formular...');
                 openForm();
             });
-            console.log('✅ Backup Event Listener aktiviert');
+            console.log('&#9989; Backup Event Listener aktiviert');
         }
     }, 100);
 }
@@ -5580,14 +5605,14 @@ ${data.images && data.images.length > 0 ? `
         version: 'gardenKeeper® v2025 - MIT BILD-PDF-INTEGRATION UND UPLOAD-FIX'
     };
     /**
-     * 🌱 gardenKeeper® - MOBILE STICKY BUTTONS JAVASCRIPT
+     * &#127793; gardenKeeper® - MOBILE STICKY BUTTONS JAVASCRIPT
      * 
      * Diesen Code am Ende des bestehenden JavaScript einfügen
      * (vor dem schließenden script Tag)
      * 
-     * ✅ Aktiviert Sticky-Buttons auf Mobile
-     * ✅ Scroll-Detection
-     * ✅ Touch-optimiert
+     * &#9989; Aktiviert Sticky-Buttons auf Mobile
+     * &#9989; Scroll-Detection
+     * &#9989; Touch-optimiert
      */
 
     // ========================================
@@ -5622,7 +5647,7 @@ ${data.images && data.images.length > 0 ? `
         // Swipe-Indicator hinzufügen
         addSwipeIndicator();
         
-        console.log('✅ Auto-Hide Buttons aktiviert');
+        console.log('&#9989; Auto-Hide Buttons aktiviert');
     }
 }
 
@@ -5733,7 +5758,7 @@ ${data.images && data.images.length > 0 ? `
         }, 3000); // 3 Sekunden für ersten Hinweis
     }, 2000);
 
-    console.log('✅ Auto-Hide Buttons initialisiert (10s Sichtbarkeit)');
+    console.log('&#9989; Auto-Hide Buttons initialisiert (10s Sichtbarkeit)');
 }
 
     // ========================================
@@ -5765,7 +5790,7 @@ ${data.images && data.images.length > 0 ? `
     document.body.appendChild(indicator);
 
     // INDICATOR BLEIBT PERMANENT (kein Timeout!)
-    console.log('✅ Permanenter Button-Trigger am unteren Rand hinzugefügt');
+    console.log('&#9989; Permanenter Button-Trigger am unteren Rand hinzugefügt');
 }
 
     // ========================================
