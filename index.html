@@ -60,7 +60,7 @@
         background: linear-gradient(135deg, var(--sage-green) 0%, var(--light-moss) 100%);
     }
     
-    .launcher-container {F
+    .launcher-container {
         max-width: 600px;
         text-align: center;
         background: rgba(255,255,255,0.95);
@@ -2720,7 +2720,7 @@ formData.images = uploadedImages.map((img, index) => ({
     // ========================================
     
     // Google Apps Script URL - KONFIGURIERT FÜR IHRE UMGEBUNG
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynyl9LKDoWeKyJhOCLk94K9imcxXW-x148ILbh_y8E5a1zF1KHlqhjkfANrfqBEbPt-Q/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxajxH7qCrerYJKQTZQxPPkVhGJvTjYDOoFGtuPcoF6S2ggxMZCcNKdoiGdf3RgSdbBng/exec';
     
     // DriveFixSystem Class für robuste Speicherung
     class DriveFixSystem {
@@ -5517,7 +5517,7 @@ ${(() => {
     <div class="pdf-footer">
         <div class="company-name">&#127793; gardenKeeper® GmbH - Sven Krämer</div>
         <div class="contact-info">
-            <strong>☎</strong> Tel: 0681 9378 4009 |
+            <strong>☎</strong> Tel: 0681 93784009 |
             <strong>✉</strong> Email: info@gardenkeeper.de |
             <strong>🌐</strong> Web: www.gardenkeeper.de
         </div>
@@ -6640,7 +6640,7 @@ ${(() => {
             const docId = docLinkMatch[1];
             console.log('Found Google Doc ID:', docId);
 
-            const CONFIG_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynyl9LKDoWeKyJhOCLk94K9imcxXW-x148ILbh_y8E5a1zF1KHlqhjkfANrfqBEbPt-Q/exec';
+            const CONFIG_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxajxH7qCrerYJKQTZQxPPkVhGJvTjYDOoFGtuPcoF6S2ggxMZCcNKdoiGdf3RgSdbBng/exec';
             const response = await fetch(`${CONFIG_APPS_SCRIPT_URL}?action=getGoogleDoc&docId=${docId}`);
             const data = await response.json();
 
@@ -6757,22 +6757,34 @@ ${(() => {
 
         log('Fülle Formular-Felder aus...');
 
-        if (eventData.kunde) {
+        // Vorname (in Feld "kunde")
+        if (eventData.vorname) {
             const kundeField = document.getElementById('kunde');
             if (kundeField && !kundeField.value) {
-                kundeField.value = eventData.kunde;
-                log('✅ Kunde gesetzt:', eventData.kunde);
+                kundeField.value = eventData.vorname;
+                log('✅ Vorname gesetzt:', eventData.vorname);
             }
         }
 
-        if (eventData.kundenEmail) {
+        // Nachname
+        if (eventData.nachname) {
+            const nachnameField = document.getElementById('nachname');
+            if (nachnameField && !nachnameField.value) {
+                nachnameField.value = eventData.nachname;
+                log('✅ Nachname gesetzt:', eventData.nachname);
+            }
+        }
+
+        // Email
+        if (eventData.email) {
             const emailField = document.getElementById('kundenEmail');
             if (emailField && !emailField.value) {
-                emailField.value = eventData.kundenEmail;
-                log('✅ Email gesetzt:', eventData.kundenEmail);
+                emailField.value = eventData.email;
+                log('✅ Email gesetzt:', eventData.email);
             }
         }
 
+        // LexOffice ID
         if (eventData.lexofficeId) {
             const lexField = document.getElementById('lexofficeId');
             if (lexField && !lexField.value) {
@@ -6781,6 +6793,7 @@ ${(() => {
             }
         }
 
+        // Projektbeschreibung
         if (eventData.projektbeschreibung) {
             const beschreibungField = document.querySelector('textarea[name="projektbeschreibung"]');
             if (beschreibungField && !beschreibungField.value) {
@@ -6789,6 +6802,7 @@ ${(() => {
             }
         }
 
+        // Event ID (hidden field)
         if (eventData.eventId) {
             const eventIdField = document.getElementById('eventId');
             if (eventIdField) {
@@ -6856,7 +6870,7 @@ ${(() => {
             infoDiv.style.cssText = 'background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745;';
             infoDiv.innerHTML = `
                 <strong>✅ Event-Daten automatisch geladen!</strong><br>
-                <small>Kunde: ${eventData.kunde || '-'} | LexOffice: ${eventData.lexofficeId || '-'}</small>
+                <small>Kunde: ${eventData.vorname || ''} ${eventData.nachname || ''} | LexOffice: ${eventData.lexofficeId || '-'}</small>
             `;
 
             const form = document.querySelector('form');
