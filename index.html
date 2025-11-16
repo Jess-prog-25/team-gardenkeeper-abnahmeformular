@@ -1385,6 +1385,11 @@
 </style>
 </head>
 <body>
+    <!-- === LOADING INDICATOR === -->
+    <div id="loading-indicator" style="display: none; position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #00b4b4, #28a745); color: white; padding: 15px 30px; border-radius: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 10000; font-weight: bold; animation: pulse 1.5s infinite;">
+        ⏳ Lade Event-Daten...
+    </div>
+
     <!-- === LAUNCHER PAGE === -->
     <div class="launcher" id="launcherPage">
         <div class="launcher-container">
@@ -3722,6 +3727,11 @@ ${formData.days.map(day => `- Tag ${day.dayNumber}: ${day.beschreibungArbeiten}`
 
 ${emailMessage ? `ZUSAETZLICHE HINWEISE:\n${emailMessage}\n\n` : ''}
 
+${(() => {
+    const pflegeResult = analyzePflegeanleitungen(formData.days);
+    return pflegeResult.emailText || '';
+})()}
+
 WICHTIG: Bitte haengen Sie das PDF manuell an die E-Mail an!
 1. Erstellen Sie zuerst das PDF (Button "PDF erstellen")
 2. Speichern Sie das PDF
@@ -4554,6 +4564,14 @@ ${data.images && data.images.length > 0 ? `
         Erstellt mit dem gardenKeeper® Abnahmeformular-System
     </div>
 </div>
+
+<!-- === PFLEGEANLEITUNGEN (automatisch erkannt) === -->
+${(() => {
+    const pflegeResult = analyzePflegeanleitungen(data.days);
+    return pflegeResult.pdfHTML || '';
+})()}
+<!-- === ENDE PFLEGEANLEITUNGEN === -->
+
 </body>
 </html>`;
     } // Ende der generatePDFHTML Funktion
@@ -5983,5 +6001,12 @@ ${data.images && data.images.length > 0 ? `
     // ========================================
 
 </script>
+
+<!-- === PFLEGEANLEITUNG-SYSTEM === -->
+<script src="pflegeanleitung-system-KOMPLETT.js"></script>
+
+<!-- === EVENT AUTO-LOADER === -->
+<script src="event-auto-loader.js"></script>
+
 </body>
 </html>
