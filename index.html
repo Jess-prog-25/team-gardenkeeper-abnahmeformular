@@ -2720,7 +2720,7 @@ formData.images = uploadedImages.map((img, index) => ({
     // ========================================
     
     // Google Apps Script URL - KONFIGURIERT FÜR IHRE UMGEBUNG
-    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxajxH7qCrerYJKQTZQxPPkVhGJvTjYDOoFGtuPcoF6S2ggxMZCcNKdoiGdf3RgSdbBng/exec';
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynyl9LKDoWeKyJhOCLk94K9imcxXW-x148ILbh_y8E5a1zF1KHlqhjkfANrfqBEbPt-Q/exec';
     
     // DriveFixSystem Class für robuste Speicherung
     class DriveFixSystem {
@@ -6640,7 +6640,7 @@ ${(() => {
             const docId = docLinkMatch[1];
             console.log('Found Google Doc ID:', docId);
 
-            const CONFIG_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxajxH7qCrerYJKQTZQxPPkVhGJvTjYDOoFGtuPcoF6S2ggxMZCcNKdoiGdf3RgSdbBng/exec';
+            const CONFIG_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynyl9LKDoWeKyJhOCLk94K9imcxXW-x148ILbh_y8E5a1zF1KHlqhjkfANrfqBEbPt-Q/exec';
             const response = await fetch(`${CONFIG_APPS_SCRIPT_URL}?action=getGoogleDoc&docId=${docId}`);
             const data = await response.json();
 
