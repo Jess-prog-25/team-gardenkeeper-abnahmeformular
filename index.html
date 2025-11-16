@@ -409,7 +409,111 @@
         border-color: var(--sage-green);
         box-shadow: 0 0 0 3px var(--hover-tint);
     }
-    
+
+    /* === CHECKBOX GROUPS FOR GOOGLE DOC POSITIONS === */
+    .checkbox-group {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        border: 2px solid var(--border-light);
+        margin-bottom: 20px;
+    }
+
+    .checkbox-group h5 {
+        color: var(--dark-forest);
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-bottom: 2px solid var(--border-light);
+        padding-bottom: 10px;
+    }
+
+    .form-check {
+        padding-left: 0;
+    }
+
+    .form-check-input {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        cursor: pointer;
+        accent-color: var(--sage-green);
+    }
+
+    .form-check-label {
+        cursor: pointer;
+        font-size: 1rem;
+        color: var(--dark-forest);
+    }
+
+    .quantity-input-group {
+        margin-top: 10px;
+        padding-left: 30px;
+    }
+
+    .input-group {
+        display: flex;
+    }
+
+    .input-group .form-control {
+        flex: 1;
+        padding: 8px 12px;
+        border: 2px solid var(--border-light);
+        border-radius: 8px 0 0 8px;
+        font-size: 0.95rem;
+    }
+
+    .input-group-text {
+        padding: 8px 12px;
+        background: var(--pale-lime);
+        border: 2px solid var(--border-light);
+        border-left: none;
+        border-radius: 0 8px 8px 0;
+        font-size: 0.95rem;
+        color: var(--dark-forest);
+    }
+
+    .mb-2 {
+        margin-bottom: 0.5rem;
+    }
+
+    .mb-3 {
+        margin-bottom: 1rem;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    .mt-2 {
+        margin-top: 0.5rem;
+    }
+
+    .mt-3 {
+        margin-top: 1rem;
+    }
+
+    .ms-4 {
+        margin-left: 1.5rem;
+    }
+
+    .me-2 {
+        margin-right: 0.5rem;
+    }
+
+    .d-flex {
+        display: flex;
+    }
+
+    .align-items-center {
+        align-items: center;
+    }
+
+    .text-muted {
+        color: #666;
+        font-style: italic;
+    }
+
     /* === TAG MANAGEMENT === */
     .day-tabs {
         display: flex;
@@ -1648,8 +1752,22 @@
                     <!-- Arbeiten -->
                     <div class="section">
                         <h3>&#128296; Beschreibung ausgeführte Arbeiten</h3>
+
+                        <!-- Dynamic positions from Google Doc -->
+                        <div id="positions-container" style="margin-bottom: 20px;">
+                            <p style="color: #666; font-style: italic;">Google Doc wird geladen...</p>
+                        </div>
+
+                        <!-- Manual override button -->
+                        <div style="margin-bottom: 15px;">
+                            <button type="button" class="btn" onclick="toggleManualDescription()" style="background: var(--soft-clay); color: white; font-size: 0.9rem; padding: 8px 16px;">
+                                &#9999; Manuell beschreiben
+                            </button>
+                        </div>
+
+                        <!-- Manual textarea (hidden by default when positions are loaded) -->
                         <div class="field">
-                            <textarea class="beschreibung-arbeiten" rows="5" placeholder="Detaillierte Beschreibung der durchgeführten Arbeiten an diesem Tag..." required></textarea>
+                            <textarea class="beschreibung-arbeiten" rows="5" placeholder="Detaillierte Beschreibung der durchgeführten Arbeiten an diesem Tag..." style="display:none;"></textarea>
                         </div>
                     </div>
 
@@ -3175,7 +3293,7 @@ setTimeout(() => {
             workers,
             machines,
             materials,
-            beschreibungArbeiten: dayContent.querySelector('.beschreibung-arbeiten').value.trim(),
+            beschreibungArbeiten: generateDescriptionFromCheckboxes() || dayContent.querySelector('.beschreibung-arbeiten').value.trim(),
             zusatzarbeiten: dayContent.querySelector('.zusatzarbeiten').value.trim()
         };
     }
@@ -6082,13 +6200,720 @@ ${(() => {
     // 📊 DEBUG INFO
     // ========================================
 
+    // ============================================================================
+    // GOOGLE DOC PARSER - Integrated from googleDocParser.js
+    // ============================================================================
+    // Parses job positions from Google Docs and generates dynamic form checkboxes
+    // Version 1.0.0
+    // ============================================================================
+
+    /**
+     * Parses Google Doc text and extracts all job positions
+     */
+    function parseGoogleDocPositions(docText) {
+        if (!docText || typeof docText !== 'string') {
+            console.error('Invalid docText provided to parseGoogleDocPositions');
+            return [];
+        }
+
+        const positions = [];
+        const positionRegex = /[▶►]?\s*Position\s+(\d+)\s*:\s*([^\n]+)/gi;
+        let match;
+        const matches = [];
+
+        while ((match = positionRegex.exec(docText)) !== null) {
+            matches.push({
+                index: match.index,
+                id: match[1],
+                title: match[2].trim(),
+                fullMatch: match[0]
+            });
+        }
+
+        matches.forEach((currentMatch, idx) => {
+            const nextMatch = matches[idx + 1];
+            const startIndex = currentMatch.index + currentMatch.fullMatch.length;
+            const endIndex = nextMatch ? nextMatch.index : docText.length;
+
+            let descriptionText = docText.substring(startIndex, endIndex).trim();
+            descriptionText = descriptionText.replace(/^[:;\-\s]+/, '');
+
+            const quantityInfo = extractQuantityAndUnit(descriptionText);
+            const category = categorizePosition(currentMatch.title, descriptionText);
+
+            const position = {
+                id: currentMatch.id,
+                title: currentMatch.title,
+                description: descriptionText,
+                category: category,
+                quantity: quantityInfo.quantity,
+                unit: quantityInfo.unit,
+                rawText: docText.substring(currentMatch.index, endIndex).trim()
+            };
+
+            positions.push(position);
+        });
+
+        return positions.filter(pos => pos.category !== 'SKIP');
+    }
+
+    /**
+     * Extracts quantity and unit from description text
+     */
+    function extractQuantityAndUnit(text) {
+        if (!text) {
+            return { quantity: null, unit: null };
+        }
+
+        const mengeRegex = /Menge\s*:\s*([\d,\.]+)\s*([^\n\r]*?)(?:\n|\r|$)/i;
+        const match = text.match(mengeRegex);
+
+        if (match) {
+            const quantityStr = match[1].replace(',', '.');
+            const quantity = parseFloat(quantityStr);
+            let unit = match[2].trim();
+            unit = unit.replace(/[,;:\.]$/, '').trim();
+
+            return {
+                quantity: isNaN(quantity) ? null : quantity,
+                unit: unit || null
+            };
+        }
+
+        return { quantity: null, unit: null };
+    }
+
+    /**
+     * Intelligently categorizes a position
+     */
+    function categorizePosition(title, description) {
+        if (!title) {
+            return 'SKIP';
+        }
+
+        const combinedText = (title + ' ' + (description || '')).toLowerCase();
+
+        const skipPatterns = [
+            /\bstd\b/, /kostenschätzung/, /ar-nach-aufwand/, /frachtkosten/,
+            /anfahrt/, /pauschal/, /\bkm\b/, /fahrtkosten/, /beratung/
+        ];
+
+        for (const pattern of skipPatterns) {
+            if (pattern.test(combinedText)) {
+                return 'SKIP';
+            }
+        }
+
+        const plantPatterns = [
+            /\bpflanzen\b/, /\bliefern\s+u\.?\s+.*pflanzen/, /\bliefern\s+und\s+.*pflanzen/,
+            /\bstück\b.*pflanzen/, /thymus/, /lavandula/, /rosa\s+/, /salvia/,
+            /geranium/, /heuchera/, /hosta/, /\bstaude/, /\bgehölz/, /\bstrauch/, /\bbaum\b/
+        ];
+
+        for (const pattern of plantPatterns) {
+            if (pattern.test(combinedText)) {
+                return 'PLANT';
+            }
+        }
+
+        const materialPatterns = [
+            /\berde\b/, /\bdünger/, /\bpflanzerde/, /\bsubstrat/, /\bkompost/,
+            /\bmulch/, /\brindenmulch/, /\bkies\b/, /\bsand\b/, /\bsteine\b/,
+            /\bpflastersteine/, /\bsack\b/, /\bcbm\b/, /\bkg\b/, /\bliter\b/,
+            /\bm[²2]\b/, /\bm[³3]\b/, /\btonnen\b/, /\bcontainer\b/,
+            /\bfolie\b/, /\bvlies\b/, /\bdrainage/, /bodenqualität\s+verbessern/
+        ];
+
+        for (const pattern of materialPatterns) {
+            if (pattern.test(combinedText)) {
+                return 'MATERIAL';
+            }
+        }
+
+        const workPatterns = [
+            /\bmähen\b/, /\bmäht\b/, /\bschneiden\b/, /\bschnitt\b/, /\brückschnitt/,
+            /\bsäubern/, /\bsäuberung/, /\bbeseitigung/, /\bentfernung/, /\bentfernen/,
+            /\bunkraut/, /\blaub\b/, /\bverladen/, /\babfahren/, /\bentsorgen/,
+            /\bentsorgung/, /\bgraben\b/, /\bpflege\b/, /\bwartung/, /\breinigung/,
+            /\bbearbeitung/, /\bvorbereitung/, /\bnachbearbeitung/, /\bbefreien/,
+            /\bjäten\b/, /\bhacken\b/, /\blockern\b/, /\bumgraben/, /\bfräsen/,
+            /\bvertikutieren/, /\bbelüften/, /\bpsch\b/
+        ];
+
+        for (const pattern of workPatterns) {
+            if (pattern.test(combinedText)) {
+                return 'WORK';
+            }
+        }
+
+        if (/\bstück\b/i.test(combinedText)) {
+            return 'PLANT';
+        }
+
+        if (/\b(sack|kg|cbm|liter|tonnen|m[²³23])\b/i.test(combinedText)) {
+            return 'MATERIAL';
+        }
+
+        return 'WORK';
+    }
+
+    /**
+     * Generates HTML for dynamic checkboxes grouped by category
+     */
+    function generateDynamicCheckboxes(positions) {
+        if (!positions || positions.length === 0) {
+            return '<p class="text-muted">Keine Positionen gefunden.</p>';
+        }
+
+        const grouped = {
+            WORK: positions.filter(p => p.category === 'WORK'),
+            PLANT: positions.filter(p => p.category === 'PLANT'),
+            MATERIAL: positions.filter(p => p.category === 'MATERIAL')
+        };
+
+        let html = '';
+
+        if (grouped.WORK.length > 0) {
+            html += `
+<div class="checkbox-group mb-4">
+    <h5 class="mb-3">Durchgefuehrte Arbeiten</h5>
+    <div class="work-checkboxes">
+`;
+            grouped.WORK.forEach(pos => {
+                const checkboxId = `work_${pos.id}`;
+                const sanitizedTitle = escapeHtml(pos.title);
+                const sanitizedDescription = escapeHtml(pos.description.split('\n')[0]);
+
+                html += `
+        <div class="form-check mb-2">
+            <input class="form-check-input position-checkbox"
+                   type="checkbox"
+                   id="${checkboxId}"
+                   data-category="WORK"
+                   data-position-id="${pos.id}"
+                   data-title="${sanitizedTitle}"
+                   data-description="${sanitizedDescription}">
+            <label class="form-check-label" for="${checkboxId}">
+                <strong>Position ${pos.id}:</strong> ${sanitizedTitle}
+            </label>
+        </div>
+`;
+            });
+
+            html += `
+    </div>
+</div>
+`;
+        }
+
+        if (grouped.PLANT.length > 0) {
+            html += `
+<div class="checkbox-group mb-4">
+    <h5 class="mb-3">Gepflanzte Pflanzen</h5>
+    <div class="plant-checkboxes">
+`;
+            grouped.PLANT.forEach(pos => {
+                const checkboxId = `plant_${pos.id}`;
+                const quantityId = `plant_qty_${pos.id}`;
+                const sanitizedTitle = escapeHtml(pos.title);
+                const defaultQty = pos.quantity || '';
+                const unit = pos.unit || 'Stueck';
+
+                html += `
+        <div class="form-check mb-3">
+            <input class="form-check-input position-checkbox"
+                   type="checkbox"
+                   id="${checkboxId}"
+                   data-category="PLANT"
+                   data-position-id="${pos.id}"
+                   data-title="${sanitizedTitle}"
+                   data-unit="${escapeHtml(unit)}"
+                   data-quantity-input="${quantityId}">
+            <label class="form-check-label d-flex align-items-center" for="${checkboxId}">
+                <span class="me-2"><strong>Position ${pos.id}:</strong> ${sanitizedTitle}</span>
+            </label>
+            <div class="ms-4 mt-2 quantity-input-group" style="display: none;" data-for="${checkboxId}">
+                <div class="input-group input-group-sm" style="max-width: 200px;">
+                    <input type="number"
+                           class="form-control quantity-input"
+                           id="${quantityId}"
+                           placeholder="Menge"
+                           value="${defaultQty}"
+                           min="0"
+                           step="0.1">
+                    <span class="input-group-text">${escapeHtml(unit)}</span>
+                </div>
+            </div>
+        </div>
+`;
+            });
+
+            html += `
+    </div>
+</div>
+`;
+        }
+
+        if (grouped.MATERIAL.length > 0) {
+            html += `
+<div class="checkbox-group mb-4">
+    <h5 class="mb-3">Verwendete Materialien</h5>
+    <div class="material-checkboxes">
+`;
+            grouped.MATERIAL.forEach(pos => {
+                const checkboxId = `material_${pos.id}`;
+                const quantityId = `material_qty_${pos.id}`;
+                const sanitizedTitle = escapeHtml(pos.title);
+                const defaultQty = pos.quantity || '';
+                const unit = pos.unit || 'Stueck';
+
+                html += `
+        <div class="form-check mb-3">
+            <input class="form-check-input position-checkbox"
+                   type="checkbox"
+                   id="${checkboxId}"
+                   data-category="MATERIAL"
+                   data-position-id="${pos.id}"
+                   data-title="${sanitizedTitle}"
+                   data-unit="${escapeHtml(unit)}"
+                   data-quantity-input="${quantityId}">
+            <label class="form-check-label d-flex align-items-center" for="${checkboxId}">
+                <span class="me-2"><strong>Position ${pos.id}:</strong> ${sanitizedTitle}</span>
+            </label>
+            <div class="ms-4 mt-2 quantity-input-group" style="display: none;" data-for="${checkboxId}">
+                <div class="input-group input-group-sm" style="max-width: 200px;">
+                    <input type="number"
+                           class="form-control quantity-input"
+                           id="${quantityId}"
+                           placeholder="Menge"
+                           value="${defaultQty}"
+                           min="0"
+                           step="0.1">
+                    <span class="input-group-text">${escapeHtml(unit)}</span>
+                </div>
+            </div>
+        </div>
+`;
+            });
+
+            html += `
+    </div>
+</div>
+`;
+        }
+
+        return html;
+    }
+
+    /**
+     * Generates formatted description text from checked checkboxes
+     */
+    function generateDescriptionFromCheckboxes() {
+        const checkedBoxes = document.querySelectorAll('.position-checkbox:checked');
+
+        if (checkedBoxes.length === 0) {
+            return '';
+        }
+
+        const grouped = {
+            WORK: [],
+            PLANT: [],
+            MATERIAL: []
+        };
+
+        checkedBoxes.forEach(checkbox => {
+            const category = checkbox.dataset.category;
+            const title = checkbox.dataset.title;
+            const unit = checkbox.dataset.unit;
+            const quantityInputId = checkbox.dataset.quantityInput;
+
+            let item = { title };
+
+            if (quantityInputId) {
+                const quantityInput = document.getElementById(quantityInputId);
+                if (quantityInput && quantityInput.value) {
+                    item.quantity = quantityInput.value;
+                    item.unit = unit;
+                }
+            }
+
+            if (grouped[category]) {
+                grouped[category].push(item);
+            }
+        });
+
+        let description = '';
+
+        if (grouped.WORK.length > 0) {
+            description += 'Durchgefuehrte Arbeiten:\n';
+            grouped.WORK.forEach(item => {
+                description += `- ${item.title}\n`;
+            });
+            description += '\n';
+        }
+
+        if (grouped.PLANT.length > 0) {
+            description += 'Gepflanzte Pflanzen:\n';
+            grouped.PLANT.forEach(item => {
+                if (item.quantity && item.unit) {
+                    description += `- ${item.quantity} ${item.unit} ${item.title}\n`;
+                } else {
+                    description += `- ${item.title}\n`;
+                }
+            });
+            description += '\n';
+        }
+
+        if (grouped.MATERIAL.length > 0) {
+            description += 'Verwendete Materialien:\n';
+            grouped.MATERIAL.forEach(item => {
+                if (item.quantity && item.unit) {
+                    description += `- ${item.quantity} ${item.unit} ${item.title}\n`;
+                } else {
+                    description += `- ${item.title}\n`;
+                }
+            });
+            description += '\n';
+        }
+
+        return description.trim();
+    }
+
+    /**
+     * Initializes checkbox event handlers
+     */
+    function initializeCheckboxHandlers() {
+        document.querySelectorAll('.position-checkbox').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const quantityInputId = this.dataset.quantityInput;
+                if (quantityInputId) {
+                    const quantityGroup = document.querySelector(`[data-for="${this.id}"]`);
+                    if (quantityGroup) {
+                        quantityGroup.style.display = this.checked ? 'block' : 'none';
+                    }
+                }
+            });
+        });
+    }
+
+    /**
+     * Escapes HTML special characters to prevent XSS
+     */
+    function escapeHtml(text) {
+        if (!text) return '';
+
+        const map = {
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#039;'
+        };
+
+        return text.replace(/[&<>"']/g, m => map[m]);
+    }
+
+    /**
+     * Toggle manual description textarea visibility
+     */
+    function toggleManualDescription() {
+        const textarea = document.querySelector('.beschreibung-arbeiten');
+        if (textarea) {
+            const currentDisplay = window.getComputedStyle(textarea).display;
+            textarea.style.display = currentDisplay === 'none' ? 'block' : 'none';
+        }
+    }
+
+    /**
+     * Load Google Doc and parse positions
+     */
+    async function loadGoogleDocPositions(eventData) {
+        try {
+            const description = eventData.description || '';
+            const docLinkMatch = description.match(/https:\/\/docs\.google\.com\/document\/d\/([a-zA-Z0-9_-]+)/);
+
+            if (!docLinkMatch) {
+                console.log('No Google Doc link found in event');
+                return null;
+            }
+
+            const docId = docLinkMatch[1];
+            console.log('Found Google Doc ID:', docId);
+
+            const CONFIG_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxajxH7qCrerYJKQTZQxPPkVhGJvTjYDOoFGtuPcoF6S2ggxMZCcNKdoiGdf3RgSdbBng/exec';
+            const response = await fetch(`${CONFIG_APPS_SCRIPT_URL}?action=getGoogleDoc&docId=${docId}`);
+            const data = await response.json();
+
+            if (data.success && data.docText) {
+                const positions = parseGoogleDocPositions(data.docText);
+                console.log('Parsed positions:', positions);
+
+                const checkboxesHtml = generateDynamicCheckboxes(positions);
+
+                const container = document.getElementById('positions-container');
+                if (container) {
+                    container.innerHTML = checkboxesHtml;
+                    initializeCheckboxHandlers();
+                }
+
+                return positions;
+            }
+        } catch (error) {
+            console.error('Error loading Google Doc:', error);
+            const container = document.getElementById('positions-container');
+            if (container) {
+                container.innerHTML = '<p style="color: #dc3545;">Fehler beim Laden der Auftragspositionen. Bitte manuell eingeben.</p>';
+            }
+        }
+        return null;
+    }
+
 </script>
 
 <!-- === PFLEGEANLEITUNG-SYSTEM === -->
 <script src="pflegeanleitung-system-KOMPLETT.js"></script>
 
-<!-- === EVENT AUTO-LOADER === -->
-<script src="event-auto-loader.js"></script>
+<!-- === EVENT AUTO-LOADER WITH GOOGLE DOC PARSER INTEGRATION === -->
+<script>
+(function() {
+    'use strict';
+
+    // ═══════════════════════════════════════════════════════════════════
+    // EVENT AUTO-LOADER - Integrated and Extended with Google Doc Parser
+    // ═══════════════════════════════════════════════════════════════════
+
+    const CONFIG = {
+        APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxajxH7qCrerYJKQTZQxPPkVhGJvTjYDOoFGtuPcoF6S2ggxMZCcNKdoiGdf3RgSdbBng/exec',
+        TIMEOUT: 10000,
+        DEBUG: true
+    };
+
+    function getEventIdFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('event');
+    }
+
+    function log(message, data) {
+        if (CONFIG.DEBUG) {
+            if (data !== undefined) {
+                console.log('🍁 EventLoader:', message, data);
+            } else {
+                console.log('🍁 EventLoader:', message);
+            }
+        }
+    }
+
+    function showLoadingIndicator(message) {
+        const indicator = document.getElementById('loading-indicator');
+        if (indicator) {
+            indicator.textContent = message || '⏳ Lade Event-Daten...';
+            indicator.style.display = 'block';
+        }
+    }
+
+    function hideLoadingIndicator() {
+        const indicator = document.getElementById('loading-indicator');
+        if (indicator) {
+            indicator.style.display = 'none';
+        }
+    }
+
+    async function loadEventData(eventId) {
+        log('Lade Event-Daten für ID:', eventId);
+
+        if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'HIER_APPS_SCRIPT_URL_EINTRAGEN') {
+            log('❌ Apps Script URL nicht konfiguriert!');
+            return null;
+        }
+
+        try {
+            const url = `${CONFIG.APPS_SCRIPT_URL}?action=getEventData&eventId=${encodeURIComponent(eventId)}`;
+
+            const response = await fetch(url, {
+                method: 'GET',
+                redirect: 'follow'
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+
+            const data = await response.json();
+            log('Event-Daten empfangen:', data);
+
+            return data;
+
+        } catch (error) {
+            log('❌ Fehler beim Laden der Event-Daten:', error);
+            return null;
+        }
+    }
+
+    function fillFormFields(eventData) {
+        if (!eventData || !eventData.success) {
+            log('❌ Keine gültigen Event-Daten zum Befüllen');
+            return;
+        }
+
+        log('Fülle Formular-Felder aus...');
+
+        if (eventData.kunde) {
+            const kundeField = document.getElementById('kunde');
+            if (kundeField && !kundeField.value) {
+                kundeField.value = eventData.kunde;
+                log('✅ Kunde gesetzt:', eventData.kunde);
+            }
+        }
+
+        if (eventData.kundenEmail) {
+            const emailField = document.getElementById('kundenEmail');
+            if (emailField && !emailField.value) {
+                emailField.value = eventData.kundenEmail;
+                log('✅ Email gesetzt:', eventData.kundenEmail);
+            }
+        }
+
+        if (eventData.lexofficeId) {
+            const lexField = document.getElementById('lexofficeId');
+            if (lexField && !lexField.value) {
+                lexField.value = eventData.lexofficeId;
+                log('✅ LexOffice-ID gesetzt:', eventData.lexofficeId);
+            }
+        }
+
+        if (eventData.projektbeschreibung) {
+            const beschreibungField = document.querySelector('textarea[name="projektbeschreibung"]');
+            if (beschreibungField && !beschreibungField.value) {
+                beschreibungField.value = eventData.projektbeschreibung;
+                log('✅ Projektbeschreibung gesetzt');
+            }
+        }
+
+        if (eventData.eventId) {
+            const eventIdField = document.getElementById('eventId');
+            if (eventIdField) {
+                eventIdField.value = eventData.eventId;
+            }
+        }
+    }
+
+    async function initAutoLoader() {
+        log('🚀 Event Auto-Loader gestartet');
+
+        const eventId = getEventIdFromURL();
+
+        if (!eventId) {
+            log('ℹ️ Keine Event-ID in URL gefunden - normaler Modus');
+            // Clear the positions container loading message
+            const container = document.getElementById('positions-container');
+            if (container) {
+                container.innerHTML = '<p style="color: #666; font-style: italic;">Keine Google Doc-Positionen verfügbar. Bitte manuell beschreiben.</p>';
+            }
+            // Show manual textarea by default
+            const textarea = document.querySelector('.beschreibung-arbeiten');
+            if (textarea) {
+                textarea.style.display = 'block';
+            }
+            return;
+        }
+
+        log('Event-ID gefunden:', eventId);
+        showLoadingIndicator('⏳ Lade Event-Daten...');
+
+        const eventData = await loadEventData(eventId);
+
+        if (eventData && eventData.success) {
+            log('✅ Event-Daten erfolgreich geladen');
+
+            fillFormFields(eventData);
+
+            // NEW: Load Google Doc and parse positions
+            showLoadingIndicator('⏳ Lade Arbeitspositionen aus Google Doc...');
+            const positions = await loadGoogleDocPositions(eventData);
+
+            if (positions && positions.length > 0) {
+                log('✅ Google Doc Positionen erfolgreich geladen');
+                // Textarea remains hidden
+            } else {
+                log('ℹ️ Keine Positionen in Google Doc gefunden');
+                // Show manual textarea as fallback
+                const textarea = document.querySelector('.beschreibung-arbeiten');
+                if (textarea) {
+                    textarea.style.display = 'block';
+                }
+                const container = document.getElementById('positions-container');
+                if (container && container.innerHTML.includes('Fehler')) {
+                    // Error already shown by loadGoogleDocPositions
+                } else if (container) {
+                    container.innerHTML = '<p style="color: #666; font-style: italic;">Keine Positionen im Google Doc gefunden.</p>';
+                }
+            }
+
+            hideLoadingIndicator();
+
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'success-message';
+            infoDiv.style.cssText = 'background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #28a745;';
+            infoDiv.innerHTML = `
+                <strong>✅ Event-Daten automatisch geladen!</strong><br>
+                <small>Kunde: ${eventData.kunde || '-'} | LexOffice: ${eventData.lexofficeId || '-'}</small>
+            `;
+
+            const form = document.querySelector('form');
+            if (form && form.firstChild) {
+                form.insertBefore(infoDiv, form.firstChild);
+            }
+
+        } else {
+            hideLoadingIndicator();
+            log('⚠️ Event-Daten konnten nicht geladen werden');
+
+            // Show manual textarea as fallback
+            const textarea = document.querySelector('.beschreibung-arbeiten');
+            if (textarea) {
+                textarea.style.display = 'block';
+            }
+
+            const container = document.getElementById('positions-container');
+            if (container) {
+                container.innerHTML = '<p style="color: #666;">Event konnte nicht geladen werden.</p>';
+            }
+
+            const warningDiv = document.createElement('div');
+            warningDiv.className = 'warning-message';
+            warningDiv.style.cssText = 'background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ffc107;';
+            warningDiv.innerHTML = `
+                <strong>⚠️ Event-Daten konnten nicht geladen werden</strong><br>
+                <small>Bitte Daten manuell eingeben. Event-ID: ${eventId}</small>
+            `;
+
+            const form = document.querySelector('form');
+            if (form && form.firstChild) {
+                form.insertBefore(warningDiv, form.firstChild);
+            }
+        }
+    }
+
+    // Wait for DOM ready
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initAutoLoader);
+    } else {
+        initAutoLoader();
+    }
+
+    // Export for debug
+    window.gardenKeeperEventLoader = {
+        loadEventData,
+        fillFormFields,
+        loadGoogleDocPositions,
+        getEventIdFromURL,
+        version: '2025.11.16-INTEGRATED'
+    };
+
+    log('✅ Event Auto-Loader Modul geladen (with Google Doc Parser)');
+
+})();
+</script>
 
 </body>
 </html>
