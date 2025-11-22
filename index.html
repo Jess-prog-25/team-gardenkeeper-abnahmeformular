@@ -3200,11 +3200,10 @@ setTimeout(() => {
             anrede: document.getElementById('anrede')?.value?.trim() || '',
             nachname: document.getElementById('nachname')?.value?.trim() || '',
             kunde: document.getElementById('kunde')?.value?.trim() || '',
+            istPauschal: document.getElementById('abrechnungsart')?.value === 'pauschal',
             kundenEmail: document.getElementById('kundenEmail')?.value?.trim() || '',
             lexofficeId: document.getElementById('lexofficeId')?.value?.trim() || '',
             startdatum: document.getElementById('startdatum')?.value || '',
-            projektbeschreibung: document.getElementById('projektbeschreibung')?.value?.trim() || '',
-            ansprechpartner: document.getElementById('ansprechpartner')?.value?.trim() || '',
             days: [],
             checkboxes: {
                 auftragGemaess: document.getElementById('auftragGemaess').checked,
@@ -4524,8 +4523,6 @@ Web: www.gardenkeeper.de
             <div class="field"><strong>Gesamtstunden:</strong> ${totalHours.toFixed(2)} Std.</div>
             ${data.kundenEmail ? `<div class="field"><strong>Kunde Email:</strong> ${data.kundenEmail}</div>` : ''}
         </div>
-        ${data.projektbeschreibung ? `<div class="field"><strong>Projektbeschreibung:</strong> ${data.projektbeschreibung}</div>` : ''}
-        ${data.ansprechpartner ? `<div class="field"><strong>Ansprechpartner:</strong> ${data.ansprechpartner}</div>` : ''}
     </div>
 </div>
 
@@ -6639,8 +6636,7 @@ ${(() => {
             const docId = docLinkMatch[1];
             console.log('Found Google Doc ID:', docId);
 
-            const CONFIG_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbynyl9LKDoWeKyJhOCLk94K9imcxXW-x148ILbh_y8E5a1zF1KHlqhjkfANrfqBEbPt-Q/exec';
-            const response = await fetch(`${CONFIG_APPS_SCRIPT_URL}?action=getGoogleDoc&docId=${docId}`);
+            const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getGoogleDoc&docId=${docId}`);
             const data = await response.json();
 
             if (data.success && data.docText) {
@@ -6682,7 +6678,7 @@ ${(() => {
     // ═══════════════════════════════════════════════════════════════════
 
     const CONFIG = {
-        APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbynyl9LKDoWeKyJhOCLk94K9imcxXW-x148ILbh_y8E5a1zF1KHlqhjkfANrfqBEbPt-Q/exec',
+        APPS_SCRIPT_URL: GOOGLE_SCRIPT_URL,
         TIMEOUT: 10000,
         DEBUG: true
     };
@@ -6792,14 +6788,6 @@ ${(() => {
             }
         }
 
-        // Projektbeschreibung
-        if (eventData.projektbeschreibung) {
-            const beschreibungField = document.querySelector('textarea[name="projektbeschreibung"]');
-            if (beschreibungField && !beschreibungField.value) {
-                beschreibungField.value = eventData.projektbeschreibung;
-                log('✅ Projektbeschreibung gesetzt');
-            }
-        }
 
         // Event ID (hidden field)
         if (eventData.eventId) {
