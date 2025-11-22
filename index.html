@@ -3197,15 +3197,14 @@ setTimeout(() => {
 
     function getFormData() {
         const data = {
-            anrede: document.getElementById('anrede').value.trim(),
-            nachname: document.getElementById('nachname').value.trim(),
-            kunde: document.getElementById('kunde').value.trim(),
-            istPauschal: document.getElementById('abrechnungsart')?.value === 'pauschal',
-            kundenEmail: document.getElementById('kundenEmail').value.trim(),
-            lexofficeId: document.getElementById('lexofficeId').value.trim(),
-            startdatum: document.getElementById('startdatum').value,
-            projektbeschreibung: document.getElementById('projektbeschreibung').value.trim(),
-            ansprechpartner: document.getElementById('ansprechpartner').value.trim(),
+            anrede: document.getElementById('anrede')?.value?.trim() || '',
+            nachname: document.getElementById('nachname')?.value?.trim() || '',
+            kunde: document.getElementById('kunde')?.value?.trim() || '',
+            kundenEmail: document.getElementById('kundenEmail')?.value?.trim() || '',
+            lexofficeId: document.getElementById('lexofficeId')?.value?.trim() || '',
+            startdatum: document.getElementById('startdatum')?.value || '',
+            projektbeschreibung: document.getElementById('projektbeschreibung')?.value?.trim() || '',
+            ansprechpartner: document.getElementById('ansprechpartner')?.value?.trim() || '',
             days: [],
             checkboxes: {
                 auftragGemaess: document.getElementById('auftragGemaess').checked,
@@ -3215,7 +3214,7 @@ setTimeout(() => {
                 kundeZufrieden: document.getElementById('kundeZufrieden').checked,
                 arbeitsplatzSauber: document.getElementById('arbeitsplatzSauber').checked
             },
-            bemerkungen: document.getElementById('bemerkungen').value.trim(),
+            bemerkungen: document.getElementById('bemerkungen')?.value?.trim() || '',
             signatures: daySignatures,
             images: uploadedImages  // BILDER HINZUGEFÜGT
         };
