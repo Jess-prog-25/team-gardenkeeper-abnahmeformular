@@ -1620,6 +1620,10 @@
                         <input type="date" id="startdatum" required>
                     </div>
                 </div>
+                <div class="field">
+                    <label>Projektbeschreibung</label>
+                    <textarea id="projektbeschreibung" name="projektbeschreibung" rows="3" placeholder="Kurze Beschreibung des Projekts..."></textarea>
+                </div>
             </div>
 
             <!-- Tage-Tabs -->
@@ -3007,12 +3011,26 @@ setTimeout(() => {
 }
     function handleImageUpload(event) {
         const files = event.target.files;
-        for (let file of files) {
-            if (file.type.startsWith('image/')) {
-                processImage(file);
-            }
+
+        if (!files || files.length === 0) {
+            console.log('❌ Keine Dateien ausgewählt');
+            return;
         }
-        event.target.value = ''; // Reset input
+
+        console.log(`📸 ${files.length} Datei(en) ausgewählt`);
+
+        // Verarbeite alle ausgewählten Dateien
+        Array.from(files).forEach(file => {
+            if (file.type.startsWith('image/')) {
+                console.log(`✅ Verarbeite Bild: ${file.name}`);
+                processImage(file);
+            } else {
+                console.log(`⚠️ Überspringe Nicht-Bild: ${file.name}`);
+            }
+        });
+
+        // Reset input damit gleiche Datei nochmal gewählt werden kann
+        event.target.value = '';
     }
 
     /**
@@ -3171,28 +3189,43 @@ setTimeout(() => {
     // Drag & Drop Support
     function setupDragAndDrop() {
         const uploadZone = document.querySelector('.upload-zone');
-        
+
+        if (!uploadZone) {
+            console.warn('⚠️ Upload-Zone nicht gefunden');
+            return;
+        }
+
         uploadZone.addEventListener('dragover', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             uploadZone.classList.add('dragover');
         });
-        
+
         uploadZone.addEventListener('dragleave', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             uploadZone.classList.remove('dragover');
         });
-        
+
         uploadZone.addEventListener('drop', function(e) {
             e.preventDefault();
+            e.stopPropagation();
             uploadZone.classList.remove('dragover');
-            
+
             const files = e.dataTransfer.files;
-            for (let file of files) {
+            console.log(`📸 ${files.length} Datei(en) per Drag & Drop`);
+
+            Array.from(files).forEach(file => {
                 if (file.type.startsWith('image/')) {
+                    console.log(`✅ Verarbeite: ${file.name}`);
                     processImage(file);
+                } else {
+                    console.log(`⚠️ Überspringe Nicht-Bild: ${file.name}`);
                 }
-            }
+            });
         });
+
+        console.log('✅ Drag & Drop initialisiert');
     }
 
     function getFormData() {
@@ -3204,6 +3237,7 @@ setTimeout(() => {
             kundenEmail: document.getElementById('kundenEmail')?.value?.trim() || '',
             lexofficeId: document.getElementById('lexofficeId')?.value?.trim() || '',
             startdatum: document.getElementById('startdatum')?.value || '',
+            projektbeschreibung: document.getElementById('projektbeschreibung')?.value?.trim() || '',
             days: [],
             checkboxes: {
                 auftragGemaess: document.getElementById('auftragGemaess').checked,
