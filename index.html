@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -4276,13 +4277,13 @@ Web: www.gardenkeeper.de
         background: white;
     }
 
-    .image-item img {
-        width: 100%;
-        height: 180px;  /* Optimiert für A4 */
-        object-fit: cover;
-        display: block;
-        object-fit: cover;
-        display: block;
+   /* NEU: */
+   .image-item img {
+       width: 100%;
+       max-height: 280px;
+       object-fit: contain;
+       display: block;
+       background: #f5f3f0;
     }
 
     .image-caption {
@@ -4306,10 +4307,11 @@ Web: www.gardenkeeper.de
             gap: 15px;
         }
         
-        .image-item img {
-            height: 150px;
-        }
+   .image-item img {
+       max-height: 220px;
+       object-fit: contain;
     }
+
     
     .footer {
         margin-top: 50px;
@@ -4550,7 +4552,7 @@ Web: www.gardenkeeper.de
     </div>
     <div class="section-content">
         <div class="grid">
-            <div class="field"><strong>Kunde:</strong> ${data.kunde}</div>
+            <div class="field"><strong>Kunde:</strong> ${data.kunde} ${data.nachname || ''}</div>
             <div class="field"><strong>LexOffice-ID:</strong> ${data.lexofficeId || '---'}</div>
             <div class="field"><strong>Startdatum:</strong> ${new Date(data.startdatum).toLocaleDateString('de-DE')}</div>
             <div class="field"><strong>Projekttage:</strong> ${data.days.length}</div>
