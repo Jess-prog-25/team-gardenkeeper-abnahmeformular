@@ -1486,7 +1486,357 @@
         margin-bottom: 6px;
         font-size: 10pt;
     }
+/* 📱 MOBILE OPTIMIERUNG - HANDY-FREUNDLICH */
+/* Diese CSS-Regeln in Ihre HTML einfügen! */
 
+/* ========================================
+   🎯 UNTERSCHRIFTEN - KOMPAKTER
+   ======================================== */
+
+/* Unterschriften-Container kleiner machen */
+#signatureCanvas {
+    width: 100% !important;
+    height: 150px !important;  /* Vorher: 250px - JETZT KLEINER */
+    max-height: 150px !important;
+    border: 2px solid var(--border-light) !important;
+    border-radius: 8px !important;
+    touch-action: none;
+}
+
+.signature-box {
+    margin: 15px 0 !important;  /* Weniger Abstand */
+    padding: 15px !important;   /* Weniger Padding */
+}
+
+.signature-box h4 {
+    font-size: 1rem !important;  /* Kleinere Überschrift */
+    margin-bottom: 10px !important;
+}
+
+/* ========================================
+   ✅ CHECKBOXEN - KOMPAKTER
+   ======================================== */
+
+.checkbox-group {
+    padding: 15px !important;  /* Vorher: 25px */
+    margin: 10px 0 !important;
+}
+
+.checkbox-item {
+    padding: 12px 15px !important;  /* Vorher: 20px */
+    margin: 8px 0 !important;       /* Weniger Abstand */
+    font-size: 0.95rem !important;  /* Etwas kleiner */
+    line-height: 1.4 !important;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 22px !important;   /* Vorher: 28px */
+    height: 22px !important;
+    min-width: 22px !important;
+    margin-right: 12px !important;
+}
+
+.checkbox-item label {
+    font-size: 0.95rem !important;
+    line-height: 1.4 !important;
+}
+
+/* ========================================
+   📝 TEXTFELDER & INPUTS - KOMPAKTER
+   ======================================== */
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+input[type="time"],
+input[type="number"],
+textarea,
+select {
+    padding: 10px 12px !important;  /* Vorher: 15px */
+    font-size: 0.95rem !important;
+    height: auto !important;
+    min-height: 42px !important;    /* Vorher: 50px */
+}
+
+textarea {
+    min-height: 80px !important;    /* Vorher: 120px */
+}
+
+/* ========================================
+   🔼 BUTTONS - KOMPAKTER
+   ======================================== */
+
+.button,
+button {
+    padding: 12px 20px !important;  /* Vorher: 15px 30px */
+    font-size: 0.95rem !important;
+    min-height: 44px !important;    /* Touch-freundlich */
+}
+
+.icon-button {
+    width: 40px !important;   /* Vorher: 50px */
+    height: 40px !important;
+    min-width: 40px !important;
+}
+
+/* ========================================
+   📦 SECTIONS & BOXES - KOMPAKTER
+   ======================================== */
+
+.section {
+    padding: 20px 15px !important;  /* Vorher: 30px */
+    margin-bottom: 20px !important;
+}
+
+.box,
+.info-box {
+    padding: 15px !important;       /* Vorher: 25px */
+    margin: 15px 0 !important;
+}
+
+.form-group {
+    margin-bottom: 15px !important; /* Vorher: 25px */
+}
+
+/* ========================================
+   📏 ÜBERSCHRIFTEN - KOMPAKTER
+   ======================================== */
+
+h2 {
+    font-size: 1.4rem !important;   /* Vorher: 1.8rem */
+    margin-bottom: 15px !important;
+}
+
+h3 {
+    font-size: 1.2rem !important;   /* Vorher: 1.5rem */
+    margin: 15px 0 10px 0 !important;
+}
+
+h4 {
+    font-size: 1.05rem !important;  /* Vorher: 1.2rem */
+    margin: 12px 0 8px 0 !important;
+}
+
+/* ========================================
+   📸 BILDER-GRID - KOMPAKTER
+   ======================================== */
+
+.images-grid {
+    grid-template-columns: 1fr !important;  /* 1 Spalte statt 2 */
+    gap: 15px !important;
+}
+
+.image-preview {
+    max-height: 200px !important;  /* Vorher: 300px */
+}
+
+.image-item {
+    padding: 12px !important;
+}
+
+/* ========================================
+   👥 MITARBEITER-LISTE - KOMPAKTER
+   ======================================== */
+
+.worker-item {
+    padding: 12px !important;      /* Vorher: 20px */
+    margin: 8px 0 !important;
+}
+
+.time-inputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px !important;
+}
+
+.time-inputs input {
+    flex: 1;
+    min-width: 100px;
+}
+
+/* ========================================
+   🎨 MATERIALS & MACHINES - KOMPAKTER
+   ======================================== */
+
+.material-row,
+.machine-row {
+    padding: 10px !important;      /* Vorher: 15px */
+    margin: 8px 0 !important;
+}
+
+/* ========================================
+   📱 SPEZIELLE MOBILE ANPASSUNGEN
+   ======================================== */
+
+@media (max-width: 768px) {
+    
+    /* Noch kleinere Schrift auf kleinen Displays */
+    body {
+        font-size: 14px !important;
+    }
+    
+    /* Container volle Breite nutzen */
+    .container {
+        padding: 10px !important;
+    }
+    
+    /* Header kompakter */
+    .page-header {
+        padding: 20px 15px !important;
+    }
+    
+    .page-header h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    /* Tages-Cards kompakter */
+    .day-card {
+        padding: 15px !important;
+        margin: 15px 0 !important;
+    }
+    
+    /* Button-Groups untereinander */
+    .button-group {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .button-group button {
+        width: 100% !important;
+    }
+    
+    /* Signature noch kleiner auf sehr kleinen Displays */
+    #signatureCanvas {
+        height: 120px !important;
+    }
+    
+    /* Weniger Padding überall */
+    * {
+        padding-top: calc(padding-top * 0.8);
+        padding-bottom: calc(padding-bottom * 0.8);
+    }
+}
+
+/* ========================================
+   🔼 "NACH OBEN" BUTTON VERSTECKEN
+   ======================================== */
+
+/* Der störende "Nach oben wischen" Button */
+.scroll-to-top,
+.sticky-button {
+    display: none !important;  /* Komplett ausblenden */
+}
+
+/* Falls er anders heißt: */
+[class*="scroll"][class*="top"],
+[class*="back"][class*="top"] {
+    display: none !important;
+}
+
+/* ========================================
+   ✅ ERFOLGS-SEITE - KOMPAKTER
+   ======================================== */
+
+#successPage {
+    padding: 20px 15px !important;
+}
+
+.success-box {
+    padding: 20px !important;
+}
+
+.success-box h2 {
+    font-size: 1.6rem !important;
+}
+
+/* ========================================
+   📋 ZUSAMMENFASSUNG - KOMPAKTER
+   ======================================== */
+
+.summary-section {
+    padding: 15px !important;
+}
+
+.summary-item {
+    padding: 10px !important;
+    margin: 8px 0 !important;
+}
+
+/* ========================================
+   🎯 WICHTIGE ELEMENTE HERVORHEBEN
+   ======================================== */
+
+/* Wichtige Buttons größer lassen */
+.complete-button,
+.submit-button,
+.primary-button {
+    min-height: 50px !important;  /* Diese BLEIBEN groß */
+    font-size: 1.05rem !important;
+}
+
+/* Zurück-Button klein halten */
+.back-button,
+.secondary-button {
+    min-height: 40px !important;
+    padding: 10px 15px !important;
+}
+
+/* ========================================
+   💡 WEITERE OPTIMIERUNGEN
+   ======================================== */
+
+/* Zeilen-Höhe global reduzieren */
+* {
+    line-height: 1.4 !important;
+}
+
+/* Weniger Schatten (Performance) */
+.box,
+.card,
+.section {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08) !important;
+}
+
+/* Animationen auf Mobile reduzieren */
+@media (max-width: 768px) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* ========================================
+   🎨 ALLGEMEINE MOBILE VERBESSERUNGEN
+   ======================================== */
+
+/* Touch-Targets mindestens 44x44px */
+button,
+input,
+select,
+textarea,
+a,
+.clickable {
+    min-height: 44px !important;
+    min-width: 44px !important;
+}
+
+/* Scrollbar verstecken auf Mobile */
+::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+}
+
+/* Smooth Scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Zoom-Verhalten verbessern */
+input,
+select,
+textarea {
+    font-size: 16px !important;  /* Verhindert Auto-Zoom auf iOS */
+}
 </style>
 </head>
 <body>
