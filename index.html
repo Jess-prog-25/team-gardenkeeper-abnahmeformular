@@ -2766,7 +2766,7 @@ textarea {
                         </p>
                         <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
                             <p style="margin: 5px 0; color: #2d3e2d;">
-                                <strong>&#128222; Telefon:</strong> 0681 99191820
+                                <strong>&#128222; Telefon:</strong> 0681 9378 4009
                             </p>
                             <p style="margin: 5px 0; color: #2d3e2d;">
                                 <strong>&#128231; E-Mail:</strong> <a href="mailto:info@gardenkeeper.de" style="color: #00b4b4; text-decoration: none;">info@gardenkeeper.de</a>
@@ -2784,7 +2784,7 @@ textarea {
                 <div style="background: linear-gradient(135deg, #4a4539, #3a3530); color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px;">
                     <p style="margin: 0; font-size: 16px; font-weight: bold;">&#127793; gardenKeeper® GmbH</p>
                     <p style="margin: 5px 0 0 0; opacity: 0.9;">Sven Krämer</p>
-                    <p style="margin: 5px 0 0 0; opacity: 0.8;">&#128222; 0681 99191820 | &#128231; info@gardenkeeper.de</p>
+                    <p style="margin: 5px 0 0 0; opacity: 0.8;">&#128222; 0681 9378 4009 | &#128231; info@gardenkeeper.de</p>
                     <p style="margin: 10px 0 0 0; font-style: italic; opacity: 0.9;">"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</p>
                 </div>
             </div>
@@ -2851,7 +2851,7 @@ formData.images = uploadedImages.map((img, index) => ({
             
             // SCHRITT 3: PDF-HTML erstellen (mit Bildern)
             showMessage('📄 Erstelle PDF-HTML mit Bildern...', 'info');
-            const pdfHTML = generatePDFHTML(projectData);
+            const pdfHTML = generateProfessionalPDF(projectData);
             // currentPDFUrl = createPDFBlob(projectData); // &#9888; DEAKTIVIERT - Funktion fehlt und wird nicht verwendet
 
             // SCHRITT 4: Daten zu Google Sheets
@@ -3242,7 +3242,7 @@ formData.images = uploadedImages.map((img, index) => ({
                 data.images = await optimizeImagesForPDF(data.images);
             }
             
-            const htmlContent = generatePDFHTML(data);
+            const htmlContent = generateProfessionalPDF(data);
             const result = await driveFixSystem.bulletproofSave(htmlContent, filename);
             return result;
             
@@ -3823,7 +3823,7 @@ setTimeout(() => {
             if (field.type === 'checkbox') {
                 field.checked = false;
             } else if (field.classList.contains('arbeitszeit-beginn')) {
-                field.value = '06:45';
+                field.value = '07:45';
             } else {
                 field.value = '';
             }
@@ -4241,7 +4241,7 @@ setTimeout(() => {
             showMessage('&#128231; Erstelle PDF und versende E-Mail...', 'info');
             
             // Generiere PDF HTML
-            const pdfHTML = generatePDFHTML(formData);
+            const pdfHTML = ggenerateProfessionalPDF(formData);
             
             // Sende an Google Apps Script
             google.script.run
@@ -4415,9 +4415,9 @@ Web: www.gardenkeeper.de
         // Gesamtstunden berechnen
         let totalHours = 0;
         data.days.forEach(day => {
-            if (day.arbeitszeitBeginn && day.arbeitszeitEnde && day.workers && day.workers.length > 0) {
+            if (day.Ladebeginn && day.arbeitszeitEnde && day.workers && day.workers.length > 0) {
                 const workHours = calculateWorkHours(
-                    day.arbeitszeitBeginn,
+                    day.Ladebeginn,
                     day.arbeitszeitEnde,
                     (day.pause || 0) + (day.regenpause || 0)
                 );
@@ -4982,7 +4982,7 @@ Web: www.gardenkeeper.de
             </div>
             <div class="projekt-item">
                 <strong>LexOffice-ID:</strong>
-                <span>${data.lexofficeId || 'LEX-' + new Date().getFullYear() + '-001'}</span>
+                <span>${data.lexofficeId}</span>
             </div>
             <div class="projekt-item">
                 <strong>Startdatum:</strong>
@@ -5017,10 +5017,10 @@ Web: www.gardenkeeper.de
                 <div class="day-info-box">
                     <strong>🕐 Zeiten:</strong>
                     <div>
-                        Ladebeginn: ${day.ladebeginn || '07:30'}<br>
-                        Abfahrt: ${day.abfahrt || '07:45'}<br>
-                        Arbeitszeit: ${day.arbeitszeitBeginn || '08:00'} - ${day.arbeitszeitEnde || '16:30'}<br>
-                        Pause: ${day.pause || '30'} Min | Regenpause: ${day.regenpause || '0'} Min
+                        Ladebeginn: ${day.ladebeginn}<br>
+                        Abfahrt: ${day.abfahrt}<br>
+                        Arbeitszeit: ${day.arbeitszeitBeginn} - ${day.arbeitszeitEnde}<br>
+                        Pause: ${day.pause} Min | Regenpause: ${day.regenpause} Min
                     </div>
                 </div>
 
@@ -5028,7 +5028,7 @@ Web: www.gardenkeeper.de
                     <strong>&#128101; Mitarbeiter:</strong>
                     <div>${day.workers.map(w => {
                         if (typeof w === 'string') return w;
-                        const timeInfo = (w.startTime || w.endTime) ? ` (${w.startTime || day.arbeitszeitBeginn} - ${w.endTime || day.arbeitszeitEnde})` : '';
+                        const timeInfo = (w.startTime || w.endTime) ? ` (${w.startTime || day.Ladebeginn} - ${w.endTime || day.arbeitszeitEnde})` : '';
                         return `${w.name}${timeInfo}`;
                     }).join(', ')}</div>
                 </div>
@@ -5186,7 +5186,7 @@ Web: www.gardenkeeper.de
     function downloadHTML() {
         try {
             const formData = getFormData();
-            const htmlContent = generatePDFHTML(formData);
+            const htmlContent = generateProfessionalPDF(formData);
             
             const blob = new Blob([htmlContent], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
@@ -5216,7 +5216,7 @@ Web: www.gardenkeeper.de
         inputs.forEach(input => {
             if (input.type === 'checkbox' || input.type === 'radio') {
                 input.checked = false;
-            } else if (input.id !== 'arbeitsbeginn' && input.id !== 'arbeitsende' && input.id !== 'pause') {
+            } else if (input.id !== 'ladebeginn' && input.id !== 'arbeitsende' && input.id !== 'pause') {
                 input.value = '';
             }
             input.style.borderColor = '';
