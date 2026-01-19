@@ -2657,7 +2657,7 @@ textarea {
                                             } else {
                                                 const actualStart = w.startTime || day.ladeBeginn;
                                                 const actualEnd = w.endTime || day.arbeitszeitEnde;
-                                                const timeInfo = (w.startTime || w.endTime) ? ' <small style="color: #888;">(' + actualStart + ' - ' + actualEnd + ')</small>' : '';
+                                                const timeInfo = ' <small>(' + actualStart + ' - ' + actualEnd + ')</small>';
                                                 return `<li>${w.name}${timeInfo}</li>`;
                                             }
                                         }).join('')}
@@ -3760,10 +3760,10 @@ setTimeout(() => {
             // Anzeige: Zeige individuelle Zeiten, falls vorhanden
             let timeInfo = '';
             if (worker.startTime || worker.endTime) {
-                timeInfo = ` <small style="color: #666;">(${actualStart} - ${actualEnd})</small>';
+                timeInfo = ' <small>(' + actualStart + ' - ' + actualEnd + ')</small>';
             }
 
-            hoursListHTML += `<div>${worker.name}: ${workHours.toFixed(2)} Stunden${timeInfo}</div>`;
+            hoursListHTML += '<div>${worker.name}: ${workHours.toFixed(2)} Stunden${timeInfo}</div>';
         });
 
         hoursListDiv.innerHTML = hoursListHTML;
@@ -4968,7 +4968,7 @@ ${data.days.map((day, index) => `
                     } else {
                         const actualStart = worker.startTime || day.ladeBeginn;
                         const actualEnd = worker.endTime || day.arbeitszeitEnde;
-                        const timeInfo = (worker.startTime || worker.endTime) ? ` <small style="color: #666;">(${actualStart} - ${actualEnd})</small>' : '';
+                        const timeInfo = ' <small>(' + actualStart + ' - ' + actualEnd + ')</small>';
                         return `<div>• ${worker.name}${timeInfo}</div>`;
                     }
                 }).join('')}
