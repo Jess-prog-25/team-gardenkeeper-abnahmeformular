@@ -1868,14 +1868,14 @@ textarea {
                 <li>Pro Tag: Mitarbeiter, Arbeitszeiten und Materialien dokumentieren</li>
                 <li>Pro Tag: Unterschriften von Kunde und Teamleiter einholen</li>
                 <li>Automatische Pausenberechnung und Stundenerfassung</li>
-                <li>Abschließen → Daten werden automatisch gespeichert</li>
+                <li>Abschließen → Kein Internet Pdf Speichern und später absenden → Daten werden automatisch gespeichert</li>
                 <li>PDF kann direkt erstellt und weitergeleitet werden</li>
             </ol>
         </div>
         
         <div class="support-info">
             <h4>&#128222; Bei Fragen oder Problemen:</h4>
-            <p><strong>Wenden Sie sich an Chef oder Chefin</strong></p>
+            <p><strong>Wenden Sie sich an die Chefin</strong></p>
         </div>
         
         <div style="margin-top: 35px; font-size: 0.95rem; opacity: 0.8; color: var(--dark-forest);">
@@ -1938,12 +1938,12 @@ textarea {
                         </select>
                     </div>
                     <div class="field">
-                        <label>Nachname *</label>
-                        <input type="text" id="nachname" placeholder="z.B. Wolf" required>
+                        <label>Vorname / Nachname *</label>
+                        <input type="text" id="kunde" placeholder="z.B.Max Mustermann" required>
                     </div>
                     <div class="field">
-                        <label>Vorname / Firma *</label>
-                        <input type="text" id="kunde" placeholder="z.B. Dorothee oder Familie" required>
+                        <label>Firma *</label>
+                        <input type="text" id="firma" placeholder="z.B. Deine Firma oder WEG" required>
                     </div>
                     <div class="field">
                         <label>Kunde Email-Adresse</label>
@@ -1963,18 +1963,14 @@ textarea {
 </div>
                     <div class="field">
                         <label>LexOffice-ID</label>
-                        <input type="text" id="lexofficeId" placeholder="z.B. AB-25/11-0815">
+                        <input type="text" id="lexofficeId" placeholder="z.B. AB-20262000">
                     </div>
                     <div class="field">
                         <label>Startdatum *</label>
                         <input type="date" id="startdatum" required>
                     </div>
                 </div>
-                <div class="field">
-                    <label>Projektbeschreibung</label>
-                    <textarea id="projektbeschreibung" name="projektbeschreibung" rows="3" placeholder="Kurze Beschreibung des Projekts..."></textarea>
-                </div>
-            </div>
+             </div>
 
             <!-- Tage-Tabs -->
             <div class="section">
@@ -2615,7 +2611,7 @@ textarea {
         const kunde = projectData.kunde || 'Kunde';
         const istTagesregie = projectData.abrechnungsart !== 'pauschal';
 
-        // Lageso/Lexoffice-Nummer
+        // Lexoffice-Nummer
         const lexofficeHTML = projectData.lexofficeId ? `
             <p style="margin: 8px 0;"><strong>Lageso-/Lexoffice-Nr.:</strong> ${projectData.lexofficeId}</p>
         ` : '';
@@ -2631,8 +2627,8 @@ textarea {
                     ${projectData.days.map((day, index) => {
                         // Arbeitszeit berechnen
                         let arbeitsstunden = 0;
-                        if (day.arbeitszeitBeginn && day.arbeitszeitEnde) {
-                            const [startH, startM] = day.arbeitszeitBeginn.split(':').map(Number);
+                        if (day.LadeBeginn && day.arbeitszeitEnde) {
+                            const [startH, startM] = day.ladeBeginn.split(':').map(Number);
                             const [endH, endM] = day.arbeitszeitEnde.split(':').map(Number);
                             const totalMinutes = (endH * 60 + endM) - (startH * 60 + startM) - (day.pause || 0) - (day.regenpause || 0);
                             arbeitsstunden = (totalMinutes / 60).toFixed(2);
@@ -2645,7 +2641,7 @@ textarea {
                             </h4>
 
                             <div style="background: #f5f3f0; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <p style="margin: 5px 0;"><strong>&#9200; Arbeitszeit:</strong> ${day.arbeitszeitBeginn} - ${day.arbeitszeitEnde} Uhr</p>
+                                <p style="margin: 5px 0;"><strong>&#9200; Arbeitszeit:</strong> ${day.ladeBeginn} - ${day.arbeitszeitEnde} Uhr</p>
                                 <p style="margin: 5px 0;"><strong>&#9201; Netto-Stunden:</strong> ${arbeitsstunden} Std. (Pausen: ${day.pause || 0} Min.)</p>
                                 ${day.regenpause ? `<p style="margin: 5px 0;"><strong>&#127783; Regenpause:</strong> ${day.regenpause} Min.</p>` : ''}
                             </div>
@@ -2659,7 +2655,7 @@ textarea {
                                             if (typeof w === 'string') {
                                                 return `<li>${w}</li>`;
                                             } else {
-                                                const actualStart = w.startTime || day.arbeitszeitBeginn;
+                                                const actualStart = w.startTime || day.ladeBeginn;
                                                 const actualEnd = w.endTime || day.arbeitszeitEnde;
                                                 const timeInfo = (w.startTime || w.endTime) ? ` <small style="color: #888;">(${actualStart} - ${actualEnd})</small>` : '';
                                                 return `<li>${w.name}${timeInfo}</li>`;
@@ -2770,7 +2766,7 @@ textarea {
                         </p>
                         <div style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
                             <p style="margin: 5px 0; color: #2d3e2d;">
-                                <strong>&#128222; Telefon:</strong> 0681 99191820
+                                <strong>&#128222; Telefon:</strong> 0681 9389 4009
                             </p>
                             <p style="margin: 5px 0; color: #2d3e2d;">
                                 <strong>&#128231; E-Mail:</strong> <a href="mailto:info@gardenkeeper.de" style="color: #00b4b4; text-decoration: none;">info@gardenkeeper.de</a>
@@ -2788,7 +2784,7 @@ textarea {
                 <div style="background: linear-gradient(135deg, #4a4539, #3a3530); color: white; padding: 20px; text-align: center; border-radius: 0 0 10px 10px;">
                     <p style="margin: 0; font-size: 16px; font-weight: bold;">&#127793; gardenKeeper® GmbH</p>
                     <p style="margin: 5px 0 0 0; opacity: 0.9;">Sven Krämer</p>
-                    <p style="margin: 5px 0 0 0; opacity: 0.8;">&#128222; 0681 99191820 | &#128231; info@gardenkeeper.de</p>
+                    <p style="margin: 5px 0 0 0; opacity: 0.8;">&#128222; 0681 9378 4009 | &#128231; info@gardenkeeper.de</p>
                     <p style="margin: 10px 0 0 0; font-style: italic; opacity: 0.9;">"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</p>
                 </div>
             </div>
@@ -2801,7 +2797,36 @@ textarea {
     async function completeFormWithImages() {
         const completeBtn = document.getElementById('completeBtnText');
         const originalText = completeBtn.textContent;
+    // ========================================
+    // OFFLINE-CHECK: Prüfe Internetverbindung
+    // ========================================
+    if (!navigator.onLine) {
+        const offlineConfirm = confirm(
+            '❌ KEINE INTERNETVERBINDUNG!\n\n' +
+            'Das Formular kann ohne Internet NICHT abgesendet werden.\n\n' +
+            '✅ IHRE DATEN BLEIBEN ERHALTEN!\n\n' +
+            'Möchten Sie:\n' +
+            '• PDF lokal speichern? (OK drücken)\n' +
+            '• Abbrechen und später absenden? (Abbrechen drücken)'
+        );
         
+        if (offlineConfirm) {
+            try {
+                const formData = getFormData();
+                const pdfHTML = generatePDFHTML(formData);
+                const printWindow = window.open('', '_blank');
+                if (printWindow) {
+                    printWindow.document.write(pdfHTML);
+                    printWindow.document.close();
+                    showMessage('📄 PDF wurde geöffnet. Bitte speichern Sie es manuell!', 'info');
+                }
+            } catch (error) {
+                showMessage('❌ Fehler beim Erstellen des PDFs: ' + error.message, 'error');
+            }
+        }
+        completeBtn.textContent = originalText;
+        return;
+    }    
         try {
             completeBtn.textContent = 'Verarbeite...';
             
@@ -2996,7 +3021,7 @@ formData.images = uploadedImages.map((img, index) => ({
     // Stammdaten aus dem Original
     const WORKERS = [
         'Fabio Krämer', 'Claudiu Adascalitei', 'Jürgen Kränkel', 
-        'Joseph Dahl', 'Wolfgang Degro', 
+        'Joseph Dahl', 'Wolfgang Degro', 'Luca Krämer
         'Christian Winterstein', 'Carsten Munz', 'Sascha Macke', 'Julina Tiedtke', 
         'Kim Honnecker', 'Jan Jeanrond', 'Justin Stillemunkes'
     ];
@@ -3826,8 +3851,8 @@ setTimeout(() => {
         dayContent.querySelectorAll('input, textarea, select').forEach(field => {
             if (field.type === 'checkbox') {
                 field.checked = false;
-            } else if (field.classList.contains('arbeitszeit-beginn')) {
-                field.value = '06:45';
+            } else if (field.classList.contains('lade-beginn')) {
+                field.value = '';
             } else {
                 field.value = '';
             }
@@ -4095,7 +4120,7 @@ setTimeout(() => {
         const title = document.getElementById('signatureTitle');
         const canvas = document.getElementById('signatureCanvas');
         
-        title.textContent = `Unterschrift ${type === 'kunde' ? 'Kunde' : 'Teamleiter'} (Tag ${day})`;
+        title.textContent = `Unterschrift ${type === 'Kunde' : 'Teamleiter'} (Tag ${day})`;
         
         modal.classList.add('show');
         setupSignatureCanvas(canvas);
@@ -4189,7 +4214,7 @@ setTimeout(() => {
         `;
         
         closeSignature();
-        showMessage(`&#9989; Unterschrift ${currentSignatureType === 'kunde' ? 'Kunde' : 'Teamleiter'} für Tag ${currentSignatureDay} gespeichert`, 'success');
+        showMessage(`&#9989; Unterschrift ${currentSignatureType === 'Kunde' : 'Teamleiter'} für Tag ${currentSignatureDay} gespeichert`, 'success');
     }
 
     function closeSignature() {
@@ -4368,7 +4393,7 @@ Web: www.gardenkeeper.de
     // ========================================
 
     function generatePDF() {
-        console.log('📄 Generiere professionelles PDF...');
+        console.log('📄 generatePDFHTML...');
 
         const data = getFormData();
 
@@ -4381,7 +4406,7 @@ Web: www.gardenkeeper.de
             showMessage('📄 Erstelle PDF-Vorschau...', 'info');
 
             // Professionelles PDF-HTML generieren (wie auf dem Bild)
-            const pdfHTML = generateProfessionalPDF(data);
+            const pdfHTML = generatePDFHTML(data);
 
             // Öffne in neuem Fenster
             const printWindow = window.open('', '_blank', 'width=1000,height=800');
@@ -4429,8 +4454,8 @@ Web: www.gardenkeeper.de
 
         let totalHours = 0;
         data.days.forEach(day => {
-            if (day.arbeitszeitBeginn && day.arbeitszeitEnde && day.workers) {
-                const workHours = calculateWorkHours(day.arbeitszeitBeginn, day.arbeitszeitEnde, (day.pause || 0) + (day.regenpause || 0));
+            if (day.ladeBeginn && day.arbeitszeitEnde && day.workers) {
+                const workHours = calculateWorkHours(day.ladeBeginn, day.arbeitszeitEnde, (day.pause || 0) + (day.regenpause || 0));
                 totalHours += workHours * day.workers.length;
             }
         });
@@ -4932,7 +4957,7 @@ ${data.days.map((day, index) => `
                 <h4>&#9200; Zeiten:</h4>
                 <div><strong>Ladebeginn:</strong> ${day.ladebeginn || '---'}</div>
                 <div><strong>Abfahrt:</strong> ${day.abfahrt || '---'}</div>
-                <div><strong>Arbeitszeit:</strong> ${day.arbeitszeitBeginn || '---'} - ${day.arbeitszeitEnde || '---'}</div>
+                <div><strong>Arbeitszeit:</strong> ${day.ankunftZeit || '---'} - ${day.arbeitszeitEnde || '---'}</div>
                 <div><strong>Pause:</strong> ${day.pause || 0} Min | <strong>Regenpause:</strong> ${day.regenpause || 0} Min</div>
             </div>
             <div>
@@ -4941,7 +4966,7 @@ ${data.days.map((day, index) => `
                     if (typeof worker === 'string') {
                         return `<div>• ${worker}</div>`;
                     } else {
-                        const actualStart = worker.startTime || day.arbeitszeitBeginn;
+                        const actualStart = worker.startTime || day.ladeBeginn;
                         const actualEnd = worker.endTime || day.arbeitszeitEnde;
                         const timeInfo = (worker.startTime || worker.endTime) ? ` <small style="color: #666;">(${actualStart} - ${actualEnd})</small>` : '';
                         return `<div>• ${worker.name}${timeInfo}</div>`;
@@ -5132,7 +5157,7 @@ ${data.images && data.images.length > 0 ? `
 
 <div class="footer">
     <div class="company-info">&#127793; gardenKeeper® GmbH - Sven Krämer</div>
-    <div>&#128222; Tel: 0681 93784009 | &#128231; Email: info@gardenkeeper.de | 🌐 Web: www.gardenkeeper.de</div>
+    <div>&#128222; Tel: 0681 9378 4009 | &#128231; Email: info@gardenkeeper.de | 🌐 Web: www.gardenkeeper.de</div>
     <div class="tagline">"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</div>
     <div class="meta">
         © copyright by gardenKeeper 2025<br>
@@ -5151,775 +5176,775 @@ ${(() => {
 </html>`;
     } // Ende der generatePDFHTML Funktion
 
-    // ========================================
-    // 📄 NEUE PROFESSIONELLE PDF-FUNKTION
-    // ========================================
-    function generateProfessionalPDF(data) {
-        const jetzt = new Date();
-        const erstelltAm = `${jetzt.getDate().toString().padStart(2, '0')}.${(jetzt.getMonth() + 1).toString().padStart(2, '0')}.${jetzt.getFullYear()} um ${jetzt.getHours().toString().padStart(2, '0')}:${jetzt.getMinutes().toString().padStart(2, '0')}:${jetzt.getSeconds().toString().padStart(2, '0')}`;
+//     // ========================================
+//     // 📄 NEUE PROFESSIONELLE PDF-FUNKTION
+//     // ========================================
+//     function generateProfessionalPDF(data) {
+//         const jetzt = new Date();
+//         const erstelltAm = `${jetzt.getDate().toString().padStart(2, '0')}.${(jetzt.getMonth() + 1).toString().padStart(2, '0')}.${jetzt.getFullYear()} um ${jetzt.getHours().toString().padStart(2, '0')}:${jetzt.getMinutes().toString().padStart(2, '0')}:${jetzt.getSeconds().toString().padStart(2, '0')}`;
 
-        // Gesamtstunden berechnen
-        let totalHours = 0;
-        data.days.forEach(day => {
-            if (day.arbeitszeitBeginn && day.arbeitszeitEnde && day.workers && day.workers.length > 0) {
-                const workHours = calculateWorkHours(
-                    day.arbeitszeitBeginn,
-                    day.arbeitszeitEnde,
-                    (day.pause || 0) + (day.regenpause || 0)
-                );
-                totalHours += workHours * day.workers.length;
-            }
-        });
+//         // Gesamtstunden berechnen
+//         let totalHours = 0;
+//         data.days.forEach(day => {
+//             if (day.arbeitszeitBeginn && day.arbeitszeitEnde && day.workers && day.workers.length > 0) {
+//                 const workHours = calculateWorkHours(
+//                     day.arbeitszeitBeginn,
+//                     day.arbeitszeitEnde,
+//                     (day.pause || 0) + (day.regenpause || 0)
+//                 );
+//                 totalHours += workHours * day.workers.length;
+//             }
+//         });
 
-        // Alle Mitarbeiter sammeln
-        const allWorkers = [];
-        data.days.forEach(day => {
-            if (day.workers) {
-                day.workers.forEach(worker => {
-                    // worker kann String oder Objekt sein
-                    const workerName = typeof worker === 'string' ? worker : worker.name;
-                    if (workerName && !allWorkers.includes(workerName)) {
-                        allWorkers.push(workerName);
-                    }
-                });
-            }
-        });
+//         // Alle Mitarbeiter sammeln
+//         const allWorkers = [];
+//         data.days.forEach(day => {
+//             if (day.workers) {
+//                 day.workers.forEach(worker => {
+//                     // worker kann String oder Objekt sein
+//                     const workerName = typeof worker === 'string' ? worker : worker.name;
+//                     if (workerName && !allWorkers.includes(workerName)) {
+//                         allWorkers.push(workerName);
+//                     }
+//                 });
+//             }
+//         });
 
-        return `<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abnahmeprotokoll - ${data.kunde}</title>
-    <style>
-        /* ========================================
-           PROFESSIONELLES PDF-DESIGN
-           ======================================== */
+//         return `<!DOCTYPE html>
+// <html lang="de">
+// <head>
+//     <meta charset="UTF-8">
+//     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//     <title>Abnahmeprotokoll - ${data.kunde}</title>
+//     <style>
+//         /* ========================================
+//            PROFESSIONELLES PDF-DESIGN
+//            ======================================== */
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+//         * {
+//             margin: 0;
+//             padding: 0;
+//             box-sizing: border-box;
+//         }
 
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            font-size: 12px;
-            line-height: 1.6;
-            color: #333;
-            background: #ffffff;
-            padding: 20px;
-        }
+//         body {
+//             font-family: 'Segoe UI', Arial, sans-serif;
+//             font-size: 12px;
+//             line-height: 1.6;
+//             color: #333;
+//             background: #ffffff;
+//             padding: 20px;
+//         }
 
-        /* HEADER - Wie auf dem Bild */
-        .pdf-header {
-            background: linear-gradient(135deg, #7F973B 0%, #A7B839 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 12px;
-            text-align: center;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 10px rgba(127, 151, 59, 0.3);
-        }
+//         /* HEADER - Wie auf dem Bild */
+//         .pdf-header {
+//             background: linear-gradient(135deg, #7F973B 0%, #A7B839 100%);
+//             color: white;
+//             padding: 30px;
+//             border-radius: 12px;
+//             text-align: center;
+//             margin-bottom: 30px;
+//             box-shadow: 0 4px 10px rgba(127, 151, 59, 0.3);
+//         }
 
-        .pdf-header h1 {
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 10px;
-            letter-spacing: 0.5px;
-        }
+//         .pdf-header h1 {
+//             font-size: 28px;
+//             font-weight: 700;
+//             margin-bottom: 10px;
+//             letter-spacing: 0.5px;
+//         }
 
-        .pdf-header .subtitle {
-            font-size: 16px;
-            font-weight: 400;
-            opacity: 0.95;
-            margin: 8px 0;
-        }
+//         .pdf-header .subtitle {
+//             font-size: 16px;
+//             font-weight: 400;
+//             opacity: 0.95;
+//             margin: 8px 0;
+//         }
 
-        .pdf-header .created-at {
-            font-size: 13px;
-            opacity: 0.9;
-            margin-top: 12px;
-        }
+//         .pdf-header .created-at {
+//             font-size: 13px;
+//             opacity: 0.9;
+//             margin-top: 12px;
+//         }
 
-        /* SEKTION - Wie auf dem Bild */
-        .pdf-section {
-            background: #ffffff;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
+//         /* SEKTION - Wie auf dem Bild */
+//         .pdf-section {
+//             background: #ffffff;
+//             border: 1px solid #e0e0e0;
+//             border-radius: 10px;
+//             padding: 20px;
+//             margin-bottom: 20px;
+//             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+//         }
 
-        .pdf-section h2 {
-            font-size: 16px;
-            color: #7F973B;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            border-bottom: 2px solid #A7B839;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+//         .pdf-section h2 {
+//             font-size: 16px;
+//             color: #7F973B;
+//             margin-bottom: 15px;
+//             padding-bottom: 8px;
+//             border-bottom: 2px solid #A7B839;
+//             display: flex;
+//             align-items: center;
+//             gap: 8px;
+//         }
 
-        .pdf-section h2 .icon {
-            font-size: 18px;
-        }
+//         .pdf-section h2 .icon {
+//             font-size: 18px;
+//         }
 
-        /* PROJEKT-DATEN GRID */
-        .projekt-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 15px 0;
-        }
+//         /* PROJEKT-DATEN GRID */
+//         .projekt-grid {
+//             display: grid;
+//             grid-template-columns: repeat(3, 1fr);
+//             gap: 15px;
+//             margin: 15px 0;
+//         }
 
-        .projekt-item {
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 6px;
-        }
+//         .projekt-item {
+//             padding: 10px;
+//             background: #f9f9f9;
+//             border-radius: 6px;
+//         }
 
-        .projekt-item strong {
-            display: block;
-            font-size: 11px;
-            color: #666;
-            margin-bottom: 4px;
-        }
+//         .projekt-item strong {
+//             display: block;
+//             font-size: 11px;
+//             color: #666;
+//             margin-bottom: 4px;
+//         }
 
-        .projekt-item span {
-            font-size: 14px;
-            color: #333;
-            font-weight: 600;
-        }
+//         .projekt-item span {
+//             font-size: 14px;
+//             color: #333;
+//             font-weight: 600;
+//         }
 
-        /* TAG-DETAILS - Mit farbigem Rand wie auf dem Bild */
-        .day-container {
-            border-left: 4px solid #A7B839;
-            padding-left: 15px;
-            margin: 20px 0;
-            background: #fafafa;
-            padding: 15px;
-            padding-left: 20px;
-            border-radius: 0 8px 8px 0;
-        }
+//         /* TAG-DETAILS - Mit farbigem Rand wie auf dem Bild */
+//         .day-container {
+//             border-left: 4px solid #A7B839;
+//             padding-left: 15px;
+//             margin: 20px 0;
+//             background: #fafafa;
+//             padding: 15px;
+//             padding-left: 20px;
+//             border-radius: 0 8px 8px 0;
+//         }
 
-        .day-container h3 {
-            font-size: 15px;
-            color: #7F973B;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+//         .day-container h3 {
+//             font-size: 15px;
+//             color: #7F973B;
+//             margin-bottom: 12px;
+//             display: flex;
+//             align-items: center;
+//             gap: 8px;
+//         }
 
-        .day-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin: 12px 0;
-        }
+//         .day-info-grid {
+//             display: grid;
+//             grid-template-columns: 1fr 1fr;
+//             gap: 15px;
+//             margin: 12px 0;
+//         }
 
-        .day-info-box {
-            background: white;
-            padding: 10px;
-            border-radius: 6px;
-            border: 1px solid #e5e5e5;
-        }
+//         .day-info-box {
+//             background: white;
+//             padding: 10px;
+//             border-radius: 6px;
+//             border: 1px solid #e5e5e5;
+//         }
 
-        .day-info-box strong {
-            display: block;
-            font-size: 11px;
-            color: #7F973B;
-            margin-bottom: 6px;
-            font-weight: 600;
-        }
+//         .day-info-box strong {
+//             display: block;
+//             font-size: 11px;
+//             color: #7F973B;
+//             margin-bottom: 6px;
+//             font-weight: 600;
+//         }
 
-        .day-info-box div {
-            font-size: 12px;
-            color: #333;
-            line-height: 1.5;
-        }
+//         .day-info-box div {
+//             font-size: 12px;
+//             color: #333;
+//             line-height: 1.5;
+//         }
 
-        /* ARBEITEN-BOX */
-        .arbeiten-box {
-            background: #f5f5f5;
-            padding: 12px;
-            border-radius: 6px;
-            margin: 12px 0;
-            border-left: 3px solid #A7B839;
-        }
+//         /* ARBEITEN-BOX */
+//         .arbeiten-box {
+//             background: #f5f5f5;
+//             padding: 12px;
+//             border-radius: 6px;
+//             margin: 12px 0;
+//             border-left: 3px solid #A7B839;
+//         }
 
-        .arbeiten-box strong {
-            display: block;
-            color: #7F973B;
-            margin-bottom: 6px;
-            font-size: 12px;
-        }
+//         .arbeiten-box strong {
+//             display: block;
+//             color: #7F973B;
+//             margin-bottom: 6px;
+//             font-size: 12px;
+//         }
 
-        .arbeiten-box p {
-            color: #333;
-            line-height: 1.6;
-        }
+//         .arbeiten-box p {
+//             color: #333;
+//             line-height: 1.6;
+//         }
 
-        /* ZUSATZARBEITEN-BOX */
-        .zusatz-box {
-            background: #fff9e6;
-            padding: 12px;
-            border-radius: 6px;
-            margin: 12px 0;
-            border-left: 3px solid #ffc107;
-        }
+//         /* ZUSATZARBEITEN-BOX */
+//         .zusatz-box {
+//             background: #fff9e6;
+//             padding: 12px;
+//             border-radius: 6px;
+//             margin: 12px 0;
+//             border-left: 3px solid #ffc107;
+//         }
 
-        .zusatz-box strong {
-            display: block;
-            color: #f57c00;
-            margin-bottom: 6px;
-            font-size: 12px;
-        }
+//         .zusatz-box strong {
+//             display: block;
+//             color: #f57c00;
+//             margin-bottom: 6px;
+//             font-size: 12px;
+//         }
 
-        /* TABELLEN - Wie auf dem Bild */
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 12px 0;
-            background: white;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
+//         /* TABELLEN - Wie auf dem Bild */
+//         .data-table {
+//             width: 100%;
+//             border-collapse: collapse;
+//             margin: 12px 0;
+//             background: white;
+//             border-radius: 6px;
+//             overflow: hidden;
+//             box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+//         }
 
-        .data-table thead {
-            background: #7F973B;
-            color: white;
-        }
+//         .data-table thead {
+//             background: #7F973B;
+//             color: white;
+//         }
 
-        .data-table th {
-            padding: 10px 12px;
-            text-align: left;
-            font-size: 12px;
-            font-weight: 600;
-        }
+//         .data-table th {
+//             padding: 10px 12px;
+//             text-align: left;
+//             font-size: 12px;
+//             font-weight: 600;
+//         }
 
-        .data-table td {
-            padding: 10px 12px;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 12px;
-        }
+//         .data-table td {
+//             padding: 10px 12px;
+//             border-bottom: 1px solid #f0f0f0;
+//             font-size: 12px;
+//         }
 
-        .data-table tbody tr:last-child td {
-            border-bottom: none;
-        }
+//         .data-table tbody tr:last-child td {
+//             border-bottom: none;
+//         }
 
-        .data-table tbody tr:hover {
-            background: #f9f9f9;
-        }
+//         .data-table tbody tr:hover {
+//             background: #f9f9f9;
+//         }
 
-        /* BEMERKUNGEN */
-        .bemerkungen-box {
-            background: #f0f8ff;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 12px 0;
-            border-left: 3px solid #2196F3;
-        }
+//         /* BEMERKUNGEN */
+//         .bemerkungen-box {
+//             background: #f0f8ff;
+//             padding: 15px;
+//             border-radius: 6px;
+//             margin: 12px 0;
+//             border-left: 3px solid #2196F3;
+//         }
 
-        .bemerkungen-box strong {
-            display: block;
-            color: #1976D2;
-            margin-bottom: 8px;
-            font-size: 12px;
-        }
+//         .bemerkungen-box strong {
+//             display: block;
+//             color: #1976D2;
+//             margin-bottom: 8px;
+//             font-size: 12px;
+//         }
 
-        /* ZUSAMMENFASSUNG */
-        .summary-box {
-            background: #e8f5e9;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
+//         /* ZUSAMMENFASSUNG */
+//         .summary-box {
+//             background: #e8f5e9;
+//             padding: 20px;
+//             border-radius: 8px;
+//             margin: 20px 0;
+//         }
 
-        .summary-box h2 {
-            color: #2E7D32;
-            border-bottom-color: #4CAF50;
-        }
+//         .summary-box h2 {
+//             color: #2E7D32;
+//             border-bottom-color: #4CAF50;
+//         }
 
-        .summary-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 15px;
-        }
+//         .summary-grid {
+//             display: grid;
+//             grid-template-columns: repeat(2, 1fr);
+//             gap: 15px;
+//             margin-top: 15px;
+//         }
 
-        .summary-item {
-            background: white;
-            padding: 12px;
-            border-radius: 6px;
-        }
+//         .summary-item {
+//             background: white;
+//             padding: 12px;
+//             border-radius: 6px;
+//         }
 
-        .summary-item strong {
-            display: block;
-            font-size: 11px;
-            color: #666;
-            margin-bottom: 4px;
-        }
+//         .summary-item strong {
+//             display: block;
+//             font-size: 11px;
+//             color: #666;
+//             margin-bottom: 4px;
+//         }
 
-        .summary-item span {
-            font-size: 18px;
-            color: #2E7D32;
-            font-weight: 700;
-        }
+//         .summary-item span {
+//             font-size: 18px;
+//             color: #2E7D32;
+//             font-weight: 700;
+//         }
 
-        /* FOOTER */
-        .pdf-footer {
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 2px solid #A7B839;
-            text-align: center;
-        }
+//         /* FOOTER */
+//         .pdf-footer {
+//             margin-top: 40px;
+//             padding-top: 20px;
+//             border-top: 2px solid #A7B839;
+//             text-align: center;
+//         }
 
-        .company-name {
-            font-size: 16px;
-            font-weight: 700;
-            color: #7F973B;
-            margin-bottom: 10px;
-        }
+//         .company-name {
+//             font-size: 16px;
+//             font-weight: 700;
+//             color: #7F973B;
+//             margin-bottom: 10px;
+//         }
 
-        .contact-info {
-            font-size: 11px;
-            color: #666;
-            line-height: 1.8;
-        }
+//         .contact-info {
+//             font-size: 11px;
+//             color: #666;
+//             line-height: 1.8;
+//         }
 
-        .contact-info strong {
-            color: #7F973B;
-        }
+//         .contact-info strong {
+//             color: #7F973B;
+//         }
 
-        .slogan {
-            font-style: italic;
-            color: #999;
-            margin-top: 12px;
-            font-size: 12px;
-        }
+//         .slogan {
+//             font-style: italic;
+//             color: #999;
+//             margin-top: 12px;
+//             font-size: 12px;
+//         }
 
-        .document-info {
-            font-size: 10px;
-            color: #999;
-            margin-top: 15px;
-        }
+//         .document-info {
+//             font-size: 10px;
+//             color: #999;
+//             margin-top: 15px;
+//         }
 
-        /* &#9989; BILDER-SEKTION STYLES */
-        .images-section {
-            page-break-before: always;
-            margin-top: 30px;
-        }
+//         /* &#9989; BILDER-SEKTION STYLES */
+//         .images-section {
+//             page-break-before: always;
+//             margin-top: 30px;
+//         }
 
-        .images-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-top: 15px;
-        }
+//         .images-grid {
+//             display: grid;
+//             grid-template-columns: repeat(2, 1fr);
+//             gap: 20px;
+//             margin-top: 15px;
+//         }
 
-        .image-item {
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            page-break-inside: avoid;
-            background: white;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
+//         .image-item {
+//             border: 2px solid #e0e0e0;
+//             border-radius: 10px;
+//             overflow: hidden;
+//             page-break-inside: avoid;
+//             background: white;
+//             box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+//         }
 
-        .image-item img {
-        width: 100%;
-        height: 400px;  /* Optimiert für A4 */
-        object-fit: cover;
-        display: block;
-            object-fit: cover;
-            display: block;
-        }
+//         .image-item img {
+//         width: 100%;
+//         height: 400px;  /* Optimiert für A4 */
+//         object-fit: cover;
+//         display: block;
+//             object-fit: cover;
+//             display: block;
+//         }
 
-        .image-caption {
-            padding: 12px 15px;
-            background: #f9f9f9;
-            border-top: 1px solid #e0e0e0;
-            font-size: 11px;
-        }
+//         .image-caption {
+//             padding: 12px 15px;
+//             background: #f9f9f9;
+//             border-top: 1px solid #e0e0e0;
+//             font-size: 11px;
+//         }
 
-        .image-category {
-            font-weight: 600;
-            color: #7F973B;
-            font-size: 10px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
+//         .image-category {
+//             font-weight: 600;
+//             color: #7F973B;
+//             font-size: 10px;
+//             text-transform: uppercase;
+//             margin-bottom: 4px;
+//         }
 
-        /* PRINT-OPTIMIERUNG */
-        @media print {
-            @page {
-                size: A4;
-                margin: 15mm;
-            }
+//         /* PRINT-OPTIMIERUNG */
+//         @media print {
+//             @page {
+//                 size: A4;
+//                 margin: 15mm;
+//             }
 
-            body {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
+//             body {
+//                 -webkit-print-color-adjust: exact;
+//                 print-color-adjust: exact;
+//             }
 
-            .pdf-header {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
+//             .pdf-header {
+//                 -webkit-print-color-adjust: exact;
+//                 print-color-adjust: exact;
+//             }
 
-            .data-table thead {
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
+//             .data-table thead {
+//                 -webkit-print-color-adjust: exact;
+//                 print-color-adjust: exact;
+//             }
 
-            .page-break {
-                page-break-before: always;
-            }
+//             .page-break {
+//                 page-break-before: always;
+//             }
 
-            .no-break {
-                page-break-inside: avoid;
-            }
-        }
+//             .no-break {
+//                 page-break-inside: avoid;
+//             }
+//         }
     
-    /* NEUE PROJEKTZUSAMMENFASSUNG */
-    .summary-box {
-        background: linear-gradient(135deg, rgba(155, 166, 135, 0.2) 0%, rgba(138, 152, 118, 0.2) 100%);
-        padding: 20px;
-        border-radius: 8px;
-        margin: 20px 0;
-        border: 2px solid #8a9876;
-        page-break-inside: avoid;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
+//     /* NEUE PROJEKTZUSAMMENFASSUNG */
+//     .summary-box {
+//         background: linear-gradient(135deg, rgba(155, 166, 135, 0.2) 0%, rgba(138, 152, 118, 0.2) 100%);
+//         padding: 20px;
+//         border-radius: 8px;
+//         margin: 20px 0;
+//         border: 2px solid #8a9876;
+//         page-break-inside: avoid;
+//         -webkit-print-color-adjust: exact;
+//         print-color-adjust: exact;
+//     }
     
-    .summary-content {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 15px;
-    }
+//     .summary-content {
+//         display: grid;
+//         grid-template-columns: 2fr 1fr;
+//         gap: 15px;
+//     }
     
-    .summary-main {
-        background: white;
-        padding: 15px;
-        border-radius: 6px;
-        border-left: 4px solid #6b7456;
-    }
+//     .summary-main {
+//         background: white;
+//         padding: 15px;
+//         border-radius: 6px;
+//         border-left: 4px solid #6b7456;
+//     }
     
-    .summary-main h3 {
-        color: #6b7456;
-        font-size: 14pt;
-        margin-bottom: 10px;
-        border-bottom: 1px solid #8a9876;
-        padding-bottom: 6px;
-    }
+//     .summary-main h3 {
+//         color: #6b7456;
+//         font-size: 14pt;
+//         margin-bottom: 10px;
+//         border-bottom: 1px solid #8a9876;
+//         padding-bottom: 6px;
+//     }
     
-    .summary-list {
-        list-style: none;
-        padding: 0;
-    }
+//     .summary-list {
+//         list-style: none;
+//         padding: 0;
+//     }
     
-    .summary-list li {
-        padding: 6px 0;
-        font-size: 10pt;
-        color: #555;
-        border-bottom: 1px solid #f0f0f0;
-    }
+//     .summary-list li {
+//         padding: 6px 0;
+//         font-size: 10pt;
+//         color: #555;
+//         border-bottom: 1px solid #f0f0f0;
+//     }
     
-    .summary-list li:last-child {
-        border-bottom: none;
-    }
+//     .summary-list li:last-child {
+//         border-bottom: none;
+//     }
     
-    .summary-list li strong {
-        color: #6b7456;
-        display: inline-block;
-        min-width: 130px;
-    }
+//     .summary-list li strong {
+//         color: #6b7456;
+//         display: inline-block;
+//         min-width: 130px;
+//     }
     
-    .summary-highlight {
-        background: white;
-        padding: 15px;
-        border-radius: 6px;
-    }
+//     .summary-highlight {
+//         background: white;
+//         padding: 15px;
+//         border-radius: 6px;
+//     }
     
-    .summary-highlight h3 {
-        color: #6b7456;
-        font-size: 11pt;
-        margin-bottom: 10px;
-        border-bottom: 1px solid #8a9876;
-        padding-bottom: 6px;
-    }
+//     .summary-highlight h3 {
+//         color: #6b7456;
+//         font-size: 11pt;
+//         margin-bottom: 10px;
+//         border-bottom: 1px solid #8a9876;
+//         padding-bottom: 6px;
+//     }
     
-    .summary-stats {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
+//     .summary-stats {
+//         display: grid;
+//         grid-template-columns: 1fr 1fr;
+//         gap: 10px;
+//     }
     
-    .stat-item {
-        background: #faf8f5;
-        padding: 12px;
-        border-radius: 6px;
-        text-align: center;
-        border: 1px solid #e5e5e5;
-    }
+//     .stat-item {
+//         background: #faf8f5;
+//         padding: 12px;
+//         border-radius: 6px;
+//         text-align: center;
+//         border: 1px solid #e5e5e5;
+//     }
     
-    .stat-item strong {
-        display: block;
-        font-size: 8pt;
-        color: #666;
-        margin-bottom: 4px;
-        text-transform: uppercase;
-    }
+//     .stat-item strong {
+//         display: block;
+//         font-size: 8pt;
+//         color: #666;
+//         margin-bottom: 4px;
+//         text-transform: uppercase;
+//     }
     
-    .stat-item .value {
-        font-size: 18pt;
-        color: #6b7456;
-        font-weight: 700;
-    }
+//     .stat-item .value {
+//         font-size: 18pt;
+//         color: #6b7456;
+//         font-weight: 700;
+//     }
     
-    .stat-item .unit {
-        font-size: 9pt;
-        color: #999;
-    }
+//     .stat-item .unit {
+//         font-size: 9pt;
+//         color: #999;
+//     }
 
-    /* ARBEITEN-BOXEN */
-    .arbeiten-box {
-        background: linear-gradient(135deg, rgba(155, 166, 135, 0.15) 0%, rgba(138, 152, 118, 0.15) 100%);
-        padding: 12px;
-        border-radius: 6px;
-        margin: 10px 0;
-        border-left: 3px solid #8a9876;
-        page-break-inside: avoid;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-    }
+//     /* ARBEITEN-BOXEN */
+//     .arbeiten-box {
+//         background: linear-gradient(135deg, rgba(155, 166, 135, 0.15) 0%, rgba(138, 152, 118, 0.15) 100%);
+//         padding: 12px;
+//         border-radius: 6px;
+//         margin: 10px 0;
+//         border-left: 3px solid #8a9876;
+//         page-break-inside: avoid;
+//         -webkit-print-color-adjust: exact;
+//         print-color-adjust: exact;
+//     }
     
-    .arbeiten-box strong {
-        display: block;
-        color: #6b7456;
-        margin-bottom: 6px;
-        font-size: 10pt;
-    }
+//     .arbeiten-box strong {
+//         display: block;
+//         color: #6b7456;
+//         margin-bottom: 6px;
+//         font-size: 10pt;
+//     }
 
-</style>
-</head>
-<body>
-    <!-- HEADER -->
-    <div class="pdf-header">
-        <h1>&#127793; ABNAHME / TAGESREGIEBERICHT</h1>
-        <div class="subtitle">gardenKeeper® GmbH - Sven Krämer</div>
-        <div class="subtitle">Professionelle Gartenpflege mit Stil und ♥</div>
-        <div class="created-at">Erstellt am: ${erstelltAm}</div>
-    </div>
+// </style>
+// </head>
+// <body>
+//     <!-- HEADER -->
+//     <div class="pdf-header">
+//         <h1>&#127793; ABNAHME / TAGESREGIEBERICHT</h1>
+//         <div class="subtitle">gardenKeeper® GmbH - Sven Krämer</div>
+//         <div class="subtitle">Professionelle Gartenpflege mit Stil und ♥</div>
+//         <div class="created-at">Erstellt am: ${erstelltAm}</div>
+//     </div>
 
-    <!-- PROJEKTDATEN -->
-    <div class="pdf-section">
-        <h2><span class="icon">&#128203;</span>Projektdaten</h2>
-        <div class="projekt-grid">
-            <div class="projekt-item">
-                <strong>Kunde:</strong>
-                <span>${data.kunde}</span>
-            </div>
-            <div class="projekt-item">
-                <strong>LexOffice-ID:</strong>
-                <span>${data.lexofficeId || 'LEX-' + new Date().getFullYear() + '-001'}</span>
-            </div>
-            <div class="projekt-item">
-                <strong>Startdatum:</strong>
-                <span>${data.startdatum}</span>
-            </div>
-            <div class="projekt-item">
-                <strong>Projekttage:</strong>
-                <span>${data.days.length}</span>
-            </div>
-            <div class="projekt-item">
-                <strong>Gesamtstunden:</strong>
-                <span>${totalHours.toFixed(2)} Std.</span>
-            </div>
-        </div>
-    </div>
+//     <!-- PROJEKTDATEN -->
+//     <div class="pdf-section">
+//         <h2><span class="icon">&#128203;</span>Projektdaten</h2>
+//         <div class="projekt-grid">
+//             <div class="projekt-item">
+//                 <strong>Kunde:</strong>
+//                 <span>${data.kunde}</span>
+//             </div>
+//             <div class="projekt-item">
+//                 <strong>LexOffice-ID:</strong>
+//                 <span>${data.lexofficeId || 'LEX-' + new Date().getFullYear() + '-001'}</span>
+//             </div>
+//             <div class="projekt-item">
+//                 <strong>Startdatum:</strong>
+//                 <span>${data.startdatum}</span>
+//             </div>
+//             <div class="projekt-item">
+//                 <strong>Projekttage:</strong>
+//                 <span>${data.days.length}</span>
+//             </div>
+//             <div class="projekt-item">
+//                 <strong>Gesamtstunden:</strong>
+//                 <span>${totalHours.toFixed(2)} Std.</span>
+//             </div>
+//         </div>
+//     </div>
 
-    <!-- PROJEKTTEAM -->
-    <div class="pdf-section">
-        <h2><span class="icon">&#128101;</span>Projektteam</h2>
-        <div style="padding: 10px; background: #f9f9f9; border-radius: 6px;">
-            <strong>Eingesetzte Mitarbeiter:</strong> ${allWorkers.join(', ')}
-        </div>
-    </div>
+//     <!-- PROJEKTTEAM -->
+//     <div class="pdf-section">
+//         <h2><span class="icon">&#128101;</span>Projektteam</h2>
+//         <div style="padding: 10px; background: #f9f9f9; border-radius: 6px;">
+//             <strong>Eingesetzte Mitarbeiter:</strong> ${allWorkers.join(', ')}
+//         </div>
+//     </div>
 
-    <!-- TAGE-DETAILS -->
-    ${data.days.map((day, index) => {
-        return `
-        <div class="day-container no-break">
-            <h3>&#128197; Tag ${day.dayNumber} - Detailbericht</h3>
+//     <!-- TAGE-DETAILS -->
+//     ${data.days.map((day, index) => {
+//         return `
+//         <div class="day-container no-break">
+//             <h3>&#128197; Tag ${day.dayNumber} - Detailbericht</h3>
 
-            <div class="day-info-grid">
-                <div class="day-info-box">
-                    <strong>🕐 Zeiten:</strong>
-                    <div>
-                        Ladebeginn: ${day.ladebeginn || '07:30'}<br>
-                        Abfahrt: ${day.abfahrt || '07:45'}<br>
-                        Arbeitszeit: ${day.arbeitszeitBeginn || '08:00'} - ${day.arbeitszeitEnde || '16:30'}<br>
-                        Pause: ${day.pause || '30'} Min | Regenpause: ${day.regenpause || '0'} Min
-                    </div>
-                </div>
+//             <div class="day-info-grid">
+//                 <div class="day-info-box">
+//                     <strong>🕐 Zeiten:</strong>
+//                     <div>
+//                         Ladebeginn: ${day.ladebeginn || '07:30'}<br>
+//                         Abfahrt: ${day.abfahrt || '07:45'}<br>
+//                         Arbeitszeit: ${day.arbeitszeitBeginn || '08:00'} - ${day.arbeitszeitEnde || '16:30'}<br>
+//                         Pause: ${day.pause || '30'} Min | Regenpause: ${day.regenpause || '0'} Min
+//                     </div>
+//                 </div>
 
-                <div class="day-info-box">
-                    <strong>&#128101; Mitarbeiter:</strong>
-                    <div>${day.workers.map(w => {
-                        if (typeof w === 'string') return w;
-                        const timeInfo = (w.startTime || w.endTime) ? ` (${w.startTime || day.arbeitszeitBeginn} - ${w.endTime || day.arbeitszeitEnde})` : '';
-                        return `${w.name}${timeInfo}`;
-                    }).join(', ')}</div>
-                </div>
-            </div>
+//                 <div class="day-info-box">
+//                     <strong>&#128101; Mitarbeiter:</strong>
+//                     <div>${day.workers.map(w => {
+//                         if (typeof w === 'string') return w;
+//                         const timeInfo = (w.startTime || w.endTime) ? ` (${w.startTime || day.arbeitszeitBeginn} - ${w.endTime || day.arbeitszeitEnde})` : '';
+//                         return `${w.name}${timeInfo}`;
+//                     }).join(', ')}</div>
+//                 </div>
+//             </div>
 
-            ${day.beschreibungArbeiten ? `
-            <div class="arbeiten-box">
-                <strong>&#128296; Durchgeführte Arbeiten:</strong>
-                <p>${day.beschreibungArbeiten}</p>
-            </div>
-            ` : ''}
+//             ${day.beschreibungArbeiten ? `
+//             <div class="arbeiten-box">
+//                 <strong>&#128296; Durchgeführte Arbeiten:</strong>
+//                 <p>${day.beschreibungArbeiten}</p>
+//             </div>
+//             ` : ''}
 
-            ${day.zusatzarbeiten ? `
-            <div class="zusatz-box">
-                <strong>➕ Zusatzarbeiten:</strong>
-                <p>${day.zusatzarbeiten}</p>
-            </div>
-            ` : ''}
+//             ${day.zusatzarbeiten ? `
+//             <div class="zusatz-box">
+//                 <strong>➕ Zusatzarbeiten:</strong>
+//                 <p>${day.zusatzarbeiten}</p>
+//             </div>
+//             ` : ''}
 
-            ${day.materials && day.materials.length > 0 ? `
-            <div style="margin-top: 15px;">
-                <strong style="color: #7F973B; display: block; margin-bottom: 8px;">🧱 Materialien:</strong>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Material</th>
-                            <th>Menge</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${day.materials.map(mat => `
-                        <tr>
-                            <td>${mat.material}</td>
-                            <td>${mat.amount}</td>
-                        </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-            ` : ''}
+//             ${day.materials && day.materials.length > 0 ? `
+//             <div style="margin-top: 15px;">
+//                 <strong style="color: #7F973B; display: block; margin-bottom: 8px;">🧱 Materialien:</strong>
+//                 <table class="data-table">
+//                     <thead>
+//                         <tr>
+//                             <th>Material</th>
+//                             <th>Menge</th>
+//                         </tr>
+//                     </thead>
+//                     <tbody>
+//                         ${day.materials.map(mat => `
+//                         <tr>
+//                             <td>${mat.material}</td>
+//                             <td>${mat.amount}</td>
+//                         </tr>
+//                         `).join('')}
+//                     </tbody>
+//                 </table>
+//             </div>
+//             ` : ''}
 
-            ${day.machines && day.machines.length > 0 ? `
-            <div style="margin-top: 15px;">
-                <strong style="color: #7F973B; display: block; margin-bottom: 8px;">&#128668; Maschinen:</strong>
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Maschine</th>
-                            <th>Dauer/Menge</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${day.machines.map(mach => `
-                        <tr>
-                            <td>${mach.machine}</td>
-                            <td>${mach.duration}</td>
-                        </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            </div>
-            ` : ''}
-        </div>
-        `;
-    }).join('')}
+//             ${day.machines && day.machines.length > 0 ? `
+//             <div style="margin-top: 15px;">
+//                 <strong style="color: #7F973B; display: block; margin-bottom: 8px;">&#128668; Maschinen:</strong>
+//                 <table class="data-table">
+//                     <thead>
+//                         <tr>
+//                             <th>Maschine</th>
+//                             <th>Dauer/Menge</th>
+//                         </tr>
+//                     </thead>
+//                     <tbody>
+//                         ${day.machines.map(mach => `
+//                         <tr>
+//                             <td>${mach.machine}</td>
+//                             <td>${mach.duration}</td>
+//                         </tr>
+//                         `).join('')}
+//                     </tbody>
+//                 </table>
+//             </div>
+//             ` : ''}
+//         </div>
+//         `;
+//     }).join('')}
 
-    <!-- BEMERKUNGEN -->
-    ${data.bemerkungen ? `
-    <div class="pdf-section">
-        <h2><span class="icon">💬</span>Bemerkungen</h2>
-        <div class="bemerkungen-box">
-            <p>${data.bemerkungen}</p>
-        </div>
-    </div>
-    ` : ''}
+//     <!-- BEMERKUNGEN -->
+//     ${data.bemerkungen ? `
+//     <div class="pdf-section">
+//         <h2><span class="icon">💬</span>Bemerkungen</h2>
+//         <div class="bemerkungen-box">
+//             <p>${data.bemerkungen}</p>
+//         </div>
+//     </div>
+//     ` : ''}
 
-    <!-- &#9989; BILDER-SEKTION -->
-    ${data.images && data.images.length > 0 ? `
-    <div class="images-section">
-        <div class="pdf-section">
-            <h2><span class="icon">&#128247;</span>Projekt-Bilder (${data.images.length} Bilder)</h2>
-            <div class="images-grid">
-                ${data.images.map((image, idx) => `
-                    <div class="image-item">
-                        <img src="${image.data}" alt="${image.name || `Bild ${idx + 1}`}">
-                        <div class="image-caption">
-                            <div class="image-category">${getCategoryDisplayName(image.category)}</div>
-                            <div>${image.name || `Bild ${idx + 1}`}</div>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    </div>
-    ` : ''}
+//     <!-- &#9989; BILDER-SEKTION -->
+//     ${data.images && data.images.length > 0 ? `
+//     <div class="images-section">
+//         <div class="pdf-section">
+//             <h2><span class="icon">&#128247;</span>Projekt-Bilder (${data.images.length} Bilder)</h2>
+//             <div class="images-grid">
+//                 ${data.images.map((image, idx) => `
+//                     <div class="image-item">
+//                         <img src="${image.data}" alt="${image.name || `Bild ${idx + 1}`}">
+//                         <div class="image-caption">
+//                             <div class="image-category">${getCategoryDisplayName(image.category)}</div>
+//                             <div>${image.name || `Bild ${idx + 1}`}</div>
+//                         </div>
+//                     </div>
+//                 `).join('')}
+//             </div>
+//         </div>
+//     </div>
+//     ` : ''}
 
-    <!-- PROJEKTZUSAMMENFASSUNG -->
-    <div class="summary-box">
-        <h2><span class="icon">📊</span>Projektzusammenfassung</h2>
-        <div class="summary-grid">
-            <div class="summary-item">
-                <strong>Gesamtstunden:</strong>
-                <span>${totalHours.toFixed(2)} Std.</span>
-            </div>
-            <div class="summary-item">
-                <strong>Mitarbeiter:</strong>
-                <span>${allWorkers.length}</span>
-            </div>
-            <div class="summary-item">
-                <strong>Materialien:</strong>
-                <span>${data.days.reduce((sum, day) => sum + (day.materials?.length || 0), 0)}</span>
-            </div>
-            <div class="summary-item">
-                <strong>Maschinen:</strong>
-                <span>${data.days.reduce((sum, day) => sum + (day.machines?.length || 0), 0)}</span>
-            </div>
-        </div>
-    </div>
+//     <!-- PROJEKTZUSAMMENFASSUNG -->
+//     <div class="summary-box">
+//         <h2><span class="icon">📊</span>Projektzusammenfassung</h2>
+//         <div class="summary-grid">
+//             <div class="summary-item">
+//                 <strong>Gesamtstunden:</strong>
+//                 <span>${totalHours.toFixed(2)} Std.</span>
+//             </div>
+//             <div class="summary-item">
+//                 <strong>Mitarbeiter:</strong>
+//                 <span>${allWorkers.length}</span>
+//             </div>
+//             <div class="summary-item">
+//                 <strong>Materialien:</strong>
+//                 <span>${data.days.reduce((sum, day) => sum + (day.materials?.length || 0), 0)}</span>
+//             </div>
+//             <div class="summary-item">
+//                 <strong>Maschinen:</strong>
+//                 <span>${data.days.reduce((sum, day) => sum + (day.machines?.length || 0), 0)}</span>
+//             </div>
+//         </div>
+//     </div>
 
-    <!-- FOOTER -->
-    <div class="pdf-footer">
-        <div class="company-name">&#127793; gardenKeeper® GmbH - Sven Krämer</div>
-        <div class="contact-info">
-            <strong>☎</strong> Tel: 0681 93784009 |
-            <strong>✉</strong> Email: info@gardenkeeper.de |
-            <strong>🌐</strong> Web: www.gardenkeeper.de
-        </div>
-        <div class="slogan">"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</div>
-        <div class="document-info">
-            Dokument erstellt mit gardenKeeper® Abnahmeformular v6.5<br>
-            Professionelle Dokumentation - Fokus auf die Essentials
-        </div>
-    </div>
+//     <!-- FOOTER -->
+//     <div class="pdf-footer">
+//         <div class="company-name">&#127793; gardenKeeper® GmbH</div>
+//         <div class="contact-info">
+//             <strong>☎</strong> Tel: 0681 9378 4009 |
+//             <strong>✉</strong> Email: info@gardenkeeper.de |
+//             <strong>🌐</strong> Web: www.gardenkeeper.de
+//         </div>
+//         <div class="slogan">"Weil Ihr Zuhause es verdient - made by gardenKeeper®"</div>
+//         <div class="document-info">
+//             Dokument erstellt mit gardenKeeper® Abnahmeformular 2026<br>
+//             Professionelle Dokumentation - Fokus auf die Essentials
+//         </div>
+//     </div>
 
-    <!-- AUTO-PRINT -->
-    <script>
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                window.print();
-            }, 800);
-        });
-    <\/script>
-</body>
-</html>`;
-    }
+//     <!-- AUTO-PRINT -->
+//     <script>
+//         window.addEventListener('load', function() {
+//             setTimeout(function() {
+//                 window.print();
+//             }, 800);
+//         });
+//     <\/script>
+// </body>
+// </html>`;
+//     }
 
     // ========================================
     // 💾 HTML DOWNLOAD
@@ -5957,7 +5982,7 @@ ${(() => {
         inputs.forEach(input => {
             if (input.type === 'checkbox' || input.type === 'radio') {
                 input.checked = false;
-            } else if (input.id !== 'arbeitsbeginn' && input.id !== 'arbeitsende' && input.id !== 'pause') {
+            } else if (input.id !== 'ladebeginn' && input.id !== 'arbeitsende' && input.id !== 'pause') {
                 input.value = '';
             }
             input.style.borderColor = '';
@@ -6141,13 +6166,9 @@ ${(() => {
         setTimeout(() => {
             showMessage(`
                 🎉 <strong>gardenKeeper® Abnahmeformular bereit!</strong><br><br>
-                &#9989; Modernes Design nach Ihren Farbvorgaben<br>
-                &#9989; Sanfte Grün- und Brauntöne integriert<br>
+                &#9989; Modernes Design einfach in Anwendung<br>
                 &#9989; Vollständige Funktionalität<br>
-                &#9989; Touch-optimiert für Tablets<br>
-                &#9989; PDF-Generierung einsatzbereit<br>
-                &#9989; Unterschriften-System aktiv<br>
-                &#9989; Email-Integration verfügbar<br>
+                &#9989; Touch-optimiert<br>
                 &#9989; <strong>BILD-UPLOAD UND PDF-INTEGRATION AKTIV!</strong><br><br>
                 &#127793; Das System ist sofort einsatzbereit!<br><br>
                 💡 <strong>Klicken Sie auf "Abnahmeformular öffnen"</strong>
@@ -6201,7 +6222,7 @@ ${(() => {
         MACHINES,
         uploadedImages,
         optimizeImagesForPDF,
-        version: 'gardenKeeper® v2025 - MIT BILD-PDF-INTEGRATION UND UPLOAD-FIX'
+        version: 'gardenKeeper® v2026 - MIT BILD-PDF-INTEGRATION UND UPLOAD-FIX'
     };
     /**
      * &#127793; gardenKeeper® - MOBILE STICKY BUTTONS JAVASCRIPT
