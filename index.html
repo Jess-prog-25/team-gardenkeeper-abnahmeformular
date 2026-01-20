@@ -3604,39 +3604,39 @@ setTimeout(() => {
     }
 
     function getFormData() {
-        const data = {
-            anrede: document.getElementById('anrede')?.value?.trim() || '',
-            nachname: document.getElementById('nachname')?.value?.trim() || '',
-            kunde: document.getElementById('kunde')?.value?.trim() || '',
-            istPauschal: document.getElementById('abrechnungsart')?.value === 'pauschal',
-            kundenEmail: document.getElementById('kundenEmail')?.value?.trim() || '',
-            lexofficeId: document.getElementById('lexofficeId')?.value?.trim() || '',
-            startdatum: document.getElementById('startdatum')?.value || '',
-            projektbeschreibung: document.getElementById('projektbeschreibung')?.value?.trim() || '',
-            days: [],
-            checkboxes: {
-                auftragGemaess: document.getElementById('auftragGemaess').checked,
-                komplett: document.getElementById('komplett').checked,
-                teilweise: document.getElementById('teilweise').checked,
-                ordnungsGemaess: document.getElementById('ordnungsGemaess').checked,
-                kundeZufrieden: document.getElementById('kundeZufrieden').checked,
-                arbeitsplatzSauber: document.getElementById('arbeitsplatzSauber').checked
-            },
-            bemerkungen: document.getElementById('bemerkungen')?.value?.trim() || '',
-            signatures: daySignatures,
-            images: uploadedImages  // BILDER HINZUGEFÜGT
-        };
+    const data = {
+        anrede: document.getElementById('anrede')?.value?.trim() || '',
+        nachname: document.getElementById('kunde')?.value?.trim() || '',  // ✅ FIX
+        kunde: document.getElementById('kunde')?.value?.trim() || '',
+        istPauschal: document.getElementById('abrechnungsart')?.value === 'pauschal',
+        kundenEmail: document.getElementById('kundenEmail')?.value?.trim() || '',
+        lexofficeId: document.getElementById('lexofficeId')?.value?.trim() || '',
+        startdatum: document.getElementById('startdatum')?.value || '',
+        projektbeschreibung: document.getElementById('projektbeschreibung')?.value?.trim() || '',
+        days: [],
+        checkboxes: {
+            auftragGemaess: document.getElementById('auftragGemaess').checked,
+            komplett: document.getElementById('komplett').checked,
+            teilweise: document.getElementById('teilweise').checked,
+            ordnungsGemaess: document.getElementById('ordnungsGemaess').checked,
+            kundeZufrieden: document.getElementById('kundeZufrieden').checked,
+            arbeitsplatzSauber: document.getElementById('arbeitsplatzSauber').checked
+        },
+        bemerkungen: document.getElementById('bemerkungen')?.value?.trim() || '',
+        signatures: daySignatures,
+        images: uploadedImages
+    };
 
-        for (let dayNum = 1; dayNum <= maxDays; dayNum++) {
-            const dayContent = document.getElementById(`day${dayNum}`);
-            if (dayContent) {
-                const dayData = getDayData(dayContent, dayNum);
-                data.days.push(dayData);
-            }
+    for (let dayNum = 1; dayNum <= maxDays; dayNum++) {
+        const dayContent = document.getElementById(`day${dayNum}`);
+        if (dayContent) {
+            const dayData = getDayData(dayContent, dayNum);
+            data.days.push(dayData);
         }
-
-        return data;
     }
+
+    return data;
+}
 
     function getDayData(dayContent, dayNumber) {
         const workers = [];
@@ -4455,12 +4455,25 @@ Web: www.gardenkeeper.de
         });
 
         let totalHours = 0;
-        data.days.forEach(day => {
-            if (day.ladeBeginn && day.arbeitszeitEnde && day.workers) {
-                const workHours = calculateWorkHours(day.ladeBeginn, day.arbeitszeitEnde, (day.pause || 0) + (day.regenpause || 0));
-                totalHours += workHours * day.workers.length;
+data.days.forEach(day => {
+    if (day.workers && day.workers.length > 0) {
+        day.workers.forEach(worker => {
+            // ✅ STANDARD: ladebeginn → arbeitszeitEnde
+            // ✅ AUSNAHME: Individuelle Zeiten wenn vorhanden
+            const workerStartTime = worker.startTime || day.ladebeginn;
+            const workerEndTime = worker.endTime || day.arbeitszeitEnde;
+            
+            if (workerStartTime && workerEndTime) {
+                const workHours = calculateWorkHours(
+                    workerStartTime,
+                    workerEndTime,
+                    (day.pause || 0) + (day.regenpause || 0)
+                );
+                totalHours += workHours;
             }
         });
+    }
+});
 
         return `<!DOCTYPE html>
 <html lang="de">
@@ -5187,16 +5200,25 @@ ${(() => {
 
         // Gesamtstunden berechnen
         let totalHours = 0;
-        data.days.forEach(day => {
-            if (day.arbeitszeitBeginn && day.arbeitszeitEnde && day.workers && day.workers.length > 0) {
+data.days.forEach(day => {
+    if (day.workers && day.workers.length > 0) {
+        day.workers.forEach(worker => {
+            // ✅ STANDARD: ladebeginn → arbeitszeitEnde
+            // ✅ AUSNAHME: Individuelle Zeiten wenn vorhanden
+            const workerStartTime = worker.startTime || day.ladebeginn;
+            const workerEndTime = worker.endTime || day.arbeitszeitEnde;
+            
+            if (workerStartTime && workerEndTime) {
                 const workHours = calculateWorkHours(
-                    day.arbeitszeitBeginn,
-                    day.arbeitszeitEnde,
+                    workerStartTime,
+                    workerEndTime,
                     (day.pause || 0) + (day.regenpause || 0)
                 );
-                totalHours += workHours * day.workers.length;
+                totalHours += workHours;
             }
         });
+    }
+});
 
         // Alle Mitarbeiter sammeln
         const allWorkers = [];
