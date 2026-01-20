@@ -3760,10 +3760,10 @@ setTimeout(() => {
             // Anzeige: Zeige individuelle Zeiten, falls vorhanden
             let timeInfo = '';
             if (worker.startTime || worker.endTime) {
-                timeInfo = ' <small>(' + actualStart + ' - ' + actualEnd + ')</small>';
+                timeInfo = ` <small>(' + actualStart + ' - ' + actualEnd + ')</small>`;
             }
 
-            hoursListHTML += '<div>${worker.name}: ${workHours.toFixed(2)} Stunden${timeInfo}</div>';
+            hoursListHTML += `<div>${worker.name}: ${workHours.toFixed(2)} Stunden${timeInfo}</div>`;
         });
 
         hoursListDiv.innerHTML = hoursListHTML;
