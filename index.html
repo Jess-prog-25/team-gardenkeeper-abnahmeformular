@@ -7158,7 +7158,6 @@ ${(() => {
 
         log('Fülle Formular-Felder aus...');
 
-        // Vorname (in Feld "kunde")
         if (eventData.vorname) {
             const kundeField = document.getElementById('kunde');
             if (kundeField && !kundeField.value) {
@@ -7167,7 +7166,6 @@ ${(() => {
             }
         }
 
-        // Nachname
         if (eventData.nachname) {
             const nachnameField = document.getElementById('nachname');
             if (nachnameField && !nachnameField.value) {
@@ -7176,7 +7174,6 @@ ${(() => {
             }
         }
 
-        // Email
         if (eventData.email) {
             const emailField = document.getElementById('kundenEmail');
             if (emailField && !emailField.value) {
@@ -7185,7 +7182,6 @@ ${(() => {
             }
         }
 
-        // LexOffice ID
         if (eventData.lexofficeId) {
             const lexField = document.getElementById('lexofficeId');
             if (lexField && !lexField.value) {
@@ -7194,14 +7190,54 @@ ${(() => {
             }
         }
 
-
-        // Event ID (hidden field)
         if (eventData.eventId) {
             const eventIdField = document.getElementById('eventId');
             if (eventIdField) {
                 eventIdField.value = eventData.eventId;
             }
         }
+    }
+
+    // ✅ DIESE FUNKTION MUSS IM GLEICHEN SCOPE SEIN!
+    async function loadGoogleDocPositions(eventData) {
+        try {
+            const description = eventData.description || '';
+            const docLinkMatch = description.match(/https:\/\/docs\.google\.com\/document\/d\/([a-zA-Z0-9_-]+)/);
+
+            if (!docLinkMatch) {
+                console.log('No Google Doc link found in event');
+                return null;
+            }
+
+            const docId = docLinkMatch[1];
+            console.log('Found Google Doc ID:', docId);
+
+            const response = await fetch(`${CONFIG.APPS_SCRIPT_URL}?action=getGoogleDoc&docId=${docId}`);
+            const data = await response.json();
+
+            if (data.success && data.docText) {
+                // ✅ Diese Funktionen müssen GLOBAL verfügbar sein (aus dem Hauptscript)
+                const positions = window.parseGoogleDocPositions(data.docText);
+                console.log('Parsed positions:', positions);
+
+                const checkboxesHtml = window.generateDynamicCheckboxes(positions);
+
+                const container = document.getElementById('positions-container');
+                if (container) {
+                    container.innerHTML = checkboxesHtml;
+                    window.initializeCheckboxHandlers();
+                }
+
+                return positions;
+            }
+        } catch (error) {
+            console.error('Error loading Google Doc:', error);
+            const container = document.getElementById('positions-container');
+            if (container) {
+                container.innerHTML = '<p style="color: #dc3545;">Fehler beim Laden der Auftragspositionen. Bitte manuell eingeben.</p>';
+            }
+        }
+        return null;
     }
 
     async function initAutoLoader() {
@@ -7211,12 +7247,10 @@ ${(() => {
 
         if (!eventId) {
             log('ℹ️ Keine Event-ID in URL gefunden - normaler Modus');
-            // Clear the positions container loading message
             const container = document.getElementById('positions-container');
             if (container) {
                 container.innerHTML = '<p style="color: #666; font-style: italic;">Keine Google Doc-Positionen verfügbar. Bitte manuell beschreiben.</p>';
             }
-            // Show manual textarea by default
             const textarea = document.querySelector('.beschreibung-arbeiten');
             if (textarea) {
                 textarea.style.display = 'block';
@@ -7234,24 +7268,19 @@ ${(() => {
 
             fillFormFields(eventData);
 
-            // NEW: Load Google Doc and parse positions
             showLoadingIndicator('⏳ Lade Arbeitspositionen aus Google Doc...');
             const positions = await loadGoogleDocPositions(eventData);
 
             if (positions && positions.length > 0) {
                 log('✅ Google Doc Positionen erfolgreich geladen');
-                // Textarea remains hidden
             } else {
                 log('ℹ️ Keine Positionen in Google Doc gefunden');
-                // Show manual textarea as fallback
                 const textarea = document.querySelector('.beschreibung-arbeiten');
                 if (textarea) {
                     textarea.style.display = 'block';
                 }
                 const container = document.getElementById('positions-container');
-                if (container && container.innerHTML.includes('Fehler')) {
-                    // Error already shown by loadGoogleDocPositions
-                } else if (container) {
+                if (container && !container.innerHTML.includes('Fehler')) {
                     container.innerHTML = '<p style="color: #666; font-style: italic;">Keine Positionen im Google Doc gefunden.</p>';
                 }
             }
@@ -7266,16 +7295,15 @@ ${(() => {
                 <small>Kunde: ${eventData.vorname || ''} ${eventData.nachname || ''} | LexOffice: ${eventData.lexofficeId || '-'}</small>
             `;
 
-            const form = document.querySelector('form');
-            if (form && form.firstChild) {
-                form.insertBefore(infoDiv, form.firstChild);
+            const formContent = document.querySelector('.form-content');
+            if (formContent && formContent.firstChild) {
+                formContent.insertBefore(infoDiv, formContent.firstChild);
             }
 
         } else {
             hideLoadingIndicator();
             log('⚠️ Event-Daten konnten nicht geladen werden');
 
-            // Show manual textarea as fallback
             const textarea = document.querySelector('.beschreibung-arbeiten');
             if (textarea) {
                 textarea.style.display = 'block';
@@ -7294,9 +7322,9 @@ ${(() => {
                 <small>Bitte Daten manuell eingeben. Event-ID: ${eventId}</small>
             `;
 
-            const form = document.querySelector('form');
-            if (form && form.firstChild) {
-                form.insertBefore(warningDiv, form.firstChild);
+            const formContent = document.querySelector('.form-content');
+            if (formContent && formContent.firstChild) {
+                formContent.insertBefore(warningDiv, formContent.firstChild);
             }
         }
     }
@@ -7308,19 +7336,16 @@ ${(() => {
         initAutoLoader();
     }
 
-    // Export for debug
+    // ✅ Export für globalen Zugriff
     window.gardenKeeperEventLoader = {
         loadEventData,
         fillFormFields,
         loadGoogleDocPositions,
         getEventIdFromURL,
-        version: '2026.01.19-INTEGRATED'
+        version: '2026.01.20-FIXED'
     };
 
     log('✅ Event Auto-Loader Modul geladen (with Google Doc Parser)');
 
 })();
 </script>
-
-</body>
-</html>
