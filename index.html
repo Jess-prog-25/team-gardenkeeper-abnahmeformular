@@ -7042,7 +7042,7 @@ ${(() => {
             const docId = docLinkMatch[1];
             console.log('Found Google Doc ID:', docId);
 
-            const response = await fetch(`${GOOGLE_SCRIPT_URL}?action=getGoogleDoc&docId=${docId}`);
+            const response = await fetch(`${CONFIG.APPS_SCRIPT_URL}?action=getGoogleDoc&docId=${docId}`);
             const data = await response.json();
 
             if (data.success && data.docText) {
@@ -7071,8 +7071,8 @@ ${(() => {
 
 </script>
 
-<!-- === PFLEGEANLEITUNG-SYSTEM === -->
-<script src="pflegeanleitung-system-KOMPLETT.js"></script>
+<!-- === PFLEGEANLEITUNG-SYSTEM (Netlify gehostet) === -->
+<script src="https://team-gardenkeeper-abnahmeformular.netlify.app/pflegeanleitung-system-KOMPLETT.js"></script>
 
 <!-- === EVENT AUTO-LOADER WITH GOOGLE DOC PARSER INTEGRATION === -->
 <script>
