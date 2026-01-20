@@ -26,7 +26,7 @@
         // ⚠️ WICHTIG: Hier die Apps Script URL eintragen!
         // Nach dem Deployment: Apps Script → "Bereitstellen" → "Als Web-App bereitstellen"
         // Die URL kopieren und hier einfügen:
-        APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbxajxH7qCrerYJKQTZQxPPkVhGJvTjYDOoFGtuPcoF6S2ggxMZCcNKdoiGdf3RgSdbBng/exec',
+        APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbwftkyLDb4kfPovKgEDqmL7szktoEUfqOq8odBnCcLL-4DXKS0li6u4CFEe2pR8-mqAKQ/exec',
 
         TIMEOUT: 10000, // 10 Sekunden Timeout für API-Aufrufe
         DEBUG: true     // Debug-Modus (Console-Logs)
@@ -380,3 +380,4 @@
     log('✅ Event Auto-Loader Modul geladen');
 
 })();
+
