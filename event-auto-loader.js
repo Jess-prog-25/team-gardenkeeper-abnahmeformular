@@ -310,14 +310,33 @@
             fillFormFields(eventData);
 
             // Wenn Google Doc Link vorhanden, Positionen laden
-            if (eventData.googleDocLink) {
-                showLoadingIndicator('⏳ Lade Arbeitspositionen...');
-                const positions = await loadDocPositions(eventData.googleDocLink);
-
-                if (positions && positions.length > 0) {
-                    createPositionCheckboxes(positions);
-                }
+            // Wenn Event-Beschreibung vorhanden, nach Google Doc Link suchen
+if (eventData.description) {
+    showLoadingIndicator('⏳ Lade Arbeitspositionen...');
+    
+    // Nutze intelligenten Parser aus googledocs.js
+    if (typeof loadGoogleDocPositions === 'function') {
+        const positions = await loadGoogleDocPositions(eventData);
+        
+        if (positions && positions.length > 0) {
+            // googledocs.js kümmert sich um die Anzeige
+            log('✅ Positionen über googledocs.js geladen');
+        } else {
+            log('ℹ️ Keine Positionen gefunden - Fallback auf alte Methode');
+            // Fallback auf deine alte Methode
+            const simplePositions = await loadDocPositions(eventData.googleDocLink);
+            if (simplePositions && simplePositions.length > 0) {
+                createPositionCheckboxes(simplePositions);
             }
+        }
+    } else {
+        log('⚠️ googledocs.js nicht geladen - verwende alte Methode');
+        const simplePositions = await loadDocPositions(eventData.googleDocLink);
+        if (simplePositions && simplePositions.length > 0) {
+            createPositionCheckboxes(simplePositions);
+        }
+    }
+}
 
             hideLoadingIndicator();
 
@@ -380,4 +399,5 @@
     log('✅ Event Auto-Loader Modul geladen');
 
 })();
+
 
