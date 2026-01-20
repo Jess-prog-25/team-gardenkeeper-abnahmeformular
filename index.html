@@ -7148,7 +7148,7 @@ data.days.forEach(day => {
     async function loadEventData(eventId) {
         log('Lade Event-Daten für ID:', eventId);
 
-        if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'HIER_APPS_SCRIPT_URL_EINTRAGEN') {
+        if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbwftkyLDb4kfPovKgEDqmL7szktoEUfqOq8odBnCcLL-4DXKS0li6u4CFEe2pR8-mqAKQ/exec') {
             log('❌ Apps Script URL nicht konfiguriert!');
             return null;
         }
