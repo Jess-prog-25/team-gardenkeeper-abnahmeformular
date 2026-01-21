@@ -2627,9 +2627,9 @@ textarea {
                     ${projectData.days.map((day, index) => {
                         // Arbeitszeit berechnen
                         let arbeitsstunden = 0;
-                        if (day.LadeBeginn && day.arbeitszeitEnde) {
-                            const [startH, startM] = day.ladeBeginn.split(':').map(Number);
-                            const [endH, endM] = day.arbeitszeitEnde.split(':').map(Number);
+                        if (day.Ladebeginn && day.arbeitszeitende) {
+                            const [startH, startM] = day.ladebeginn.split(':').map(Number);
+                            const [endH, endM] = day.arbeitszeitende.split(':').map(Number);
                             const totalMinutes = (endH * 60 + endM) - (startH * 60 + startM) - (day.pause || 0) - (day.regenpause || 0);
                             arbeitsstunden = (totalMinutes / 60).toFixed(2);
                         }
@@ -2641,7 +2641,7 @@ textarea {
                             </h4>
 
                             <div style="background: #f5f3f0; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <p style="margin: 5px 0;"><strong>&#9200; Arbeitszeit:</strong> ${day.ladeBeginn} - ${day.arbeitszeitEnde} Uhr</p>
+                                <p style="margin: 5px 0;"><strong>&#9200; Arbeitszeit:</strong> ${day.ladebeginn} - ${day.arbeitszeitende} Uhr</p>
                                 <p style="margin: 5px 0;"><strong>&#9201; Netto-Stunden:</strong> ${arbeitsstunden} Std. (Pausen: ${day.pause || 0} Min.)</p>
                                 ${day.regenpause ? `<p style="margin: 5px 0;"><strong>&#127783; Regenpause:</strong> ${day.regenpause} Min.</p>` : ''}
                             </div>
@@ -2655,8 +2655,8 @@ textarea {
                                             if (typeof w === 'string') {
                                                 return `<li>${w}</li>`;
                                             } else {
-                                                const actualStart = w.startTime || day.ladeBeginn;
-                                                const actualEnd = w.endTime || day.arbeitszeitEnde;
+                                                const actualStart = w.startTime || day.ladebeginn;
+                                                const actualEnd = w.endTime || day.arbeitszeitende;
                                                 const timeInfo = ' <small>(' + actualStart + ' - ' + actualEnd + ')</small>';
                                                 return `<li>${w.name}${timeInfo}</li>`;
                                             }
@@ -3197,7 +3197,7 @@ formData.images = uploadedImages.map((img, index) => ({
             try {
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: 'POST',
-                    mode: 'no-cors',
+                    mode: 'cors',
                     headers: {
                         'Content-Type': 'text/plain'
                     },
@@ -3240,18 +3240,36 @@ formData.images = uploadedImages.map((img, index) => ({
         } catch (error) {
             console.error('❌ Google Sheets Integration komplett fehlgeschlagen:', error);
             
-            // Backup lokal speichern
-            try {
-                const backup = {
-                    timestamp: new Date().toISOString(),
-                    data: data,
-                    error: error.message
-                };
-                localStorage.setItem('gardenKeeper_sheets_backup', JSON.stringify(backup));
-                console.log('💾 Daten als Backup lokal gespeichert');
-            } catch (backupError) {
-                console.error('❌ Backup speichern fehlgeschlagen:', backupError);
-            }
+            '❌ Backup speichern fehlgeschlagen:', backupError);
+   }
+        // Backup lokal speichern (MEHRERE Einträge, nicht überschreiben!)
+try {
+    const backupKey = 'gardenKeeper_backups';
+    const existingBackups = JSON.parse(localStorage.getItem(backupKey) || '[]');
+    
+    const newBackup = {
+        id: Date.now(),
+        timestamp: new Date().toISOString(),
+        kunde: data.kunde || 'Unbekannt',
+        data: data,
+        error: error.message,
+        status: 'pending'
+    };
+    
+    existingBackups.push(newBackup);
+    
+    // Max 50 Backups behalten
+    if (existingBackups.length > 50) {
+        existingBackups.shift();
+    }
+    
+    localStorage.setItem(backupKey, JSON.stringify(existingBackups));
+    console.log('💾 Backup #' + newBackup.id + ' gespeichert (' + existingBackups.length + ' gesamt)');
+    
+    showMessage('⚠️ Daten lokal gesichert! Später unter "Backups" nachsenden.', 'warning');
+} catch (backupError) {
+    console.error('❌ Backup speichern fehlgeschlagen:', backupError);
+}
 
             return { 
                 success: false, 
@@ -4257,10 +4275,9 @@ function closeSignature() {
         const kundeEmail = document.getElementById('emailKundeAddress').value.trim();
         const emailMessage = document.getElementById('emailMessage').value.trim();
         
-        if (!kundeEmail) {
-            showMessage('❌ Bitte Email-Adresse eingeben', 'error');
-            return;
-        }
+        // Info-Email geht IMMER raus, Kunde optional
+        const infoEmail = 'info@gardenkeeper.de';
+        
         
         const formData = getFormData();
         
@@ -4346,7 +4363,9 @@ Web: www.gardenkeeper.de
 =========================================================
 `;
             const body = encodeURIComponent(emailContent);
-            const mailtoLink = `mailto:${kundeEmail}?cc=info@gardenkeeper.de&subject=${subject}&body=${body}`;
+            const mailtoLink = kundeEmail
+                ? `mailto:${kundeEmail}?cc=info@gardenkeeper.de&subject=${subject}&body=${body}`
+                : `mailto:info@gardenkeeper.de?subject=${subject}&body=${body}`;
             
             try {
                 window.location.href = mailtoLink;
@@ -4461,7 +4480,7 @@ data.days.forEach(day => {
             // ✅ STANDARD: ladebeginn → arbeitszeitEnde
             // ✅ AUSNAHME: Individuelle Zeiten wenn vorhanden
             const workerStartTime = worker.startTime || day.ladebeginn;
-            const workerEndTime = worker.endTime || day.arbeitszeitEnde;
+            const workerEndTime = worker.endTime || day.arbeitszeitende;
             
             if (workerStartTime && workerEndTime) {
                 const workHours = calculateWorkHours(
@@ -4972,7 +4991,7 @@ ${data.days.map((day, index) => `
                 <h4>&#9200; Zeiten:</h4>
                 <div><strong>Ladebeginn:</strong> ${day.ladebeginn || '---'}</div>
                 <div><strong>Abfahrt:</strong> ${day.abfahrt || '---'}</div>
-                <div><strong>Arbeitszeit:</strong> ${day.ankunftZeit || '---'} - ${day.arbeitszeitEnde || '---'}</div>
+                <div><strong>Arbeitszeit:</strong> ${day.arbeitszeitbeginn || '---'} - ${day.arbeitszeitende || '---'}</div>
                 <div><strong>Pause:</strong> ${day.pause || 0} Min | <strong>Regenpause:</strong> ${day.regenpause || 0} Min</div>
             </div>
             <div>
@@ -4981,7 +5000,7 @@ ${data.days.map((day, index) => `
                     if (typeof worker === 'string') {
                         return `<div>• ${worker}</div>`;
                     } else {
-                        const actualStart = worker.startTime || day.ladeBeginn;
+                        const actualStart = worker.startTime || day.ladebeginn;
                         const actualEnd = worker.endTime || day.arbeitszeitEnde;
                         const timeInfo = ' <small>(' + actualStart + ' - ' + actualEnd + ')</small>';
                         return `<div>• ${worker.name}${timeInfo}</div>`;
@@ -5802,37 +5821,35 @@ data.days.forEach(day => {
         </div>
     </div>
 
-    <!-- TAGE-DETAILS -->
+<!-- TAGE-DETAILS -->
     ${data.days.map((day, index) => {
         return `
         <div class="day-container no-break">
             <h3>&#128197; Tag ${day.dayNumber} - Detailbericht</h3>
-
             <div class="day-info-grid">
                 <div class="day-info-box">
                     <strong>🕐 Zeiten:</strong>
                     <div>
-                        Ladebeginn: ${day.ladebeginn || '07:30'}<br>
-                        Abfahrt: ${day.abfahrt || '07:45'}<br>
-                        Arbeitszeit: ${day.arbeitszeitBeginn || '08:00'} - ${day.arbeitszeitEnde || '16:30'}<br>
-                        Pause: ${day.pause || '30'} Min | Regenpause: ${day.regenpause || '0'} Min
+                        Ladebeginn: ${day.ladebeginn || '---'}<br>
+                        Abfahrt: ${day.abfahrt || '---'}<br>
+                        Arbeitszeit: ${day.ladebeginn || '---'} - ${day.arbeitszeitEnde || '---'}<br>
+                        Pause: ${day.pause || '0'} Min | Regenpause: ${day.regenpause || '0'} Min
                     </div>
                 </div>
-
                 <div class="day-info-box">
                     <strong>&#128101; Mitarbeiter:</strong>
                     <div>${day.workers.map(w => {
                         if (typeof w === 'string') return w;
-                        const timeInfo = (w.startTime || w.endTime) ? ` (${w.startTime || day.arbeitszeitBeginn} - ${w.endTime || day.arbeitszeitEnde})` : '';
+                        const timeInfo = (w.startTime || w.endTime) ? ` (${w.startTime || day.ladebeginn || '---'} - ${w.endTime || day.arbeitszeitEnde || '---'})` : '';
                         return `${w.name}${timeInfo}`;
                     }).join(', ')}</div>
                 </div>
             </div>
 
-            ${day.beschreibungArbeiten ? `
+            ${day.beschreibungarbeiten ? `
             <div class="arbeiten-box">
                 <strong>&#128296; Durchgeführte Arbeiten:</strong>
-                <p>${day.beschreibungArbeiten}</p>
+                <p>${day.beschreibungarbeiten}</p>
             </div>
             ` : ''}
 
@@ -7375,6 +7392,66 @@ data.days.forEach(day => {
     };
 
     log('✅ Event Auto-Loader Modul geladen (with Google Doc Parser)');
+    
+// ========================================
+// 💾 BACKUP-VERWALTUNG
+// ========================================
+
+function getBackups() {
+    return JSON.parse(localStorage.getItem('gardenKeeper_backups') || '[]');
+}
+
+function showBackups() {
+    const backups = getBackups();
+    if (backups.length === 0) {
+        alert('✅ Keine ausstehenden Backups vorhanden!');
+        return;
+    }
+    
+    let msg = '📋 AUSSTEHENDE BACKUPS (' + backups.length + '):\n\n';
+    backups.forEach((b, i) => {
+        msg += (i+1) + '. ' + b.kunde + ' (' + new Date(b.timestamp).toLocaleString('de-DE') + ')\n';
+        msg += '   Status: ' + b.status + ' | Fehler: ' + (b.error || 'keiner') + '\n\n';
+    });
+    msg += '\nZum Nachsenden: resendBackup(INDEX) in Console eingeben';
+    alert(msg);
+}
+
+async function resendBackup(index) {
+    const backups = getBackups();
+    if (index < 1 || index > backups.length) {
+        console.error('❌ Ungültiger Index. Verfügbar: 1-' + backups.length);
+        return;
+    }
+    
+    const backup = backups[index - 1];
+    console.log('🔄 Sende Backup nach:', backup.kunde);
+    
+    try {
+        const result = await sendToGoogleSheets(backup.data, false);
+        if (result.success) {
+            backup.status = 'sent';
+            backup.sentAt = new Date().toISOString();
+            localStorage.setItem('gardenKeeper_backups', JSON.stringify(backups));
+            console.log('✅ Backup erfolgreich nachgesendet!');
+            showMessage('✅ Backup für ' + backup.kunde + ' erfolgreich gesendet!', 'success');
+        }
+    } catch (error) {
+        console.error('❌ Nachsenden fehlgeschlagen:', error);
+    }
+}
+
+function clearSentBackups() {
+    const backups = getBackups().filter(b => b.status !== 'sent');
+    localStorage.setItem('gardenKeeper_backups', JSON.stringify(backups));
+    console.log('🗑️ Gesendete Backups gelöscht. Verbleibend: ' + backups.length);
+}
+
+// Global verfügbar machen
+window.showBackups = showBackups;
+window.resendBackup = resendBackup;
+window.clearSentBackups = clearSentBackups;
+window.getBackups = getBackups;
 
 })();
 </script>
