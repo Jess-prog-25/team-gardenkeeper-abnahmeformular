@@ -3237,12 +3237,7 @@ formData.images = uploadedImages.map((img, index) => ({
             
             throw new Error('Alle Übertragungsmethoden fehlgeschlagen');
             
-        } catch (error) {
-            console.error('❌ Google Sheets Integration komplett fehlgeschlagen:', error);
-            
-            '❌ Backup speichern fehlgeschlagen:', backupError);
-   }
-        // Backup lokal speichern (MEHRERE Einträge, nicht überschreiben!)
+ // Backup lokal speichern (MEHRERE Einträge, nicht überschreiben!)
 try {
     const backupKey = 'gardenKeeper_backups';
     const existingBackups = JSON.parse(localStorage.getItem(backupKey) || '[]');
