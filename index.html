@@ -1923,44 +1923,40 @@ textarea {
         <!-- Status Messages -->
         <div id="statusMessage"></div>
 
-        <div class="form-content">
-            <!-- Grunddaten -->
-            <div class="section">
-                <h3>&#128203; Grunddaten des Projekts</h3>
-                <div class="grid grid-3">
-                    <div class="field">
-                        <label>Anrede *</label>
-                        <select id="anrede" required style="width: 100%; padding: 15px; border: 2px solid var(--border-light); border-radius: 10px; font-size: 16px;">
-                            <option value="">Bitte wählen...</option>
-                            <option value="Liebe Frau">Liebe Frau</option>
-                            <option value="Lieber Herr">Lieber Herr</option>
-                            <option value="Guten Tag">Guten Tag (neutral)</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label>Vorname / Nachname *</label>
-                        <input type="text" id="kunde" placeholder="z.B.Max Mustermann" required>
-                    </div>
-                    <div class="field">
-                        <label>Firma </label>
-                        <input type="text" id="firma" placeholder="z.B. Deine Firma oder WEG" required>
-                    </div>
-                    <div class="field">
-                        <label>Kunde Email-Adresse</label>
-                        <input type="email" id="kundenEmail" placeholder="kunde@beispiel.de">
-                    </div>
-                    <div class="form-group">
-    <label for="abrechnungsart" style="font-size: 16px; font-weight: 600;">
-        💰 Abrechnungsart
-    </label>
-    <select id="abrechnungsart" style="width: 100%; padding: 12px; border: 2px solid var(--border-light); border-radius: 10px; font-size: 15px;">
-        <option value="tagesregie">&#9201; Tagesregie (mit Zeiterfassung)</option>
-        <option value="pauschal">&#128181; Pauschal (ohne Zeitangaben für Kunde)</option>
-    </select>
-    <small style="color: var(--soft-clay); font-style: italic;">
-        Bei Pauschal-Projekten werden Zeiten nur intern erfasst
-    </small>
-</div>
+      <div class="form-content">
+    <!-- Grunddaten -->
+    <div class="section">
+        <h3>&#128203; Grunddaten des Projekts</h3>
+        <div class="grid grid-3">
+            <div class="field">
+                <label>Anrede *</label>
+                <select id="anrede" required style="width: 100%; padding: 15px; border: 2px solid var(--border-light); border-radius: 10px; font-size: 16px;">
+                    <option value="">Bitte wählen...</option>
+                    <option value="Liebe Frau">Liebe Frau</option>
+                    <option value="Lieber Herr">Lieber Herr</option>
+                    <option value="Guten Tag">Guten Tag (neutral)</option>
+                </select>
+            </div>
+            <div class="field">
+                <label>Kundenname *</label>
+                <input type="text" id="kunde" placeholder="z.B. Max Mustermann" required>
+            </div>
+            <div class="field">
+                <label>Kunde Email-Adresse</label>
+                <input type="email" id="kundenEmail" placeholder="kunde@beispiel.de">
+            </div>
+            <div class="form-group">
+                <label for="abrechnungsart" style="font-size: 16px; font-weight: 600;">
+                    💰 Abrechnungsart
+                </label>
+                <select id="abrechnungsart" style="width: 100%; padding: 12px; border: 2px solid var(--border-light); border-radius: 10px; font-size: 15px;">
+                    <option value="tagesregie">&#9201; Tagesregie (mit Zeiterfassung)</option>
+                    <option value="pauschal">&#128181; Pauschal (ohne Zeitangaben für Kunde)</option>
+                </select>
+                <small style="color: var(--soft-clay); font-style: italic;">
+                    Bei Pauschal-Projekten werden Zeiten nur intern erfasst
+                </small>
+            </div>
                     <div class="field">
                         <label>LexOffice-ID</label>
                         <input type="text" id="lexofficeId" placeholder="z.B. AB-20262000">
