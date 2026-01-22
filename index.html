@@ -2623,9 +2623,9 @@ textarea {
                     ${projectData.days.map((day, index) => {
                         // Arbeitszeit berechnen
                         let arbeitsstunden = 0;
-                        if (day.Ladebeginn && day.arbeitszeitende) {
+                        if (day.ladebeginn && day.arbeitszeitEnde) {
                             const [startH, startM] = day.ladebeginn.split(':').map(Number);
-                            const [endH, endM] = day.arbeitszeitende.split(':').map(Number);
+                            const [endH, endM] = day.arbeitszeitEnde.split(':').map(Number);
                             const totalMinutes = (endH * 60 + endM) - (startH * 60 + startM) - (day.pause || 0) - (day.regenpause || 0);
                             arbeitsstunden = (totalMinutes / 60).toFixed(2);
                         }
@@ -2637,7 +2637,7 @@ textarea {
                             </h4>
 
                             <div style="background: #f5f3f0; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
-                                <p style="margin: 5px 0;"><strong>&#9200; Arbeitszeit:</strong> ${day.ladebeginn} - ${day.arbeitszeitende} Uhr</p>
+                                <p style="margin: 5px 0;"><strong>&#9200; Arbeitszeit:</strong> ${day.ladebeginn} - ${day.arbeitszeitEnde} Uhr</p>
                                 <p style="margin: 5px 0;"><strong>&#9201; Netto-Stunden:</strong> ${arbeitsstunden} Std. (Pausen: ${day.pause || 0} Min.)</p>
                                 ${day.regenpause ? `<p style="margin: 5px 0;"><strong>&#127783; Regenpause:</strong> ${day.regenpause} Min.</p>` : ''}
                             </div>
@@ -2652,7 +2652,7 @@ textarea {
                                                 return `<li>${w}</li>`;
                                             } else {
                                                 const actualStart = w.startTime || day.ladebeginn;
-                                                const actualEnd = w.endTime || day.arbeitszeitende;
+                                                const actualEnd = w.endTime || day.arbeitszeitEnde;
                                                 const timeInfo = ' <small>(' + actualStart + ' - ' + actualEnd + ')</small>';
                                                 return `<li>${w.name}${timeInfo}</li>`;
                                             }
@@ -4474,7 +4474,7 @@ data.days.forEach(day => {
             // ✅ STANDARD: ladebeginn → arbeitszeitEnde
             // ✅ AUSNAHME: Individuelle Zeiten wenn vorhanden
             const workerStartTime = worker.startTime || day.ladebeginn;
-            const workerEndTime = worker.endTime || day.arbeitszeitende;
+            const workerEndTime = worker.endTime || day.arbeitszeitEnde;
             
             if (workerStartTime && workerEndTime) {
                 const workHours = calculateWorkHours(
@@ -4954,7 +4954,7 @@ data.days.forEach(day => {
     </div>
     <div class="section-content">
         <div class="grid">
-            <div class="field"><strong>Kunde:</strong> ${data.kunde} ${data.nachname || ''}</div>
+            <div class="field"><strong>Kunde:</strong> ${data.kunde}</div>
             <div class="field"><strong>LexOffice-ID:</strong> ${data.lexofficeId || '---'}</div>
             <div class="field"><strong>Startdatum:</strong> ${new Date(data.startdatum).toLocaleDateString('de-DE')}</div>
             <div class="field"><strong>Projekttage:</strong> ${data.days.length}</div>
@@ -4985,7 +4985,7 @@ ${data.days.map((day, index) => `
                 <h4>&#9200; Zeiten:</h4>
                 <div><strong>Ladebeginn:</strong> ${day.ladebeginn || '---'}</div>
                 <div><strong>Abfahrt:</strong> ${day.abfahrt || '---'}</div>
-                <div><strong>Arbeitszeit:</strong> ${day.arbeitszeitbeginn || '---'} - ${day.arbeitszeitende || '---'}</div>
+                <div><strong>Arbeitszeit:</strong> ${day.ladebeginn || '---'} - ${day.arbeitszeitEnde || '---'}</div>
                 <div><strong>Pause:</strong> ${day.pause || 0} Min | <strong>Regenpause:</strong> ${day.regenpause || 0} Min</div>
             </div>
             <div>
@@ -6259,6 +6259,39 @@ data.days.forEach(day => {
         optimizeImagesForPDF,
         version: 'gardenKeeper® v2026 - MIT BILD-PDF-INTEGRATION UND UPLOAD-FIX'
     };
+
+    // ========================================
+    // 🌐 GLOBALE FUNKTIONEN FÜR ONCLICK
+    // ========================================
+    window.addWorker = addWorker;
+    window.removeWorker = removeWorker;
+    window.addMachine = addMachine;
+    window.removeMachine = removeMachine;
+    window.addMaterial = addMaterial;
+    window.removeMaterial = removeMaterial;
+    window.updateHoursSummary = updateHoursSummary;
+    window.openSignature = openSignature;
+    window.closeSignature = closeSignature;
+    window.clearSignature = clearSignature;
+    window.saveSignature = saveSignature;
+    window.generatePDF = generatePDF;
+    window.downloadHTML = downloadHTML;
+    window.openForm = openForm;
+    window.goBackToLauncher = goBackToLauncher;
+    window.toggleManualDescription = toggleManualDescription;
+    window.openWorkerModal = openWorkerModal;
+    window.closeWorkerModal = closeWorkerModal;
+    window.closeEmailModal = closeEmailModal;
+    window.sendEmailWithPDF = sendEmailWithPDF;
+    window.addDay = addDay;
+    window.switchDay = switchDay;
+    window.showMessage = showMessage;
+    window.populateDropdowns = populateDropdowns;
+    
+    // Für externe Scripts (event-auto-loader.js)
+    window.parseGoogleDocPositions = parseGoogleDocPositions;
+    window.generateDynamicCheckboxes = generateDynamicCheckboxes;
+    window.initializeCheckboxHandlers = initializeCheckboxHandlers;
     /**
      * &#127793; gardenKeeper® - MOBILE STICKY BUTTONS JAVASCRIPT
      * 
