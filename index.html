@@ -4498,12 +4498,13 @@ data.days.forEach(day => {
             const workerStartTime = worker.startTime || day.ladebeginn;
             const workerEndTime = worker.endTime || day.arbeitszeitEnde;
             
-            if (workerStartTime && workerEndTime) {
-                const workHours = calculateWorkHours(
-                    workerStartTime,
-                    workerEndTime,
-                    (day.pause || 0) + (day.regenpause || 0)
-                );
+    if (workerStartTime && workerEndTime) {
+           const workerPause = calculatePauseForWorker(workerStartTime) + (day.regenpause || 0);
+           const workHours = calculateWorkHours(
+               workerStartTime,
+               workerEndTime,
+               workerPause
+    );
                 totalHours += workHours;
             }
         });
@@ -5243,12 +5244,13 @@ data.days.forEach(day => {
             const workerStartTime = worker.startTime || day.ladebeginn;
             const workerEndTime = worker.endTime || day.arbeitszeitEnde;
             
-            if (workerStartTime && workerEndTime) {
-                const workHours = calculateWorkHours(
-                    workerStartTime,
-                    workerEndTime,
-                    (day.pause || 0) + (day.regenpause || 0)
-                );
+    if (workerStartTime && workerEndTime) {
+        const workerPause = calculatePauseForWorker(workerStartTime) + (day.regenpause || 0);
+        const workHours = calculateWorkHours(
+            workerStartTime,
+            workerEndTime,
+            workerPause
+    );
                 totalHours += workHours;
             }
         });
